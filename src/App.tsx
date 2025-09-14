@@ -116,7 +116,7 @@ const generateGames = () => {
 };
 
 const Container = ({ children }: { children: React.ReactNode }) => (
-  <div className="mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">{children}</div>
+  <div className="mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 overflow-x-hidden">{children}</div>
 );
 
 const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
@@ -253,7 +253,7 @@ export default function App() {
 
   return (
     <div className={dark ? "dark" : ""}>
-      <div className="min-h-screen w-full text-white" style={{ backgroundColor: '#edc77b', fontFamily: 'KosugiMaru, sans-serif' }}>
+      <div className="min-h-screen w-full text-white overflow-x-hidden" style={{ backgroundColor: '#edc77b', fontFamily: 'KosugiMaru, sans-serif' }}>
         {/* Header */}
         <header className="sticky top-0 z-40 backdrop-blur-sm bg-black/80 border-b border-gray-800">
           <Container>

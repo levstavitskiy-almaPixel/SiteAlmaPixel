@@ -42,3 +42,21 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;  /* Chrome, Safari and Opera */
 }
+
+/* Предотвращение горизонтального скролла на мобильных */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Дополнительная защита от горизонтального скролла */
+* {
+  box-sizing: border-box;
+}
+
+/* Предотвращение выхода элементов за границы экрана */
+.container, .mx-auto {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
