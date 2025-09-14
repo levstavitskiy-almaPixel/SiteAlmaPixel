@@ -95,7 +95,7 @@ const SITE = {
 // Функция для автоматического создания игр на основе доступных изображений
 const generateGames = () => {
   const games = [];
-  const maxImages = 8; // Максимальное количество изображений
+  const maxImages = 4; // Максимальное количество изображений
   
   for (let i = 1; i <= maxImages; i++) {
     const imageSrc = `/shot-${i}.png`;
@@ -159,7 +159,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
     <div className="relative">
             <div
               ref={scrollRef}
-              className="flex gap-32 overflow-x-auto pb-4 games-scroll cursor-grab select-none"
+              className="flex gap-32 overflow-x-auto pb-2 games-scroll cursor-grab select-none h-20"
               onMouseDown={handleMouseDown}
               onMouseLeave={handleMouseLeave}
               onMouseUp={handleMouseUp}
@@ -184,7 +184,7 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
     className="group cursor-pointer w-full"
   >
     <div className="relative rounded-lg bg-gray-800 overflow-hidden mx-0.5">
-      <div className="w-full h-16 sm:h-20 flex items-center justify-center overflow-visible p-0.5 sm:p-1">
+      <div className="w-full h-8 sm:h-10 flex items-center justify-center overflow-visible p-0.5 sm:p-1">
         <img 
           src={game.src} 
           alt={game.alt} 
@@ -259,7 +259,7 @@ export default function App() {
           <Container>
             <div className="flex h-16 items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 flex items-center justify-center">
+                <div className="w-3 h-3 flex items-center justify-center bg-red-500 rounded">
                   <img 
                     src="/AlmaPixelLogo.png?v=2" 
                     alt="Alma Pixel Logo" 
@@ -269,7 +269,7 @@ export default function App() {
                   />
                 </div>
                 <div>
-                  <h1 className="text-xl font-chiron-heading font-heading text-white">{SITE.brand}</h1>
+                  <h1 className="text-xl font-chiron-heading font-heading text-white bg-red-500 p-2">TEST CHANGE</h1>
                   <p className="text-sm text-gray-400">{SITE.tagline}</p>
                 </div>
               </div>
@@ -347,7 +347,7 @@ export default function App() {
             
             <HorizontalScroll>
               {generateGames().map((game, i) => (
-                <div key={i} className="flex-shrink-0 w-32 sm:w-36 mx-1">
+                <div key={i} className="flex-shrink-0 w-16 sm:w-20 mx-1">
                   <GameCard game={game} index={i} />
                 </div>
               ))}
