@@ -7,7 +7,7 @@ const SITE = {
   brand: "Alma Pixel",
   tagline: "Indie Game Studio",
   description:
-    "Alma pixel the juiciest temptation",
+    "Создаем уникальные инди-игры с ручной анимацией, атмосферной музыкой и глубоким геймплеем.",
   email: "hello@alma-pixel.com",
   telegram: "@levstavitskiy",
   gameTitles: [
@@ -95,7 +95,7 @@ const SITE = {
 // Функция для автоматического создания игр на основе доступных изображений
 const generateGames = () => {
   const games = [];
-  const maxImages = 4; // Максимальное количество изображений
+  const maxImages = 8; // Максимальное количество изображений
   
   for (let i = 1; i <= maxImages; i++) {
     const imageSrc = `/shot-${i}.png`;
@@ -159,7 +159,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
     <div className="relative">
             <div
               ref={scrollRef}
-              className="flex gap-32 overflow-x-auto pb-2 games-scroll cursor-grab select-none h-20"
+              className="flex gap-32 overflow-x-auto pb-4 games-scroll cursor-grab select-none"
               onMouseDown={handleMouseDown}
               onMouseLeave={handleMouseLeave}
               onMouseUp={handleMouseUp}
@@ -184,7 +184,7 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
     className="group cursor-pointer w-full"
   >
     <div className="relative rounded-lg bg-gray-800 overflow-hidden mx-0.5">
-      <div className="w-full h-8 sm:h-10 flex items-center justify-center overflow-visible p-0.5 sm:p-1">
+      <div className="w-full h-16 sm:h-20 flex items-center justify-center overflow-visible p-0.5 sm:p-1">
         <img 
           src={game.src} 
           alt={game.alt} 
@@ -195,14 +195,14 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
       <div className="absolute bottom-1 left-1 right-1 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-        <h3 className="text-xs font-chiron-heading font-heading">{game.title}</h3>
+        <h3 className="text-xs font-semibold font-heading">{game.title}</h3>
         <p className="text-xs opacity-90">{game.subtitle}</p>
       </div>
     </div>
     <div className="mt-0.5 px-0.5">
-      <h3 className="text-xs font-chiron-heading font-heading text-white">{game.title}</h3>
+      <h3 className="text-xs font-semibold text-white font-heading">{game.title}</h3>
       <p className="text-xs text-gray-300">{game.subtitle}</p>
-      <span className="inline-block mt-0.5 text-xs font-chiron-heading font-heading text-amber-400">
+      <span className="inline-block mt-0.5 text-xs font-medium text-amber-400">
         {game.status}
       </span>
     </div>
@@ -253,23 +253,23 @@ export default function App() {
 
   return (
     <div className={dark ? "dark" : ""}>
-      <div className="min-h-screen w-screen text-white overflow-x-hidden font-chiron-body bg-red-500" style={{ backgroundColor: '#ff0000' }}>
+      <div className="min-h-screen w-screen text-white overflow-x-hidden" style={{ backgroundColor: '#edc77b', fontFamily: 'ChironGoRoundTC, sans-serif' }}>
         {/* Header */}
         <header className="sticky top-0 z-40 backdrop-blur-sm bg-black/80 border-b border-gray-800">
           <Container>
             <div className="flex h-16 items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
               <div className="flex items-center gap-3">
-                <div className="w-2 h-2 flex items-center justify-center bg-red-500 rounded">
+                <div className="w-8 h-8 flex items-center justify-center">
                   <img 
                     src="/AlmaPixelLogo.png?v=2" 
                     alt="Alma Pixel Logo" 
-                    className="w-2 h-2 object-contain"
+                    className="w-full h-full object-contain"
                     draggable={false}
                     onDragStart={(e) => e.preventDefault()}
                   />
                 </div>
                 <div>
-                  <h1 className="text-xl font-chiron-heading font-heading text-white">{SITE.brand}</h1>
+                  <h1 className="text-xl font-bold text-white font-heading">{SITE.brand}</h1>
                   <p className="text-sm text-gray-400">{SITE.tagline}</p>
                 </div>
               </div>
@@ -339,7 +339,7 @@ export default function App() {
         <section id="games" className="py-20 bg-gray-900/50">
           <Container>
             <div className="text-center mb-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-chiron-heading font-heading text-white mb-4">Games</h2>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-heading">Games</h2>
               <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
                 Наши проекты в разработке и концепты будущих игр
               </p>
@@ -347,7 +347,7 @@ export default function App() {
             
             <HorizontalScroll>
               {generateGames().map((game, i) => (
-                <div key={i} className="flex-shrink-0 w-16 sm:w-20 mx-1">
+                <div key={i} className="flex-shrink-0 w-32 sm:w-36 mx-1">
                   <GameCard game={game} index={i} />
                 </div>
               ))}
@@ -367,7 +367,7 @@ export default function App() {
                <div className="grid lg:grid-cols-2 gap-12 items-center">
                  {/* Текст */}
                  <div className="text-center lg:text-left">
-                   <h2 className="text-3xl sm:text-4xl lg:text-5xl font-chiron-heading font-heading text-white mb-8">About</h2>
+                   <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 font-heading">About</h2>
                    <div className="prose prose-lg text-gray-300">
                      <p className="text-xl leading-relaxed mb-6">
                        Мы — небольшая команда разработчиков, вдохновленная работами таких студий как Amanita Design, 
@@ -405,7 +405,7 @@ export default function App() {
         <section id="music" className="py-20">
           <Container>
             <div className="text-center mb-12 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-chiron-heading font-heading text-white mb-4">Music</h2>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-heading">Music</h2>
               <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
                 Погрузитесь в атмосферу наших игр через музыку. Каждый трек создан специально для уникального мира наших проектов.
               </p>
@@ -472,7 +472,7 @@ export default function App() {
         <section id="contact" className="py-20 bg-gray-900/50">
           <Container>
             <div className="max-w-sm mx-auto text-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-chiron-heading font-heading text-white mb-8">Contact</h2>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 font-heading">Contact</h2>
               <p className="text-base sm:text-lg text-gray-300 mb-8">
                 Хотите узнать больше о наших проектах или обсудить сотрудничество?
               </p>
@@ -507,7 +507,7 @@ export default function App() {
                 <form onSubmit={onSubmit} className="space-y-6">
                   <div className="space-y-6">
                     <div>
-                      <label htmlFor="name" className="block text-sm font-chiron-heading font-heading text-gray-300 mb-2">
+                      <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
                         Имя *
                       </label>
                       <input
@@ -520,7 +520,7 @@ export default function App() {
                       />
                     </div>
                     <div>
-                      <label htmlFor="email" className="block text-sm font-chiron-heading font-heading text-gray-300 mb-2">
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                         Email *
                       </label>
                       <input
@@ -535,7 +535,7 @@ export default function App() {
                   </div>
                   
                   <div>
-                    <label htmlFor="subject" className="block text-sm font-chiron-heading font-heading text-gray-300 mb-2">
+                    <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
                       Тема
                     </label>
                     <input
@@ -548,7 +548,7 @@ export default function App() {
                   </div>
                   
                   <div>
-                    <label htmlFor="message" className="block text-sm font-chiron-heading font-heading text-gray-300 mb-2">
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
                       Сообщение *
                     </label>
                     <textarea
@@ -563,7 +563,7 @@ export default function App() {
                   
                   <button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white px-8 py-4 rounded-lg font-chiron-heading font-heading hover:from-amber-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+                    className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white px-8 py-4 rounded-lg font-semibold hover:from-amber-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-gray-900"
                   >
                     Отправить сообщение
                   </button>
