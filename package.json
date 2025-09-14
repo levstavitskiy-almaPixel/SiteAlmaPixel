@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@esotericsoftware/spine-canvas": "^4.2.90",
+    "@esotericsoftware/spine-core": "^4.2.90",
+    "dragonbones.js": "^5.7.4",
+    "pixi.js": "^8.13.2"
+  }
+}
