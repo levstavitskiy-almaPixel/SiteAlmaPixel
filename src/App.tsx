@@ -183,8 +183,8 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
     transition={{ duration: 0.6, delay: index * 0.1 }}
     className="group cursor-pointer w-full"
   >
-    <div className="relative rounded-lg bg-gray-800 overflow-hidden mx-2 sm:mx-4">
-      <div className="w-full h-40 sm:h-48 flex items-center justify-center overflow-visible p-2 sm:p-3">
+    <div className="relative rounded-lg bg-gray-800 overflow-hidden mx-1 sm:mx-2">
+      <div className="w-full h-24 sm:h-28 flex items-center justify-center overflow-visible p-1 sm:p-2">
         <img 
           src={game.src} 
           alt={game.alt} 
@@ -194,13 +194,13 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
         />
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-      <div className="absolute bottom-3 left-3 right-3 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-        <h3 className="text-base font-semibold">{game.title}</h3>
+      <div className="absolute bottom-2 left-2 right-2 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+        <h3 className="text-sm font-semibold">{game.title}</h3>
         <p className="text-xs opacity-90">{game.subtitle}</p>
       </div>
     </div>
-    <div className="mt-2 px-2 sm:px-4">
-      <h3 className="text-sm sm:text-base font-semibold text-white">{game.title}</h3>
+    <div className="mt-1 px-1 sm:px-2">
+      <h3 className="text-xs sm:text-sm font-semibold text-white">{game.title}</h3>
       <p className="text-xs text-gray-300">{game.subtitle}</p>
       <span className="inline-block mt-1 text-xs font-medium text-amber-400">
         {game.status}
@@ -347,7 +347,7 @@ export default function App() {
             
             <HorizontalScroll>
               {generateGames().map((game, i) => (
-                <div key={i} className="flex-shrink-0 w-72 sm:w-80 mx-1 sm:mx-2">
+                <div key={i} className="flex-shrink-0 w-48 sm:w-56 mx-1 sm:mx-2">
                   <GameCard game={game} index={i} />
                 </div>
               ))}
