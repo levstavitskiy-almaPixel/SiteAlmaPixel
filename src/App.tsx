@@ -257,9 +257,9 @@ export default function App() {
         {/* Header */}
         <header className="sticky top-0 z-40 backdrop-blur-sm bg-black/80 border-b border-gray-800">
           <Container>
-            <div className="flex h-20 items-center justify-between">
+            <div className="flex h-16 items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 flex items-center justify-center">
+                <div className="w-8 h-8 flex items-center justify-center">
                   <img 
                     src="/AlmaPixelLogo.png?v=2" 
                     alt="Alma Pixel Logo" 
