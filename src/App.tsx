@@ -263,7 +263,7 @@ export default function App() {
                   <img 
                     src="/AlmaPixelLogo.png?v=2" 
                     alt="Alma Pixel Logo" 
-                    className="w-full h-full object-contain"
+                    className="w-4 h-4 object-contain"
                     draggable={false}
                     onDragStart={(e) => e.preventDefault()}
                   />
