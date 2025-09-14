@@ -259,7 +259,7 @@ export default function App() {
           <Container>
             <div className="flex h-16 items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
               <div className="flex items-center gap-3">
-                <div className="w-4 h-4 flex items-center justify-center">
+                <div className="w-4 h-4 flex items-center justify-center bg-blue-500 rounded">
                   <img 
                     src="/AlmaPixelLogo.png?v=2" 
                     alt="Alma Pixel Logo" 
