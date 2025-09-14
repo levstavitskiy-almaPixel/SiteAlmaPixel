@@ -47,7 +47,12 @@ jobs:
           npm run
       
       - name: Build
-        run: npm run build
+        run: |
+          echo "Starting build..."
+          npm run build
+          echo "Build completed successfully"
+          echo "Checking dist folder:"
+          ls -la dist/
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
