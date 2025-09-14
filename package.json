@@ -1,8 +1,30 @@
 {
+  "name": "vite-project",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "deploy": "gh-pages -d dist"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "gh-pages": "^6.3.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.13",
+    "typescript": "~5.8.3",
+    "vite": "^7.1.2"
+  },
   "dependencies": {
-    "@esotericsoftware/spine-canvas": "^4.2.90",
-    "@esotericsoftware/spine-core": "^4.2.90",
-    "dragonbones.js": "^5.7.4",
-    "pixi.js": "^8.13.2"
+    "@pixi-spine/loader-uni": "^4.0.6",
+    "@pixi-spine/runtime-3.7": "^4.0.6",
+    "@tailwindcss/postcss": "^4.1.13",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "framer-motion": "^12.23.12",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
   }
 }

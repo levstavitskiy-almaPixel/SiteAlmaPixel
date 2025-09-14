@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Кастомные шрифты */
+@font-face {
+  font-family: 'KosugiMaru';
+  src: url('/fonts/KosugiMaru-Regular.woff2') format('woff2'),
+       url('/fonts/KosugiMaru-Regular.woff') format('woff'),
+       url('/fonts/KosugiMaru-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'KosugiMaru';
+  src: url('/fonts/KosugiMaru-Regular.woff2') format('woff2'),
+       url('/fonts/KosugiMaru-Regular.woff') format('woff'),
+       url('/fonts/KosugiMaru-Regular.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Скрытый скроллбар для горизонтального скролла игр */
+.games-scroll {
+  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+
+.games-scroll::-webkit-scrollbar {
+  height: 0px;  /* Chrome, Safari and Opera - делаем высоту 0 вместо display: none */
+}
+
+/* Скрытие скроллбара для других элементов */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
