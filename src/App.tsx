@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import MovieClipAnimation from "./components/MovieClipAnimation";
@@ -195,12 +196,12 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
       <div className="absolute bottom-1 left-1 right-1 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-        <h3 className="text-xs font-semibold font-heading">{game.title}</h3>
+        <h3 className="text-xs font-semibold font-chiron-heading">{game.title}</h3>
         <p className="text-xs opacity-90">{game.subtitle}</p>
       </div>
     </div>
     <div className="mt-0.5 px-0.5">
-      <h3 className="text-xs font-semibold text-white font-heading">{game.title}</h3>
+      <h3 className="text-xs font-semibold text-white font-chiron-heading">{game.title}</h3>
       <p className="text-xs text-gray-300">{game.subtitle}</p>
       <span className="inline-block mt-0.5 text-xs font-medium text-amber-400">
         {game.status}
@@ -253,7 +254,7 @@ export default function App() {
 
   return (
     <div className={dark ? "dark" : ""}>
-      <div className="min-h-screen w-screen text-white overflow-x-hidden" style={{ backgroundColor: '#edc77b', fontFamily: 'ChironGoRoundTC, sans-serif' }}>
+      <div className="min-h-screen w-screen text-white overflow-x-hidden font-chiron-body" style={{ backgroundColor: '#edc77b' }}>
         {/* Header */}
         <header className="sticky top-0 z-40 backdrop-blur-sm bg-black/80 border-b border-gray-800">
           <Container>
@@ -269,7 +270,7 @@ export default function App() {
                   />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-white font-heading">{SITE.brand}</h1>
+                  <h1 className="text-xl font-bold text-white font-chiron-heading">{SITE.brand}</h1>
                   <p className="text-sm text-gray-400">{SITE.tagline}</p>
                 </div>
               </div>
@@ -339,7 +340,7 @@ export default function App() {
         <section id="games" className="py-20 bg-gray-900/50">
           <Container>
             <div className="text-center mb-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-heading">Games</h2>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">Games</h2>
               <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
                 Наши проекты в разработке и концепты будущих игр
               </p>
@@ -367,7 +368,7 @@ export default function App() {
                <div className="grid lg:grid-cols-2 gap-12 items-center">
                  {/* Текст */}
                  <div className="text-center lg:text-left">
-                   <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 font-heading">About</h2>
+                   <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 font-chiron-heading">About</h2>
                    <div className="prose prose-lg text-gray-300">
                      <p className="text-xl leading-relaxed mb-6">
                        Мы — небольшая команда разработчиков, вдохновленная работами таких студий как Amanita Design, 
@@ -405,7 +406,7 @@ export default function App() {
         <section id="music" className="py-20">
           <Container>
             <div className="text-center mb-12 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-heading">Music</h2>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">Music</h2>
               <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
                 Погрузитесь в атмосферу наших игр через музыку. Каждый трек создан специально для уникального мира наших проектов.
               </p>
@@ -472,7 +473,7 @@ export default function App() {
         <section id="contact" className="py-20 bg-gray-900/50">
           <Container>
             <div className="max-w-sm mx-auto text-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 font-heading">Contact</h2>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 font-chiron-heading">Contact</h2>
               <p className="text-base sm:text-lg text-gray-300 mb-8">
                 Хотите узнать больше о наших проектах или обсудить сотрудничество?
               </p>
