@@ -31,7 +31,7 @@ jobs:
         uses: actions/configure-pages@v4
       
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       
       - name: Debug
         run: |
@@ -41,6 +41,10 @@ jobs:
           ls -la
           echo "Package.json exists:"
           ls -la package.json
+          echo "Package.json content:"
+          cat package.json
+          echo "NPM scripts:"
+          npm run
       
       - name: Build
         run: npm run build
