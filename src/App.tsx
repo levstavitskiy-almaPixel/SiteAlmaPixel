@@ -7,7 +7,7 @@ const SITE = {
   brand: "Alma Pixel",
   tagline: "Indie Game Studio",
   description:
-    "Создаем уникальные инди-игры с ручной анимацией, атмосферной музыкой и глубоким геймплеем.",
+    "Alma pixel the juiciest temptation",
   email: "hello@alma-pixel.com",
   telegram: "@levstavitskiy",
   gameTitles: [
