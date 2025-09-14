@@ -116,7 +116,7 @@ const generateGames = () => {
 };
 
 const Container = ({ children }: { children: React.ReactNode }) => (
-  <div className="mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-12">{children}</div>
+  <div className="mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">{children}</div>
 );
 
 const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
@@ -183,8 +183,8 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
     transition={{ duration: 0.6, delay: index * 0.1 }}
     className="group cursor-pointer w-full"
   >
-    <div className="relative rounded-lg bg-gray-800 overflow-hidden mx-4">
-      <div className="w-full h-48 flex items-center justify-center overflow-visible p-3">
+    <div className="relative rounded-lg bg-gray-800 overflow-hidden mx-2 sm:mx-4">
+      <div className="w-full h-40 sm:h-48 flex items-center justify-center overflow-visible p-2 sm:p-3">
         <img 
           src={game.src} 
           alt={game.alt} 
@@ -199,8 +199,8 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
         <p className="text-xs opacity-90">{game.subtitle}</p>
       </div>
     </div>
-    <div className="mt-2" style={{ paddingLeft: '16px', paddingRight: '16px' }}>
-      <h3 className="text-base font-semibold text-white">{game.title}</h3>
+    <div className="mt-2 px-2 sm:px-4">
+      <h3 className="text-sm sm:text-base font-semibold text-white">{game.title}</h3>
       <p className="text-xs text-gray-300">{game.subtitle}</p>
       <span className="inline-block mt-1 text-xs font-medium text-amber-400">
         {game.status}
@@ -253,7 +253,7 @@ export default function App() {
 
   return (
     <div className={dark ? "dark" : ""}>
-      <div className="min-h-screen text-white" style={{ backgroundColor: '#edc77b', fontFamily: 'KosugiMaru, sans-serif' }}>
+      <div className="min-h-screen w-full text-white" style={{ backgroundColor: '#edc77b', fontFamily: 'KosugiMaru, sans-serif' }}>
         {/* Header */}
         <header className="sticky top-0 z-40 backdrop-blur-sm bg-black/80 border-b border-gray-800">
           <Container>
@@ -339,15 +339,15 @@ export default function App() {
         <section id="games" className="py-20 bg-gray-900/50">
           <Container>
             <div className="text-center mb-16">
-              <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">Games</h2>
-              <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">Games</h2>
+              <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
                 Наши проекты в разработке и концепты будущих игр
               </p>
             </div>
             
             <HorizontalScroll>
               {generateGames().map((game, i) => (
-                <div key={i} className="flex-shrink-0 w-80 mx-2">
+                <div key={i} className="flex-shrink-0 w-72 sm:w-80 mx-1 sm:mx-2">
                   <GameCard game={game} index={i} />
                 </div>
               ))}
@@ -367,7 +367,7 @@ export default function App() {
                <div className="grid lg:grid-cols-2 gap-12 items-center">
                  {/* Текст */}
                  <div className="text-center lg:text-left">
-                   <h2 className="text-4xl sm:text-5xl font-bold text-white mb-8">About</h2>
+                   <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8">About</h2>
                    <div className="prose prose-lg text-gray-300">
                      <p className="text-xl leading-relaxed mb-6">
                        Мы — небольшая команда разработчиков, вдохновленная работами таких студий как Amanita Design, 
@@ -405,8 +405,8 @@ export default function App() {
         <section id="music" className="py-20">
           <Container>
             <div className="text-center mb-12">
-              <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">Music</h2>
-              <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">Music</h2>
+              <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
                 Погрузитесь в атмосферу наших игр через музыку. Каждый трек создан специально для уникального мира наших проектов.
               </p>
             </div>
@@ -424,40 +424,40 @@ export default function App() {
             </HorizontalScroll>
             
             {/* Анимации музыкантов */}
-            <div className="mt-16 flex items-center justify-center gap-2">
+            <div className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
               {/* Анимация лягушки-барда */}
               <MovieClipAnimation 
                 mcPath="/animations/frog_bard_mc.json"
                 texturePath="/animations/frog_bard_tex.png"
-                width={300}
-                height={300}
+                width={250}
+                height={250}
                 loop={true}
                 className="rounded-lg"
                 offsetY={35}
-                scale={0.7}
+                scale={0.6}
               />
               
               {/* Анимация musicKar */}
               <MovieClipAnimation 
                 mcPath="/animations/musicKar_mc.json"
                 texturePath="/animations/musicKar_tex.png"
-                width={300}
-                height={300}
+                width={250}
+                height={250}
                 loop={true}
                 className="rounded-lg"
                 offsetY={20}
-                scale={0.7}
+                scale={0.6}
               />
               
               {/* Анимация лисы-музыканта */}
               <MovieClipAnimation 
                 mcPath="/animations/fox_Music_mc.json"
                 texturePath="/animations/fox_Music_tex.png"
-                width={300}
-                height={300}
+                width={250}
+                height={250}
                 loop={true}
                 className="rounded-lg"
-                scale={0.7}
+                scale={0.6}
               />
             </div>
           </Container>
@@ -472,8 +472,8 @@ export default function App() {
         <section id="contact" className="py-20 bg-gray-900/50">
           <Container>
             <div className="max-w-sm mx-auto text-center">
-              <h2 className="text-4xl sm:text-5xl font-bold text-white mb-8">Contact</h2>
-              <p className="text-lg text-gray-300 mb-8">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8">Contact</h2>
+              <p className="text-base sm:text-lg text-gray-300 mb-8">
                 Хотите узнать больше о наших проектах или обсудить сотрудничество?
               </p>
               
