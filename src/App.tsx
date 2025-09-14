@@ -183,8 +183,8 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
     transition={{ duration: 0.6, delay: index * 0.1 }}
     className="group cursor-pointer w-full"
   >
-    <div className="relative rounded-lg bg-gray-800 overflow-hidden mx-8">
-      <div className="w-full h-64 flex items-center justify-center overflow-visible p-4">
+    <div className="relative rounded-lg bg-gray-800 overflow-hidden mx-4">
+      <div className="w-full h-48 flex items-center justify-center overflow-visible p-3">
         <img 
           src={game.src} 
           alt={game.alt} 
@@ -194,14 +194,14 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
         />
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-      <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-        <h3 className="text-lg font-semibold">{game.title}</h3>
-        <p className="text-sm opacity-90">{game.subtitle}</p>
+      <div className="absolute bottom-3 left-3 right-3 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+        <h3 className="text-base font-semibold">{game.title}</h3>
+        <p className="text-xs opacity-90">{game.subtitle}</p>
       </div>
     </div>
-    <div className="mt-3" style={{ paddingLeft: '32px', paddingRight: '32px' }}>
-      <h3 className="text-lg font-semibold text-white">{game.title}</h3>
-      <p className="text-sm text-gray-300">{game.subtitle}</p>
+    <div className="mt-2" style={{ paddingLeft: '16px', paddingRight: '16px' }}>
+      <h3 className="text-base font-semibold text-white">{game.title}</h3>
+      <p className="text-xs text-gray-300">{game.subtitle}</p>
       <span className="inline-block mt-1 text-xs font-medium text-amber-400">
         {game.status}
       </span>
@@ -347,7 +347,7 @@ export default function App() {
             
             <HorizontalScroll>
               {generateGames().map((game, i) => (
-                <div key={i} className="flex-shrink-0 w-96 mx-4">
+                <div key={i} className="flex-shrink-0 w-80 mx-2">
                   <GameCard game={game} index={i} />
                 </div>
               ))}
