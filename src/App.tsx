@@ -478,7 +478,7 @@ export default function App() {
                 Хотите узнать больше о наших проектах или обсудить сотрудничество?
               </p>
               
-              {/* BangerContact Image */}
+              {/* Yabloko Animation */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -486,13 +486,13 @@ export default function App() {
                 className="mb-8"
               >
                 <div className="relative mx-auto">
-                  <img 
-                    src="/BangerContact.png?v=7" 
-                    alt="Banger Contact - Alma Pixel" 
-                    className="rounded-lg shadow-2xl"
-                    style={{ width: '600px', height: '600px', objectFit: 'contain' }}
-                    draggable={false}
-                    onDragStart={(e) => e.preventDefault()}
+                  <MovieClipAnimation 
+                    mcPath="/animations/Yabloko_mc.json"
+                    texturePath="/animations/Yabloko_tex.png"
+                    width={400}
+                    height={400}
+                    loop={true}
+                    className="rounded-lg"
                   />
                 </div>
               </motion.div>
