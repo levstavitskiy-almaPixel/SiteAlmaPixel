@@ -221,6 +221,7 @@ export default function App() {
                         ? 'text-white' 
                         : 'text-gray-300 hover:text-white'
                     }`}
+                    style={{ transform: 'translate(-10px, -10px)' }}
                   >
                     EN
                   </button>
@@ -231,6 +232,7 @@ export default function App() {
                         ? 'text-white' 
                         : 'text-gray-300 hover:text-white'
                     }`}
+                    style={{ transform: 'translate(10px, -10px)' }}
                   >
                     РУ
                   </button>
