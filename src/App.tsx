@@ -181,7 +181,7 @@ export default function App() {
           }}
         >
           <Container>
-            <div className="flex h-20 items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative z-10">
+            <div className="flex h-24 items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative z-10">
               <div className="flex items-center gap-3">
                 <div className="w-[90px] h-[90px] flex items-center justify-center">
                   <img 
@@ -205,7 +205,7 @@ export default function App() {
                 <a href="#contact" className="text-gray-300 hover:text-amber-400 transition-colors">{locale.nav.contact}</a>
               </nav>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2" style={{ position: 'absolute', right: '25%', top: '50%', transform: 'translateY(-50%)' }}>
                 {/* Language Switcher */}
                 <div className="relative w-[60px] h-[60px]">
                   <img 
