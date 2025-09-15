@@ -210,31 +210,15 @@ export default function App() {
                 <div className="relative">
                   <img 
                     src="/Buttons.png" 
-                    alt="Language buttons" 
-                    className="w-[100px] h-[100px]"
+                    alt="Question button" 
+                    className="w-[60px] h-[60px]"
                     draggable={false}
                   />
                   <button
-                    onClick={() => setLanguage('en')}
-                    className={`absolute top-0 left-0 w-1/2 h-full text-sm font-medium transition-colors ${
-                      language === 'en' 
-                        ? 'text-white' 
-                        : 'text-gray-300 hover:text-white'
-                    }`}
+                    className="absolute top-0 left-0 w-full h-full text-lg font-bold text-white hover:text-gray-300 transition-colors flex items-center justify-center"
                     style={{ transform: 'translate(-20px, -20px)' }}
                   >
-                    EN
-                  </button>
-                  <button
-                    onClick={() => setLanguage('ru')}
-                    className={`absolute top-0 right-0 w-1/2 h-full text-sm font-medium transition-colors ${
-                      language === 'ru' 
-                        ? 'text-white' 
-                        : 'text-gray-300 hover:text-white'
-                    }`}
-                    style={{ transform: 'translate(20px, -20px)' }}
-                  >
-                    RU
+                    ?
                   </button>
                 </div>
               </div>
