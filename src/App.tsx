@@ -171,67 +171,17 @@ export default function App() {
     <div className={dark ? "dark" : ""}>
       <div className="min-h-screen w-screen text-white overflow-x-hidden font-chiron-body" style={{ backgroundColor: '#edc77b' }}>
         {/* Header */}
-        <header className="sticky top-0 z-40 backdrop-blur-sm bg-black/80 border-b border-gray-800 relative overflow-hidden">
-          {/* Animated Clouds Background */}
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-0 left-0 w-full h-full">
-              {/* Cloud 1 */}
-              <motion.div
-                className="absolute top-2 opacity-20"
-                animate={{ x: ['100vw', '-200px'] }}
-                transition={{ 
-                  duration: 30, 
-                  repeat: Infinity, 
-                  ease: 'linear' 
-                }}
-              >
-                <img 
-                  src="/Cloud.png" 
-                  alt="Cloud" 
-                  className="w-32 h-16 object-contain"
-                  draggable={false}
-                />
-              </motion.div>
-              
-              {/* Cloud 2 */}
-              <motion.div
-                className="absolute top-4 opacity-15"
-                animate={{ x: ['120vw', '-150px'] }}
-                transition={{ 
-                  duration: 35, 
-                  repeat: Infinity, 
-                  ease: 'linear',
-                  delay: 5
-                }}
-              >
-                <img 
-                  src="/Cloud.png" 
-                  alt="Cloud" 
-                  className="w-24 h-12 object-contain"
-                  draggable={false}
-                />
-              </motion.div>
-              
-              {/* Cloud 3 */}
-              <motion.div
-                className="absolute top-1 opacity-25"
-                animate={{ x: ['110vw', '-180px'] }}
-                transition={{ 
-                  duration: 40, 
-                  repeat: Infinity, 
-                  ease: 'linear',
-                  delay: 10
-                }}
-              >
-                <img 
-                  src="/Cloud.png" 
-                  alt="Cloud" 
-                  className="w-20 h-10 object-contain"
-                  draggable={false}
-                />
-              </motion.div>
-            </div>
-          </div>
+        <header 
+          className="sticky top-0 z-40 backdrop-blur-sm border-b border-gray-800 relative"
+          style={{
+            backgroundImage: 'url(/Cloud.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        >
+          {/* Semi-transparent overlay for better text readability */}
+          <div className="absolute inset-0 bg-black/40"></div>
           
           <Container>
             <div className="flex h-16 items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative z-10">
