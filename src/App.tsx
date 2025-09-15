@@ -3,113 +3,25 @@ import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import MovieClipAnimation from "./components/MovieClipAnimation";
 import MusicCard from "./components/MusicCard";
-
-const SITE = {
-  brand: "Alma Pixel",
-  tagline: "Indie Game Studio",
-  description:
-    "Создаем уникальные инди-игры с ручной анимацией, атмосферной музыкой и глубоким геймплеем.",
-  email: "hello@alma-pixel.com",
-  telegram: "@levstavitskiy",
-  gameTitles: [
-    "Adventure Owl",
-    "Bastard", 
-    "Coming soon",
-    "Coming soon",
-    "Coming soon",
-    "Coming soon",
-    "Coming soon",
-    "Coming soon"
-  ],
-  gameSubtitles: [
-    "A cozy puzzle adventure",
-    "An atmospheric platformer", 
-    "A space exploration game",
-    "A magical gardening sim",
-    "A cyberpunk adventure",
-    "An underwater exploration",
-    "A mountain climbing journey",
-    "A desert survival game"
-  ],
-  gameStatuses: [
-    "В разработке",
-    "В разработке",
-    "Концепт", 
-    "Концепт",
-    "Концепт",
-    "Концепт",
-    "Концепт",
-    "Концепт"
-  ],
-  musicTracks: [
-    {
-      id: "track1",
-      title: "Forest Melody",
-      artist: "Alma Pixel",
-      duration: "3:24",
-      src: "/music/forest-melody.mp3",
-      cover: "/music/covers/forest.jpg"
-    },
-    {
-      id: "track2", 
-      title: "Cosmic Journey",
-      artist: "Alma Pixel",
-      duration: "4:12",
-      src: "/music/cosmic-journey.mp3",
-      cover: "/music/covers/cosmic.jpg"
-    },
-    {
-      id: "track3",
-      title: "Pixel Dreams",
-      artist: "Alma Pixel", 
-      duration: "2:58",
-      src: "/music/pixel-dreams.mp3",
-      cover: "/music/covers/pixel.jpg"
-    },
-    {
-      id: "track4",
-      title: "Mystic Garden",
-      artist: "Alma Pixel",
-      duration: "3:45",
-      src: "/music/mystic-garden.mp3", 
-      cover: "/music/covers/mystic.jpg"
-    },
-    {
-      id: "track5",
-      title: "Neon City",
-      artist: "Alma Pixel",
-      duration: "4:33",
-      src: "/music/neon-city.mp3",
-      cover: "/music/covers/neon.jpg"
-    },
-    {
-      id: "track6",
-      title: "Ocean Depths",
-      artist: "Alma Pixel",
-      duration: "3:17",
-      src: "/music/ocean-depths.mp3",
-      cover: "/music/covers/ocean.jpg"
-    }
-  ]
-};
+import { locales, type Locale } from "./locales";
 
 // Функция для автоматического создания игр на основе доступных изображений
-const generateGames = () => {
+const generateGames = (locale: Locale) => {
   const games = [];
   const maxImages = 8; // Максимальное количество изображений
   
   for (let i = 1; i <= maxImages; i++) {
     const imageSrc = `/shot-${i}.png`;
-    const titleIndex = (i - 1) % SITE.gameTitles.length;
-    const subtitleIndex = (i - 1) % SITE.gameSubtitles.length;
-    const statusIndex = (i - 1) % SITE.gameStatuses.length;
+    const titleIndex = (i - 1) % locale.gameTitles.length;
+    const subtitleIndex = (i - 1) % locale.gameSubtitles.length;
+    const statusIndex = (i - 1) % locale.gameStatuses.length;
     
     games.push({
-      title: SITE.gameTitles[titleIndex],
-      subtitle: SITE.gameSubtitles[subtitleIndex],
+      title: locale.gameTitles[titleIndex],
+      subtitle: locale.gameSubtitles[subtitleIndex],
       src: imageSrc,
-      alt: `${SITE.gameTitles[titleIndex]} - скриншот`,
-      status: SITE.gameStatuses[statusIndex]
+      alt: `${locale.gameTitles[titleIndex]} - скриншот`,
+      status: locale.gameStatuses[statusIndex]
     });
   }
   
@@ -226,6 +138,9 @@ const IconMoon = (props: React.SVGProps<SVGSVGElement>) => (
 export default function App() {
   const [dark, setDark] = useState(true);
   const [currentTrack, setCurrentTrack] = useState<string | null>(null);
+  const [language, setLanguage] = useState<'en' | 'ru'>('en'); // English by default
+  
+  const locale = locales[language];
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -236,9 +151,9 @@ export default function App() {
     const message = formData.get('message') as string;
     
     // Создаем mailto ссылку с данными формы
-    const mailtoBody = `Имя: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0A${message}`;
-    const mailtoSubject = subject ? `Тема: ${subject}` : 'Сообщение с сайта Alma Pixel';
-    const mailtoLink = `mailto:${SITE.email}?subject=${encodeURIComponent(mailtoSubject)}&body=${mailtoBody}`;
+    const mailtoBody = `${language === 'en' ? 'Name' : 'Имя'}: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0A${message}`;
+    const mailtoSubject = subject ? `${language === 'en' ? 'Subject' : 'Тема'}: ${subject}` : `${language === 'en' ? 'Message from Alma Pixel website' : 'Сообщение с сайта Alma Pixel'}`;
+    const mailtoLink = `mailto:${locale.email}?subject=${encodeURIComponent(mailtoSubject)}&body=${mailtoBody}`;
     
     // Открываем почтовый клиент
     window.location.href = mailtoLink;
@@ -270,16 +185,41 @@ export default function App() {
                   />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-white font-chiron-heading">{SITE.brand}</h1>
-                  <p className="text-sm text-gray-400">{SITE.tagline}</p>
+                  <h1 className="text-xl font-bold text-white font-chiron-heading">{locale.brand}</h1>
+                  <p className="text-sm text-gray-400">{locale.tagline}</p>
                 </div>
               </div>
               
               <nav className="hidden md:flex items-center gap-8">
-                <a href="#games" className="text-gray-300 hover:text-amber-400 transition-colors">Games</a>
-                <a href="#about" className="text-gray-300 hover:text-amber-400 transition-colors">About</a>
-                <a href="#contact" className="text-gray-300 hover:text-amber-400 transition-colors">Contact</a>
+                <a href="#games" className="text-gray-300 hover:text-amber-400 transition-colors">{locale.nav.games}</a>
+                <a href="#about" className="text-gray-300 hover:text-amber-400 transition-colors">{locale.nav.about}</a>
+                <a href="#contact" className="text-gray-300 hover:text-amber-400 transition-colors">{locale.nav.contact}</a>
               </nav>
+
+              <div className="flex items-center gap-2">
+                {/* Language Switcher */}
+                <div className="flex items-center bg-gray-800 rounded-lg p-1">
+                  <button
+                    onClick={() => setLanguage('en')}
+                    className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                      language === 'en' 
+                        ? 'bg-amber-500 text-white' 
+                        : 'text-gray-300 hover:text-white'
+                    }`}
+                  >
+                    EN
+                  </button>
+                  <button
+                    onClick={() => setLanguage('ru')}
+                    className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                      language === 'ru' 
+                        ? 'bg-amber-500 text-white' 
+                        : 'text-gray-300 hover:text-white'
+                    }`}
+                  >
+                    RU
+                  </button>
+                </div>
 
                 <button
                 className="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors"
@@ -288,6 +228,7 @@ export default function App() {
                 >
                 {dark ? <IconSun className="h-5 w-5" /> : <IconMoon className="h-5 w-5" />}
                 </button>
+              </div>
             </div>
           </Container>
         </header>
@@ -325,7 +266,7 @@ export default function App() {
                 transition={{ duration: 0.8, delay: 0.4 }}
                 className="text-xl sm:text-2xl text-gray-300 mb-8"
               >
-                {SITE.description}
+                {locale.description}
               </motion.p>
             </div>
           </Container>
@@ -340,14 +281,14 @@ export default function App() {
         <section id="games" className="py-20 bg-gray-900/50">
           <Container>
             <div className="text-center mb-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">Games</h2>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.games.title}</h2>
               <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
-                Наши проекты в разработке и концепты будущих игр
+                {locale.sections.games.description}
               </p>
             </div>
             
             <HorizontalScroll>
-              {generateGames().map((game, i) => (
+              {generateGames(locale).map((game, i) => (
                 <div key={i} className="flex-shrink-0 w-24 sm:w-28 mx-1">
                   <GameCard game={game} index={i} />
                 </div>
@@ -368,15 +309,13 @@ export default function App() {
                <div className="grid lg:grid-cols-2 gap-12 items-center">
                  {/* Текст */}
                  <div className="text-center lg:text-left">
-                   <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 font-chiron-heading">About</h2>
+                   <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 font-chiron-heading">{locale.sections.about.title}</h2>
                    <div className="prose prose-lg text-gray-300">
                      <p className="text-xl leading-relaxed mb-6">
-                       Мы — небольшая команда разработчиков, вдохновленная работами таких студий как Amanita Design, 
-                       создаем игры с акцентом на атмосферу, музыку и уникальный визуальный стиль.
+                       {locale.sections.about.description1}
                      </p>
                      <p className="text-lg leading-relaxed">
-                       Каждая наша игра — это путешествие в особый мир, где каждая деталь продумана, 
-                       а игровой процесс приносит радость и умиротворение.
+                       {locale.sections.about.description2}
                      </p>
                    </div>
                  </div>
@@ -406,14 +345,14 @@ export default function App() {
         <section id="music" className="py-20">
           <Container>
             <div className="text-center mb-12 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">Music</h2>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.music.title}</h2>
               <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
-                Погрузитесь в атмосферу наших игр через музыку. Каждый трек создан специально для уникального мира наших проектов.
+                {locale.sections.music.description}
               </p>
             </div>
             
             <HorizontalScroll>
-              {SITE.musicTracks.map((track) => (
+              {locale.musicTracks.map((track) => (
                 <MusicCard
                   key={track.id}
                   track={track}
@@ -470,9 +409,9 @@ export default function App() {
         <section id="contact" className="py-20 bg-gray-900/50">
           <Container>
             <div className="max-w-sm mx-auto text-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 font-chiron-heading">Contact</h2>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 font-chiron-heading">{locale.sections.contact.title}</h2>
               <p className="text-base sm:text-lg text-gray-300 mb-8">
-                Хотите узнать больше о наших проектах или обсудить сотрудничество?
+                {locale.sections.contact.description}
               </p>
               
               {/* Yabloko Animation */}
@@ -506,7 +445,7 @@ export default function App() {
                   <div className="space-y-6">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                        Имя *
+                        {locale.sections.contact.form.name}
                       </label>
                       <input
                         type="text"
@@ -514,12 +453,12 @@ export default function App() {
                         name="name"
                         required
                         className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
-                        placeholder="Ваше имя"
+                        placeholder={language === 'en' ? 'Your name' : 'Ваше имя'}
                       />
                     </div>
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                        Email *
+                        {locale.sections.contact.form.email}
                       </label>
                       <input
                         type="email"
@@ -534,20 +473,20 @@ export default function App() {
                   
                   <div>
                     <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
-                      Тема
+                      {locale.sections.contact.form.subject}
                     </label>
                     <input
                       type="text"
                       id="subject"
                       name="subject"
                       className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
-                      placeholder="Тема сообщения"
+                      placeholder={language === 'en' ? 'Message subject' : 'Тема сообщения'}
                     />
                   </div>
                   
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                      Сообщение *
+                      {locale.sections.contact.form.message}
                     </label>
                     <textarea
                       id="message"
@@ -555,7 +494,7 @@ export default function App() {
                       rows={6}
                       required
                       className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all resize-none"
-                      placeholder="Расскажите о вашем проекте или вопросе..."
+                      placeholder={language === 'en' ? 'Tell us about your project or question...' : 'Расскажите о вашем проекте или вопросе...'}
                     />
                   </div>
                   
@@ -563,16 +502,16 @@ export default function App() {
                     type="submit"
                     className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white px-8 py-4 rounded-lg font-semibold hover:from-amber-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-gray-900"
                   >
-                    Отправить сообщение
+                    {locale.sections.contact.form.submit}
                   </button>
                 </form>
                 
                 <div className="mt-6 text-center">
                   <p className="text-gray-400 text-sm">
-                    или напишите напрямую: <a href={`mailto:${SITE.email}`} className="text-amber-400 hover:text-amber-300">{SITE.email}</a>
+                    {locale.sections.contact.form.orDirect} <a href={`mailto:${locale.email}`} className="text-amber-400 hover:text-amber-300">{locale.email}</a>
                   </p>
                   <p className="text-gray-400 text-sm mt-2">
-                    Telegram: <span className="text-amber-400">{SITE.telegram}</span>
+                    Telegram: <span className="text-amber-400">{locale.telegram}</span>
                   </p>
                 </div>
                 </motion.div>
@@ -604,7 +543,7 @@ export default function App() {
               </div>
               </motion.div>
               
-              <p>© {new Date().getFullYear()} {SITE.brand}. All Rights Reserved.</p>
+              <p>© {new Date().getFullYear()} {locale.brand}. {locale.footer.copyright}</p>
             </div>
           </Container>
         </footer>
