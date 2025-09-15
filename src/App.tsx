@@ -430,35 +430,32 @@ export default function App() {
               <MovieClipAnimation 
                 mcPath="/animations/frog_bard_mc.json"
                 texturePath="/animations/frog_bard_tex.png"
-                width={250}
-                height={250}
+                width={400}
+                height={400}
                 loop={true}
                 className="rounded-lg"
                 offsetY={35}
-                scale={0.6}
               />
               
               {/* Анимация musicKar */}
               <MovieClipAnimation 
                 mcPath="/animations/musicKar_mc.json"
                 texturePath="/animations/musicKar_tex.png"
-                width={250}
-                height={250}
+                width={400}
+                height={400}
                 loop={true}
                 className="rounded-lg"
                 offsetY={20}
-                scale={0.6}
               />
               
               {/* Анимация лисы-музыканта */}
               <MovieClipAnimation 
                 mcPath="/animations/fox_Music_mc.json"
                 texturePath="/animations/fox_Music_tex.png"
-                width={250}
-                height={250}
+                width={400}
+                height={400}
                 loop={true}
                 className="rounded-lg"
-                scale={0.6}
               />
             </div>
           </Container>
