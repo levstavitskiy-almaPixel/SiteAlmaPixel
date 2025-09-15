@@ -185,7 +185,7 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
     className="group cursor-pointer w-full"
   >
     <div className="relative rounded-lg bg-gray-800 overflow-hidden mx-0.5">
-      <div className="w-full h-16 sm:h-20 flex items-center justify-center overflow-visible p-0.5 sm:p-1">
+      <div className="w-full h-12 sm:h-16 flex items-center justify-center overflow-visible p-0.5 sm:p-1">
         <img 
           src={game.src} 
           alt={game.alt} 
@@ -348,7 +348,7 @@ export default function App() {
             
             <HorizontalScroll>
               {generateGames().map((game, i) => (
-                <div key={i} className="flex-shrink-0 w-32 sm:w-36 mx-1">
+                <div key={i} className="flex-shrink-0 w-24 sm:w-28 mx-1">
                   <GameCard game={game} index={i} />
                 </div>
               ))}
