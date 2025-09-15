@@ -425,15 +425,15 @@ export default function App() {
             </HorizontalScroll>
             
             {/* Анимации музыкантов */}
-            <div className="mt-16 flex flex-row items-center justify-center -space-x-8">
+            <div className="mt-16 flex flex-row items-center justify-center -space-x-4 sm:-space-x-8">
               {/* Анимация лягушки-барда */}
               <MovieClipAnimation 
                 mcPath="/animations/frog_bard_mc.json"
                 texturePath="/animations/frog_bard_tex.png"
-                width={400}
-                height={400}
+                width={200}
+                height={200}
                 loop={true}
-                className="rounded-lg"
+                className="rounded-lg sm:w-[400px] sm:h-[400px]"
                 offsetY={35}
               />
               
@@ -441,10 +441,10 @@ export default function App() {
               <MovieClipAnimation 
                 mcPath="/animations/musicKar_mc.json"
                 texturePath="/animations/musicKar_tex.png"
-                width={400}
-                height={400}
+                width={200}
+                height={200}
                 loop={true}
-                className="rounded-lg"
+                className="rounded-lg sm:w-[400px] sm:h-[400px]"
                 offsetY={20}
               />
               
@@ -452,10 +452,10 @@ export default function App() {
               <MovieClipAnimation 
                 mcPath="/animations/fox_Music_mc.json"
                 texturePath="/animations/fox_Music_tex.png"
-                width={400}
-                height={400}
+                width={200}
+                height={200}
                 loop={true}
-                className="rounded-lg"
+                className="rounded-lg sm:w-[400px] sm:h-[400px]"
               />
             </div>
           </Container>
