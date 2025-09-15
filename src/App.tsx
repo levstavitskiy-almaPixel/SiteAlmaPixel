@@ -172,47 +172,23 @@ export default function App() {
       <div className="min-h-screen w-screen text-white overflow-x-hidden font-chiron-body" style={{ backgroundColor: '#edc77b' }}>
         {/* Header */}
         <header className="sticky top-0 z-40 backdrop-blur-sm border-b border-gray-800 relative overflow-hidden">
-          {/* Seamless Cloud Animation using Tiling Technique */}
+          {/* Single Cloud.png Animation */}
           <div className="absolute inset-0 pointer-events-none">
             <motion.div
-              className="flex h-full"
-              animate={{ x: ['0%', '-50%'] }}
+              className="absolute top-0 left-0 w-full h-full"
+              animate={{ x: ['100%', '-100%'] }}
               transition={{ 
-                duration: 25, 
+                duration: 30, 
                 repeat: Infinity, 
                 ease: 'linear' 
               }}
             >
-              {/* First set of clouds */}
-              <div className="flex h-full">
-                <img 
-                  src="/Cloud.png" 
-                  alt="Cloud" 
-                  className="h-full w-auto object-cover opacity-40"
-                  draggable={false}
-                />
-                <img 
-                  src="/Cloud.png" 
-                  alt="Cloud" 
-                  className="h-full w-auto object-cover opacity-40"
-                  draggable={false}
-                />
-              </div>
-              {/* Duplicate set for seamless loop */}
-              <div className="flex h-full">
-                <img 
-                  src="/Cloud.png" 
-                  alt="Cloud" 
-                  className="h-full w-auto object-cover opacity-40"
-                  draggable={false}
-                />
-                <img 
-                  src="/Cloud.png" 
-                  alt="Cloud" 
-                  className="h-full w-auto object-cover opacity-40"
-                  draggable={false}
-                />
-              </div>
+              <img 
+                src="/Cloud.png" 
+                alt="Cloud" 
+                className="w-full h-full object-contain opacity-60"
+                draggable={false}
+              />
             </motion.div>
           </div>
           
