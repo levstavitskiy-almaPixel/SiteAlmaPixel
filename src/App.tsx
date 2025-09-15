@@ -185,25 +185,27 @@ export default function App() {
             >
               {/* First cloud texture */}
               <div 
-                className="h-full w-screen bg-cover bg-center bg-no-repeat opacity-50"
+                className="h-full w-screen bg-cover bg-center bg-no-repeat opacity-80"
                 style={{
                   backgroundImage: 'url(/Cloud.png)',
-                  backgroundSize: 'cover'
+                  backgroundSize: 'cover',
+                  minHeight: '64px'
                 }}
               />
               {/* Duplicate for seamless loop */}
               <div 
-                className="h-full w-screen bg-cover bg-center bg-no-repeat opacity-50"
+                className="h-full w-screen bg-cover bg-center bg-no-repeat opacity-80"
                 style={{
                   backgroundImage: 'url(/Cloud.png)',
-                  backgroundSize: 'cover'
+                  backgroundSize: 'cover',
+                  minHeight: '64px'
                 }}
               />
             </motion.div>
           </div>
           
           {/* Semi-transparent overlay for better text readability */}
-          <div className="absolute inset-0 bg-black/30"></div>
+          <div className="absolute inset-0 bg-black/10"></div>
           
           <Container>
             <div className="flex h-16 items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative z-10">
