@@ -240,49 +240,6 @@ export default function App() {
           </Container>
         </header>
 
-        {/* Divider */}
-        <div className="flex justify-center">
-          <div className="w-1/2 border-t-2 border-gray-600"></div>
-        </div>
-
-        {/* Hero */}
-        <section className="py-20 sm:py-32">
-        <Container>
-            <div className="text-center max-w-4xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-              {/* Banger Image */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                className="mb-8"
-              >
-                <div className="relative mx-auto w-full max-w-[400px] h-[300px] sm:h-[400px]">
-                  <img 
-                    src="/BangerLogo.png" 
-                    alt="Banger - Alma Pixel Game" 
-                    className="w-full h-full object-contain rounded-lg shadow-2xl"
-                    draggable={false}
-                    onDragStart={(e) => e.preventDefault()}
-                  />
-                </div>
-              </motion.div>
-              
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                className="text-xl sm:text-2xl text-gray-300 mb-8"
-              >
-                {locale.description}
-              </motion.p>
-            </div>
-          </Container>
-          </section>
-
-        {/* Divider */}
-        <div className="flex justify-center">
-          <div className="w-1/2 border-t-2 border-gray-600"></div>
-        </div>
 
         {/* Games */}
         <section id="games" className="py-20 bg-gray-900/50">
