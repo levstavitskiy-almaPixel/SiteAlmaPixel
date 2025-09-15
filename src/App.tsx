@@ -3,6 +3,7 @@ import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import MovieClipAnimation from "./components/MovieClipAnimation";
 import MusicCard from "./components/MusicCard";
+import DinoGame from "./components/DinoGame";
 
 const SITE = {
   brand: "Alma Pixel",
@@ -353,6 +354,11 @@ export default function App() {
                 </div>
               ))}
             </HorizontalScroll>
+            
+            {/* Интерактивная игра динозаврика */}
+            <div className="mt-16 flex justify-center">
+              <DinoGame />
+            </div>
           </Container>
         </section>
 
