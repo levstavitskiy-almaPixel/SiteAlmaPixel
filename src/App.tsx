@@ -177,7 +177,8 @@ export default function App() {
             backgroundImage: 'url(/Cloud.png)',
             backgroundSize: 'auto 100%',
             backgroundRepeat: 'repeat-x',
-            backgroundPosition: '0% 20%'
+            backgroundPosition: '0% 20%',
+            marginTop: '200px'
           }}
         >
           <Container>
