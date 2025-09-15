@@ -425,7 +425,7 @@ export default function App() {
             </HorizontalScroll>
             
             {/* Анимации музыкантов */}
-            <div className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-1">
+            <div className="mt-16 flex flex-col sm:flex-row items-center justify-center -space-x-8 sm:-space-x-8">
               {/* Анимация лягушки-барда */}
               <MovieClipAnimation 
                 mcPath="/animations/frog_bard_mc.json"
