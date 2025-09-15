@@ -183,7 +183,7 @@ export default function App() {
           <Container>
             <div className="flex h-16 items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative z-10">
               <div className="flex items-center gap-3">
-                <div className="w-[70px] h-[70px] flex items-center justify-center">
+                <div className="w-[90px] h-[90px] flex items-center justify-center">
                   <img 
                     src="/AlmaPixelLogo.png?v=2" 
                     alt="Alma Pixel Logo" 
@@ -194,7 +194,7 @@ export default function App() {
                 </div>
                 <div>
                   <h1 className="text-xl font-bold text-white font-chiron-heading">{locale.brand}</h1>
-                  <p className="text-sm text-gray-400">{locale.tagline}</p>
+                  <p className="text-sm text-gray-400 -mt-1">{locale.tagline}</p>
                 </div>
               </div>
               
