@@ -172,32 +172,32 @@ export default function App() {
       <div className="min-h-screen w-screen text-white overflow-x-hidden font-chiron-body" style={{ backgroundColor: '#edc77b' }}>
         {/* Header */}
         <header className="sticky top-0 z-40 backdrop-blur-sm border-b border-gray-800 relative overflow-hidden">
-          {/* Scrolling Texture Effect like Unity */}
-          <div className="absolute inset-0 pointer-events-none">
-            <motion.div
-              className="flex h-full"
-              animate={{ x: ['0%', '-100%'] }}
-              transition={{ 
-                duration: 20, 
-                repeat: Infinity, 
-                ease: 'linear' 
-              }}
-            >
-              {/* First cloud texture */}
-              <img 
-                src="/Cloud.png" 
-                alt="Cloud" 
-                className="h-full w-auto object-cover opacity-60"
-                draggable={false}
-              />
-              {/* Duplicate for seamless loop */}
-              <img 
-                src="/Cloud.png" 
-                alt="Cloud" 
-                className="h-full w-auto object-cover opacity-60"
-                draggable={false}
-              />
-            </motion.div>
+          {/* CSS Cloud Animation */}
+          <div className="cloud absolute inset-0 pointer-events-none">
+            <img 
+              src="/Cloud.png" 
+              alt="Cloud" 
+              className="cloud1"
+              draggable={false}
+            />
+            <img 
+              src="/Cloud.png" 
+              alt="Cloud" 
+              className="cloud2"
+              draggable={false}
+            />
+            <img 
+              src="/Cloud.png" 
+              alt="Cloud" 
+              className="cloud3"
+              draggable={false}
+            />
+            <img 
+              src="/Cloud.png" 
+              alt="Cloud" 
+              className="cloud4"
+              draggable={false}
+            />
           </div>
           
           {/* Semi-transparent overlay for better text readability */}
