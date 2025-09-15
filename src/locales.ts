@@ -60,7 +60,7 @@ export const locales: Record<string, Locale> = {
     email: "hello@alma-pixel.com",
     telegram: "@levstavitskiy",
     nav: {
-      games: "Games",
+      games: "COMING SOON",
       about: "About",
       contact: "Contact"
     },
