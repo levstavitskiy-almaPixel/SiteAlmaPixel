@@ -207,35 +207,46 @@ export default function App() {
 
               <div className="flex items-center gap-2" style={{ position: 'absolute', right: '25%', top: '50%', transform: 'translateY(-50%)' }}>
                 {/* Language Switcher */}
-                <div className="relative w-[60px] h-[60px]">
-                  <img 
-                    src="/Buttons.png" 
-                    alt="Language buttons" 
-                    className="w-full h-full object-contain"
-                    draggable={false}
-                  />
-                  <button
-                    onClick={() => setLanguage('en')}
-                    className={`absolute top-0 left-0 w-1/2 h-full text-xs font-medium transition-colors ${
-                      language === 'en' 
-                        ? 'text-white' 
-                        : 'text-gray-300 hover:text-white'
-                    }`}
-                    style={{ transform: 'translate(-10px, -10px)' }}
-                  >
-                    EN
-                  </button>
-                  <button
-                    onClick={() => setLanguage('ru')}
-                    className={`absolute top-0 right-0 w-1/2 h-full text-xs font-medium transition-colors ${
-                      language === 'ru' 
-                        ? 'text-white' 
-                        : 'text-gray-300 hover:text-white'
-                    }`}
-                    style={{ transform: 'translate(10px, -10px)' }}
-                  >
-                    РУ
-                  </button>
+                <div className="flex gap-2">
+                  {/* EN Button */}
+                  <div className="relative w-[60px] h-[60px]">
+                    <img 
+                      src="/Buttons.png" 
+                      alt="EN Button" 
+                      className="w-full h-full object-contain"
+                      draggable={false}
+                    />
+                    <button
+                      onClick={() => setLanguage('en')}
+                      className={`absolute inset-0 w-full h-full text-sm font-medium transition-colors ${
+                        language === 'en' 
+                          ? 'text-white' 
+                          : 'text-gray-300 hover:text-white'
+                      }`}
+                    >
+                      EN
+                    </button>
+                  </div>
+                  
+                  {/* RU Button */}
+                  <div className="relative w-[60px] h-[60px]">
+                    <img 
+                      src="/Buttons.png" 
+                      alt="RU Button" 
+                      className="w-full h-full object-contain"
+                      draggable={false}
+                    />
+                    <button
+                      onClick={() => setLanguage('ru')}
+                      className={`absolute inset-0 w-full h-full text-sm font-medium transition-colors ${
+                        language === 'ru' 
+                          ? 'text-white' 
+                          : 'text-gray-300 hover:text-white'
+                      }`}
+                    >
+                      РУ
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
