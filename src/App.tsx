@@ -97,7 +97,7 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
     className="group cursor-pointer w-full"
   >
     <div className="relative rounded-lg bg-gray-800 overflow-hidden mx-0.5">
-      <div className="w-full h-12 sm:h-16 flex items-center justify-center overflow-visible p-0.5 sm:p-1">
+      <div className="w-full h-8 sm:h-10 flex items-center justify-center overflow-visible p-0.5 sm:p-1">
         <img 
           src={game.src} 
           alt={game.alt} 
