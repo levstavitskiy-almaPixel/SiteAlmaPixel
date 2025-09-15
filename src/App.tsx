@@ -172,22 +172,32 @@ export default function App() {
       <div className="min-h-screen w-screen text-white overflow-x-hidden font-chiron-body" style={{ backgroundColor: '#edc77b' }}>
         {/* Header */}
         <header className="sticky top-0 z-40 backdrop-blur-sm border-b border-gray-800 relative overflow-hidden">
-          {/* Single Cloud.png Animation */}
+          {/* Scrolling Texture Effect like Unity */}
           <div className="absolute inset-0 pointer-events-none">
             <motion.div
-              className="absolute top-0 left-0 w-full h-full"
-              animate={{ x: ['100%', '-100%'] }}
+              className="flex h-full"
+              animate={{ x: ['0%', '-100%'] }}
               transition={{ 
-                duration: 30, 
+                duration: 20, 
                 repeat: Infinity, 
                 ease: 'linear' 
               }}
             >
-              <img 
-                src="/Cloud.png" 
-                alt="Cloud" 
-                className="w-full h-full object-contain opacity-60"
-                draggable={false}
+              {/* First cloud texture */}
+              <div 
+                className="h-full w-screen bg-cover bg-center bg-no-repeat opacity-50"
+                style={{
+                  backgroundImage: 'url(/Cloud.png)',
+                  backgroundSize: 'cover'
+                }}
+              />
+              {/* Duplicate for seamless loop */}
+              <div 
+                className="h-full w-screen bg-cover bg-center bg-no-repeat opacity-50"
+                style={{
+                  backgroundImage: 'url(/Cloud.png)',
+                  backgroundSize: 'cover'
+                }}
               />
             </motion.div>
           </div>
