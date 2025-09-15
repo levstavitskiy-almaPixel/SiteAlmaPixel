@@ -171,7 +171,16 @@ export default function App() {
     <div className={dark ? "dark" : ""}>
       <div className="min-h-screen w-screen text-white overflow-x-hidden font-chiron-body" style={{ backgroundColor: '#edc77b' }}>
         {/* Header */}
-        <header className="sticky top-0 z-40 backdrop-blur-sm border-b border-gray-800 relative">
+        <header 
+          className="sticky top-0 z-40 backdrop-blur-sm border-b border-gray-800 relative"
+          style={{
+            backgroundImage: 'url(/Cloud.png)',
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'local'
+          }}
+        >
           <Container>
             <div className="flex h-16 items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative z-10">
               <div className="flex items-center gap-3">
