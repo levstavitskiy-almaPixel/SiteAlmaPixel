@@ -171,38 +171,7 @@ export default function App() {
     <div className={dark ? "dark" : ""}>
       <div className="min-h-screen w-screen text-white overflow-x-hidden font-chiron-body" style={{ backgroundColor: '#edc77b' }}>
         {/* Header */}
-        <header className="sticky top-0 z-40 backdrop-blur-sm border-b border-gray-800 relative overflow-hidden">
-          {/* CSS Cloud Animation */}
-          <div className="cloud absolute inset-0 pointer-events-none">
-            <img 
-              src="/Cloud.png" 
-              alt="Cloud" 
-              className="cloud1"
-              draggable={false}
-            />
-            <img 
-              src="/Cloud.png" 
-              alt="Cloud" 
-              className="cloud2"
-              draggable={false}
-            />
-            <img 
-              src="/Cloud.png" 
-              alt="Cloud" 
-              className="cloud3"
-              draggable={false}
-            />
-            <img 
-              src="/Cloud.png" 
-              alt="Cloud" 
-              className="cloud4"
-              draggable={false}
-            />
-          </div>
-          
-          {/* Semi-transparent overlay for better text readability */}
-          <div className="absolute inset-0 bg-black/10"></div>
-          
+        <header className="sticky top-0 z-40 backdrop-blur-sm border-b border-gray-800 relative">
           <Container>
             <div className="flex h-16 items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative z-10">
               <div className="flex items-center gap-3">
