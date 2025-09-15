@@ -110,5 +110,5 @@ html, body {
 }
 
 .cloud-animation {
-  animation: cloudMove 20s linear infinite;
+  animation: cloudMove 40s linear infinite;
 }
