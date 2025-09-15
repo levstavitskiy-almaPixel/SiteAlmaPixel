@@ -171,17 +171,68 @@ export default function App() {
     <div className={dark ? "dark" : ""}>
       <div className="min-h-screen w-screen text-white overflow-x-hidden font-chiron-body" style={{ backgroundColor: '#edc77b' }}>
         {/* Header */}
-        <header 
-          className="sticky top-0 z-40 backdrop-blur-sm border-b border-gray-800 relative"
-          style={{
-            backgroundImage: 'url(/Cloud.png)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }}
-        >
+        <header className="sticky top-0 z-40 backdrop-blur-sm border-b border-gray-800 relative overflow-hidden">
+          {/* Animated Clouds Background */}
+          <div className="absolute inset-0 pointer-events-none">
+            {/* Cloud 1 */}
+            <motion.div
+              className="absolute top-1 opacity-30"
+              animate={{ x: ['100%', '-100%'] }}
+              transition={{ 
+                duration: 25, 
+                repeat: Infinity, 
+                ease: 'linear' 
+              }}
+            >
+              <img 
+                src="/Cloud.png" 
+                alt="Cloud" 
+                className="w-40 h-20 object-contain"
+                draggable={false}
+              />
+            </motion.div>
+            
+            {/* Cloud 2 */}
+            <motion.div
+              className="absolute top-3 opacity-25"
+              animate={{ x: ['100%', '-100%'] }}
+              transition={{ 
+                duration: 30, 
+                repeat: Infinity, 
+                ease: 'linear',
+                delay: 8
+              }}
+            >
+              <img 
+                src="/Cloud.png" 
+                alt="Cloud" 
+                className="w-32 h-16 object-contain"
+                draggable={false}
+              />
+            </motion.div>
+            
+            {/* Cloud 3 */}
+            <motion.div
+              className="absolute top-0 opacity-35"
+              animate={{ x: ['100%', '-100%'] }}
+              transition={{ 
+                duration: 35, 
+                repeat: Infinity, 
+                ease: 'linear',
+                delay: 15
+              }}
+            >
+              <img 
+                src="/Cloud.png" 
+                alt="Cloud" 
+                className="w-28 h-14 object-contain"
+                draggable={false}
+              />
+            </motion.div>
+          </div>
+          
           {/* Semi-transparent overlay for better text readability */}
-          <div className="absolute inset-0 bg-black/40"></div>
+          <div className="absolute inset-0 bg-black/30"></div>
           
           <Container>
             <div className="flex h-16 items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative z-10">
