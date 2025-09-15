@@ -207,24 +207,32 @@ export default function App() {
 
               <div className="flex items-center gap-2">
                 {/* Language Switcher */}
-                <div className="flex items-center bg-gray-800 rounded-lg p-1">
+                <div className="relative">
+                  <img 
+                    src="/Buttons.png" 
+                    alt="Language buttons" 
+                    className="w-auto h-8"
+                    draggable={false}
+                  />
                   <button
                     onClick={() => setLanguage('en')}
-                    className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                    className={`absolute top-0 left-0 w-1/2 h-full text-xs font-medium transition-colors ${
                       language === 'en' 
-                        ? 'bg-amber-500 text-white' 
+                        ? 'text-white' 
                         : 'text-gray-300 hover:text-white'
                     }`}
+                    style={{ transform: 'translate(-20px, -20px)' }}
                   >
                     EN
                   </button>
                   <button
                     onClick={() => setLanguage('ru')}
-                    className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                    className={`absolute top-0 right-0 w-1/2 h-full text-xs font-medium transition-colors ${
                       language === 'ru' 
-                        ? 'bg-amber-500 text-white' 
+                        ? 'text-white' 
                         : 'text-gray-300 hover:text-white'
                     }`}
+                    style={{ transform: 'translate(20px, -20px)' }}
                   >
                     RU
                   </button>
