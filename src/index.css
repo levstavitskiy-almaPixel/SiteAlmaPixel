@@ -80,6 +80,26 @@ html, body {
   padding: 0;
 }
 
+/* Улучшение качества изображений на мобильных устройствах */
+img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Специальные стили для фоновых изображений */
+[style*="background-image"] {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
 /* Полный экран без отступов */
 #root {
   width: 100vw;
@@ -111,4 +131,28 @@ html, body {
 
 .cloud-animation {
   animation: cloudMove 40s linear infinite;
+  /* Улучшение качества изображения на мобильных устройствах */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Дополнительные стили для улучшения качества фоновых изображений */
+.cloud-animation::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: inherit;
+  background-size: inherit;
+  background-repeat: inherit;
+  background-position: inherit;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: transform;
 }
