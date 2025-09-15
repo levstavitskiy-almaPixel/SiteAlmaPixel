@@ -172,13 +172,12 @@ export default function App() {
       <div className="min-h-screen w-screen text-white overflow-x-hidden font-chiron-body" style={{ backgroundColor: '#edc77b' }}>
         {/* Header */}
         <header 
-          className="sticky top-0 z-40 backdrop-blur-sm border-b border-gray-800 relative"
+          className="sticky top-0 z-40 backdrop-blur-sm border-b border-gray-800 relative cloud-animation"
           style={{
             backgroundImage: 'url(/Cloud.png)',
-            backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-            backgroundAttachment: 'local'
+            backgroundSize: 'auto 100%',
+            backgroundRepeat: 'repeat-x',
+            backgroundPosition: '0% 0%'
           }}
         >
           <Container>
