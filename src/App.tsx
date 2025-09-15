@@ -310,7 +310,7 @@ export default function App() {
               >
                 <div className="relative mx-auto w-full max-w-2xl">
                   <img 
-                    src="/Banger.png" 
+                    src="/BangerLogo.png" 
                     alt="Banger - Alma Pixel Game" 
                     className="w-full h-auto object-contain rounded-lg shadow-2xl"
                     draggable={false}
