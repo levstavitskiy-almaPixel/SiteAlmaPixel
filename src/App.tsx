@@ -3,7 +3,6 @@ import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import MovieClipAnimation from "./components/MovieClipAnimation";
 import MusicCard from "./components/MusicCard";
-import DinoGame from "./components/DinoGame";
 
 const SITE = {
   brand: "Alma Pixel",
@@ -309,7 +308,7 @@ export default function App() {
                 transition={{ duration: 0.8, delay: 0.3 }}
                 className="mb-8"
               >
-                <div className="relative mx-auto w-full max-w-xl">
+                <div className="relative mx-auto w-full max-w-lg">
                   <img 
                     src="/BangerLogo.png" 
                     alt="Banger - Alma Pixel Game" 
@@ -354,11 +353,6 @@ export default function App() {
                 </div>
               ))}
             </HorizontalScroll>
-            
-            {/* Интерактивная игра динозаврика */}
-            <div className="mt-16 flex justify-center">
-              <DinoGame />
-            </div>
           </Container>
         </section>
 
