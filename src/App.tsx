@@ -308,11 +308,11 @@ export default function App() {
                 transition={{ duration: 0.8, delay: 0.3 }}
                 className="mb-8"
               >
-                <div className="relative mx-auto w-full max-w-lg">
+                <div className="relative mx-auto w-full max-w-lg max-h-64 lg:max-h-48">
                   <img 
                     src="/BangerLogo.png" 
                     alt="Banger - Alma Pixel Game" 
-                    className="w-full h-auto object-contain rounded-lg shadow-2xl"
+                    className="w-full h-full object-contain rounded-lg shadow-2xl"
                     draggable={false}
                     onDragStart={(e) => e.preventDefault()}
                   />
