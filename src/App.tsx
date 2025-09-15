@@ -209,44 +209,30 @@ export default function App() {
                 {/* Language Switcher */}
                 <div className="flex gap-2">
                   {/* EN Button */}
-                  <div className="relative w-[60px] h-[60px]">
+                  <button
+                    onClick={() => setLanguage('en')}
+                    className="w-[60px] h-[60px] transition-opacity hover:opacity-80"
+                  >
                     <img 
                       src="/Buttons.png" 
                       alt="EN Button" 
                       className="w-full h-full object-contain"
                       draggable={false}
                     />
-                    <button
-                      onClick={() => setLanguage('en')}
-                      className={`absolute inset-0 w-full h-full text-sm font-medium transition-colors ${
-                        language === 'en' 
-                          ? 'text-white' 
-                          : 'text-gray-300 hover:text-white'
-                      }`}
-                    >
-                      EN
-                    </button>
-                  </div>
+                  </button>
                   
                   {/* RU Button */}
-                  <div className="relative w-[60px] h-[60px]">
+                  <button
+                    onClick={() => setLanguage('ru')}
+                    className="w-[60px] h-[60px] transition-opacity hover:opacity-80"
+                  >
                     <img 
                       src="/Buttons.png" 
                       alt="RU Button" 
                       className="w-full h-full object-contain"
                       draggable={false}
                     />
-                    <button
-                      onClick={() => setLanguage('ru')}
-                      className={`absolute inset-0 w-full h-full text-sm font-medium transition-colors ${
-                        language === 'ru' 
-                          ? 'text-white' 
-                          : 'text-gray-300 hover:text-white'
-                      }`}
-                    >
-                      РУ
-                    </button>
-                  </div>
+                  </button>
                 </div>
               </div>
             </div>
