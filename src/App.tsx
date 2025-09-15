@@ -172,14 +172,13 @@ export default function App() {
       <div className="min-h-screen w-screen text-white overflow-x-hidden font-chiron-body" style={{ backgroundColor: '#edc77b' }}>
         {/* Header */}
         <header className="sticky top-0 z-40 backdrop-blur-sm border-b border-gray-800 relative overflow-hidden">
-          {/* Animated Clouds Background */}
+          {/* Animated Cloud Background */}
           <div className="absolute inset-0 pointer-events-none">
-            {/* Cloud 1 */}
             <motion.div
-              className="absolute top-1 opacity-30"
+              className="absolute top-0 left-0 w-full h-full"
               animate={{ x: ['100%', '-100%'] }}
               transition={{ 
-                duration: 25, 
+                duration: 30, 
                 repeat: Infinity, 
                 ease: 'linear' 
               }}
@@ -187,45 +186,7 @@ export default function App() {
               <img 
                 src="/Cloud.png" 
                 alt="Cloud" 
-                className="w-40 h-20 object-contain"
-                draggable={false}
-              />
-            </motion.div>
-            
-            {/* Cloud 2 */}
-            <motion.div
-              className="absolute top-3 opacity-25"
-              animate={{ x: ['100%', '-100%'] }}
-              transition={{ 
-                duration: 30, 
-                repeat: Infinity, 
-                ease: 'linear',
-                delay: 8
-              }}
-            >
-              <img 
-                src="/Cloud.png" 
-                alt="Cloud" 
-                className="w-32 h-16 object-contain"
-                draggable={false}
-              />
-            </motion.div>
-            
-            {/* Cloud 3 */}
-            <motion.div
-              className="absolute top-0 opacity-35"
-              animate={{ x: ['100%', '-100%'] }}
-              transition={{ 
-                duration: 35, 
-                repeat: Infinity, 
-                ease: 'linear',
-                delay: 15
-              }}
-            >
-              <img 
-                src="/Cloud.png" 
-                alt="Cloud" 
-                className="w-28 h-14 object-contain"
+                className="w-full h-full object-cover opacity-40"
                 draggable={false}
               />
             </motion.div>
