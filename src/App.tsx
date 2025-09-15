@@ -211,12 +211,12 @@ export default function App() {
                   <img 
                     src="/Buttons.png" 
                     alt="Language buttons" 
-                    className="w-auto h-8"
+                    className="w-[100px] h-[100px]"
                     draggable={false}
                   />
                   <button
                     onClick={() => setLanguage('en')}
-                    className={`absolute top-0 left-0 w-1/2 h-full text-xs font-medium transition-colors ${
+                    className={`absolute top-0 left-0 w-1/2 h-full text-sm font-medium transition-colors ${
                       language === 'en' 
                         ? 'text-white' 
                         : 'text-gray-300 hover:text-white'
@@ -227,7 +227,7 @@ export default function App() {
                   </button>
                   <button
                     onClick={() => setLanguage('ru')}
-                    className={`absolute top-0 right-0 w-1/2 h-full text-xs font-medium transition-colors ${
+                    className={`absolute top-0 right-0 w-1/2 h-full text-sm font-medium transition-colors ${
                       language === 'ru' 
                         ? 'text-white' 
                         : 'text-gray-300 hover:text-white'
@@ -237,14 +237,6 @@ export default function App() {
                     RU
                   </button>
                 </div>
-
-                <button
-                className="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors"
-                  onClick={() => setDark((v) => !v)}
-                  aria-label="Toggle theme"
-                >
-                {dark ? <IconSun className="h-5 w-5" /> : <IconMoon className="h-5 w-5" />}
-                </button>
               </div>
             </div>
           </Container>
