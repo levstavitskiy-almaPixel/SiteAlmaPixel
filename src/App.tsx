@@ -193,6 +193,7 @@ export default function App() {
               <nav className="hidden md:flex items-center gap-8">
                 <a href="#games" className="text-gray-300 hover:text-amber-400 transition-colors">{locale.nav.games}</a>
                 <a href="#about" className="text-gray-300 hover:text-amber-400 transition-colors">{locale.nav.about}</a>
+                <a href="#music" className="text-gray-300 hover:text-amber-400 transition-colors">{locale.sections.music.title}</a>
                 <a href="#contact" className="text-gray-300 hover:text-amber-400 transition-colors">{locale.nav.contact}</a>
               </nav>
 
@@ -249,7 +250,7 @@ export default function App() {
                 transition={{ duration: 0.8, delay: 0.3 }}
                 className="mb-8"
               >
-                <div className="relative mx-auto w-full max-w-md max-h-32 lg:max-h-24">
+                <div className="relative mx-auto w-[400px] h-[400px]">
                   <img 
                     src="/BangerLogo.png" 
                     alt="Banger - Alma Pixel Game" 
