@@ -184,22 +184,18 @@ export default function App() {
               }}
             >
               {/* First cloud texture */}
-              <div 
-                className="h-full w-screen bg-cover bg-center bg-no-repeat opacity-80"
-                style={{
-                  backgroundImage: 'url(/Cloud.png)',
-                  backgroundSize: 'cover',
-                  minHeight: '64px'
-                }}
+              <img 
+                src="/Cloud.png" 
+                alt="Cloud" 
+                className="h-full w-auto object-cover opacity-60"
+                draggable={false}
               />
               {/* Duplicate for seamless loop */}
-              <div 
-                className="h-full w-screen bg-cover bg-center bg-no-repeat opacity-80"
-                style={{
-                  backgroundImage: 'url(/Cloud.png)',
-                  backgroundSize: 'cover',
-                  minHeight: '64px'
-                }}
+              <img 
+                src="/Cloud.png" 
+                alt="Cloud" 
+                className="h-full w-auto object-cover opacity-60"
+                draggable={false}
               />
             </motion.div>
           </div>
