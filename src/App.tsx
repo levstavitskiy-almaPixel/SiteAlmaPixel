@@ -308,7 +308,7 @@ export default function App() {
                 transition={{ duration: 0.8, delay: 0.3 }}
                 className="mb-8"
               >
-                <div className="relative mx-auto w-full max-w-lg max-h-64 lg:max-h-48">
+                <div className="relative mx-auto w-full max-w-md max-h-32 lg:max-h-24">
                   <img 
                     src="/BangerLogo.png" 
                     alt="Banger - Alma Pixel Game" 
