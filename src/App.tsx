@@ -171,27 +171,15 @@ export default function App() {
     <div className={dark ? "dark" : ""}>
       <div className="min-h-screen w-screen text-white overflow-x-hidden font-chiron-body" style={{ backgroundColor: '#edc77b' }}>
         {/* Header */}
-        <header className="sticky top-0 z-40 backdrop-blur-sm border-b border-gray-800 relative overflow-hidden">
-          {/* Animated Cloud Background */}
-          <div className="absolute inset-0 pointer-events-none">
-            <motion.div
-              className="absolute top-0 left-0 w-full h-full"
-              animate={{ x: ['100%', '-100%'] }}
-              transition={{ 
-                duration: 30, 
-                repeat: Infinity, 
-                ease: 'linear' 
-              }}
-            >
-              <img 
-                src="/Cloud.png" 
-                alt="Cloud" 
-                className="w-full h-full object-cover opacity-40"
-                draggable={false}
-              />
-            </motion.div>
-          </div>
-          
+        <header 
+          className="sticky top-0 z-40 backdrop-blur-sm border-b border-gray-800 relative"
+          style={{
+            backgroundImage: 'url(/Cloud.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        >
           {/* Semi-transparent overlay for better text readability */}
           <div className="absolute inset-0 bg-black/30"></div>
           
