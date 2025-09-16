@@ -72,7 +72,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
     <div className="relative h-[500px] w-full max-w-full overflow-hidden">
             <div
               ref={scrollRef}
-              className="flex gap-32 overflow-x-auto pb-4 games-scroll cursor-grab select-none h-full w-full"
+              className="flex gap-32 overflow-x-auto overflow-y-hidden pb-4 games-scroll cursor-grab select-none h-full w-full"
               onMouseDown={handleMouseDown}
               onMouseLeave={handleMouseLeave}
               onMouseUp={handleMouseUp}
