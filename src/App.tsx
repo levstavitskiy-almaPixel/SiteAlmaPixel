@@ -91,12 +91,6 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
     // Используем текущий индекс из состояния
     const currentIndex = currentCenterIndex;
     
-    console.log('Debug changeCard:', {
-      direction,
-      currentIndex,
-      currentCenterIndex
-    });
-    
     // Вычисляем новый индекс
     let newIndex = currentIndex;
     if (direction === 'left') {
@@ -104,8 +98,6 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
     } else {
       newIndex = Math.min(7, currentIndex + 1); // 8 карточек всего (0-7)
     }
-    
-    console.log('New index:', newIndex);
     
     // Вычисляем новую позицию скролла
     const targetScroll = newIndex * cardWidth;
