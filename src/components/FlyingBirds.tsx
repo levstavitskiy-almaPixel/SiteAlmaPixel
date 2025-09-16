@@ -86,7 +86,7 @@ const FlyingBirds: React.FC = () => {
       {birds.map((bird) => (
         <motion.div
           key={bird.id}
-          className="absolute w-12 h-12"
+          className="absolute w-24 h-24"
           style={{
             left: bird.startX,
             top: bird.startY,
@@ -112,8 +112,8 @@ const FlyingBirds: React.FC = () => {
             <MovieClipAnimation
               mcPath="/animations/bird_ske_mc.json"
               texturePath="/animations/bird_ske_tex.png"
-              width={40}
-              height={40}
+              width={36}
+              height={36}
               loop={true}
               animation="fly"
               className="w-full h-full"
