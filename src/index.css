@@ -173,3 +173,22 @@ img {
   transform: translateZ(0);
   will-change: transform;
 }
+
+/* Блокировка touch скролла для навигации только кнопками */
+.no-scroll {
+  touch-action: none !important;
+  overscroll-behavior: none !important;
+  -webkit-overflow-scrolling: auto !important;
+  scroll-behavior: auto !important;
+}
+
+.no-scroll * {
+  touch-action: none !important;
+  pointer-events: none !important;
+}
+
+/* Разрешаем pointer events только для кнопок навигации */
+.no-scroll button {
+  pointer-events: auto !important;
+  touch-action: auto !important;
+}

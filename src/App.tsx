@@ -97,13 +97,23 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
     setCurrentCenterIndex(newIndex);
   };
 
+  // Блокируем touch скролл на мобильных устройствах
+  const preventTouchScroll = (e: React.TouchEvent) => {
+    e.preventDefault();
+  };
+
+  const preventWheelScroll = (e: React.WheelEvent) => {
+    e.preventDefault();
+  };
 
   return (
     <div className="relative h-[600px] w-full max-w-full overflow-hidden">
       
       <div
         ref={scrollRef}
-        className="flex gap-16 overflow-x-auto overflow-y-hidden pb-4 games-scroll select-none h-full w-full"
+        className="flex gap-16 overflow-x-auto overflow-y-hidden pb-4 games-scroll select-none h-full w-full no-scroll"
+        onTouchMove={preventTouchScroll}
+        onWheel={preventWheelScroll}
         style={{ 
           scrollbarWidth: 'none', 
           msOverflowStyle: 'none', 
@@ -111,7 +121,9 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
           paddingLeft: 'calc(50vw - 175px)', // Отступ для центрирования первой карточки
           paddingRight: 'calc(50vw - 175px)',  // Отступ для центрирования последней карточки
           scrollBehavior: 'smooth',
-          WebkitOverflowScrolling: 'touch' // Плавный скролл на iOS
+          touchAction: 'none', // Блокируем touch скролл
+          overscrollBehavior: 'none', // Блокируем overscroll
+          WebkitOverflowScrolling: 'auto' // Отключаем плавный скролл на iOS
         }}
       >
         {children}
