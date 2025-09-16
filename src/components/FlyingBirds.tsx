@@ -29,7 +29,7 @@ const FlyingBirds: React.FC = () => {
       delay: 0,
       duration: 12,
       direction: 'left-to-right',
-      scaleX: [1, 1, -1, -1, 1]
+      scaleX: [-1, -1, -1, -1, -1] // Поворачиваем на 180° для полета вправо
     },
     {
       id: 2,
@@ -40,7 +40,7 @@ const FlyingBirds: React.FC = () => {
       delay: 3,
       duration: 10,
       direction: 'right-to-left',
-      scaleX: [-1, -1, 1, 1, -1]
+      scaleX: [1, 1, 1, 1, 1] // Не поворачиваем для полета влево
     },
     {
       id: 3,
@@ -51,7 +51,7 @@ const FlyingBirds: React.FC = () => {
       delay: 6,
       duration: 14,
       direction: 'left-to-right',
-      scaleX: [1, 1, -1, -1, 1]
+      scaleX: [-1, -1, -1, -1, -1] // Поворачиваем на 180° для полета вправо
     },
     {
       id: 4,
@@ -62,7 +62,7 @@ const FlyingBirds: React.FC = () => {
       delay: 9,
       duration: 11,
       direction: 'right-to-left',
-      scaleX: [-1, -1, 1, 1, -1]
+      scaleX: [1, 1, 1, 1, 1] // Не поворачиваем для полета влево
     },
     {
       id: 5,
@@ -73,7 +73,7 @@ const FlyingBirds: React.FC = () => {
       delay: 12,
       duration: 13,
       direction: 'left-to-right',
-      scaleX: [1, 1, -1, -1, 1]
+      scaleX: [-1, -1, -1, -1, -1] // Поворачиваем на 180° для полета вправо
     }
   ];
   
