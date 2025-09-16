@@ -96,7 +96,9 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
     transition={{ duration: 0.6, delay: index * 0.1 }}
     className="group cursor-pointer w-full"
   >
-    <div className="relative rounded-lg bg-gray-800 overflow-hidden mx-0.5">
+    <div className="relative rounded-lg bg-gray-800 overflow-hidden mx-0.5 border-2 border-dashed border-yellow-400 p-1" 
+         title={`Карточка игры ${index + 1}`}
+         onClick={() => alert(`Карточка игры ${index + 1}\nРазмер контейнера: 2-3px ширина\nВысота: 1-1.5px\nФайл: ${game.src}\nАнимация: hover scale-105`)}>
       <div className="w-full h-1 sm:h-1.5 flex items-center justify-center overflow-visible p-0.5 sm:p-1">
         <img 
           src={game.src} 
@@ -105,6 +107,9 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
           draggable={false}
           onDragStart={(e) => e.preventDefault()}
         />
+      </div>
+      <div className="absolute -top-4 left-0 text-xs bg-yellow-400 text-black px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+        Карточка {index + 1}
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
       <div className="absolute bottom-1 left-1 right-1 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
@@ -184,7 +189,9 @@ export default function App() {
             <Container style={{ border: '2px solid gray' }}>
             <div className="flex h-[300px] items-start justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative z-10 pt-2">
               <div className="flex items-center gap-3">
-                <div className="w-[90px] h-[90px] flex items-center justify-center">
+                <div className="w-[90px] h-[90px] flex items-center justify-center border-2 border-dashed border-yellow-400 relative group cursor-pointer" 
+                     title="Логотип Alma Pixel - 90x90px"
+                     onClick={() => alert('Логотип Alma Pixel\nРазмер: 90x90px\nФайл: AlmaPixelLogo.png')}>
                   <img 
                     src="/AlmaPixelLogo.png?v=2" 
                     alt="Alma Pixel Logo" 
@@ -192,6 +199,9 @@ export default function App() {
                     draggable={false}
                     onDragStart={(e) => e.preventDefault()}
                   />
+                  <div className="absolute -top-6 left-0 text-xs bg-yellow-400 text-black px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                    90x90px
+                  </div>
                 </div>
                 <div>
                   <h1 className="text-xl font-bold text-white font-chiron-heading">{locale.brand}</h1>
@@ -249,13 +259,20 @@ export default function App() {
               </p>
             </div>
             
-            <HorizontalScroll style={{ border: '2px solid yellow' }}>
-              {generateGames(locale).map((game, i) => (
-                <div key={i} className="flex-shrink-0 w-2 sm:w-3 mx-0.5">
-                  <GameCard game={game} index={i} />
-                </div>
-              ))}
-            </HorizontalScroll>
+            <div className="relative border-2 border-dashed border-yellow-400 p-2 group cursor-pointer" 
+                 title="Горизонтальный скролл игр"
+                 onClick={() => alert('Горизонтальный скролл игр\nВысота: 64px (h-16)\nШирина: 100% контейнера\nКарточек: 8 штук\nРазмер карточки: 2-3px')}>
+              <HorizontalScroll style={{ border: '2px solid yellow' }}>
+                {generateGames(locale).map((game, i) => (
+                  <div key={i} className="flex-shrink-0 w-2 sm:w-3 mx-0.5">
+                    <GameCard game={game} index={i} />
+                  </div>
+                ))}
+              </HorizontalScroll>
+              <div className="absolute -top-6 left-0 text-xs bg-yellow-400 text-black px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                Скролл: 64px высота
+              </div>
+            </div>
           </Container>
         </section>
 
@@ -284,14 +301,21 @@ export default function App() {
                  
                  {/* Анимация совы */}
                  <div className="flex justify-center lg:justify-end">
-                   <MovieClipAnimation 
-                     mcPath="/animations/owl_mc.json"
-                     texturePath="/animations/owl_tex.png"
-                     width={400}
-                     height={400}
-                     loop={true}
-                     className="rounded-lg"
-                   />
+                   <div className="relative border-2 border-dashed border-yellow-400 p-2 group cursor-pointer" 
+                        title="Анимация совы"
+                        onClick={() => alert('Анимация совы\nРазмер: 400x400px\nФайлы: owl_mc.json, owl_tex.png\nЦикл: включен')}>
+                     <MovieClipAnimation 
+                       mcPath="/animations/owl_mc.json"
+                       texturePath="/animations/owl_tex.png"
+                       width={400}
+                       height={400}
+                       loop={true}
+                       className="rounded-lg"
+                     />
+                     <div className="absolute -top-6 left-0 text-xs bg-yellow-400 text-black px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                       400x400px
+                     </div>
+                   </div>
                  </div>
                </div>
              </div>
@@ -328,36 +352,57 @@ export default function App() {
             {/* Анимации музыкантов */}
             <div className="mt-16 flex flex-row items-center justify-center -space-x-4 sm:-space-x-8">
               {/* Анимация лягушки-барда */}
-              <MovieClipAnimation 
-                mcPath="/animations/frog_bard_mc.json"
-                texturePath="/animations/frog_bard_tex.png"
-                width={200}
-                height={200}
-                loop={true}
-                className="rounded-lg sm:w-[400px] sm:h-[400px]"
-                offsetY={35}
-              />
+              <div className="relative border-2 border-dashed border-yellow-400 p-1 group cursor-pointer" 
+                   title="Анимация лягушки-барда"
+                   onClick={() => alert('Анимация лягушки-барда\nРазмер: 200x200px (мобил), 400x400px (десктоп)\nФайлы: frog_bard_mc.json, frog_bard_tex.png\nСмещение Y: 35px')}>
+                <MovieClipAnimation 
+                  mcPath="/animations/frog_bard_mc.json"
+                  texturePath="/animations/frog_bard_tex.png"
+                  width={200}
+                  height={200}
+                  loop={true}
+                  className="rounded-lg sm:w-[400px] sm:h-[400px]"
+                  offsetY={35}
+                />
+                <div className="absolute -top-6 left-0 text-xs bg-yellow-400 text-black px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                  200x200px
+                </div>
+              </div>
               
               {/* Анимация musicKar */}
-              <MovieClipAnimation 
-                mcPath="/animations/musicKar_mc.json"
-                texturePath="/animations/musicKar_tex.png"
-                width={200}
-                height={200}
-                loop={true}
-                className="rounded-lg sm:w-[400px] sm:h-[400px]"
-                offsetY={20}
-              />
+              <div className="relative border-2 border-dashed border-yellow-400 p-1 group cursor-pointer" 
+                   title="Анимация musicKar"
+                   onClick={() => alert('Анимация musicKar\nРазмер: 200x200px (мобил), 400x400px (десктоп)\nФайлы: musicKar_mc.json, musicKar_tex.png\nСмещение Y: 20px')}>
+                <MovieClipAnimation 
+                  mcPath="/animations/musicKar_mc.json"
+                  texturePath="/animations/musicKar_tex.png"
+                  width={200}
+                  height={200}
+                  loop={true}
+                  className="rounded-lg sm:w-[400px] sm:h-[400px]"
+                  offsetY={20}
+                />
+                <div className="absolute -top-6 left-0 text-xs bg-yellow-400 text-black px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                  200x200px
+                </div>
+              </div>
               
               {/* Анимация лисы-музыканта */}
-              <MovieClipAnimation 
-                mcPath="/animations/fox_Music_mc.json"
-                texturePath="/animations/fox_Music_tex.png"
-                width={200}
-                height={200}
-                loop={true}
-                className="rounded-lg sm:w-[400px] sm:h-[400px]"
-              />
+              <div className="relative border-2 border-dashed border-yellow-400 p-1 group cursor-pointer" 
+                   title="Анимация лисы-музыканта"
+                   onClick={() => alert('Анимация лисы-музыканта\nРазмер: 200x200px (мобил), 400x400px (десктоп)\nФайлы: fox_Music_mc.json, fox_Music_tex.png\nСмещение Y: нет')}>
+                <MovieClipAnimation 
+                  mcPath="/animations/fox_Music_mc.json"
+                  texturePath="/animations/fox_Music_tex.png"
+                  width={200}
+                  height={200}
+                  loop={true}
+                  className="rounded-lg sm:w-[400px] sm:h-[400px]"
+                />
+                <div className="absolute -top-6 left-0 text-xs bg-yellow-400 text-black px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                  200x200px
+                </div>
+              </div>
             </div>
           </Container>
         </section>
@@ -383,7 +428,9 @@ export default function App() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="mb-8"
               >
-                <div className="relative mx-auto">
+                <div className="relative mx-auto border-2 border-dashed border-yellow-400 p-2 group cursor-pointer" 
+                     title="Анимация Yabloko"
+                     onClick={() => alert('Анимация Yabloko\nРазмер: 400x400px\nФайлы: Yabloko_mc.json, Yabloko_tex.png\nЦикл: включен')}>
                   <MovieClipAnimation 
                     mcPath="/animations/Yabloko_mc.json"
                     texturePath="/animations/Yabloko_tex.png"
@@ -392,6 +439,9 @@ export default function App() {
                     loop={true}
                     className="rounded-lg"
                   />
+                  <div className="absolute -top-6 left-0 text-xs bg-yellow-400 text-black px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                    400x400px
+                  </div>
                 </div>
               </motion.div>
               
@@ -493,7 +543,9 @@ export default function App() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="mb-6"
               >
-                <div className="relative mx-auto">
+                <div className="relative mx-auto border-2 border-dashed border-yellow-400 p-2 group cursor-pointer" 
+                     title="Изображение BangerDonats"
+                     onClick={() => alert('Изображение BangerDonats\nРазмер: 600x600px\nФайл: BangerDonats.png\nСтиль: rounded-lg shadow-2xl')}>
                   <img 
                     src="/BangerDonats.png?v=1" 
                     alt="Banger Donats - Alma Pixel" 
@@ -502,7 +554,10 @@ export default function App() {
                     draggable={false}
                     onDragStart={(e) => e.preventDefault()}
                   />
-              </div>
+                  <div className="absolute -top-6 left-0 text-xs bg-yellow-400 text-black px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                    600x600px
+                  </div>
+                </div>
               </motion.div>
               
               <p>© {new Date().getFullYear()} {locale.brand}. {locale.footer.copyright}</p>
