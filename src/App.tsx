@@ -35,11 +35,7 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 
 const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [isSwipeActive, setIsSwipeActive] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [startTime, setStartTime] = useState(0);
   const [currentCenterIndex, setCurrentCenterIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
 
   // Инициализация: центрируем первую карточку при загрузке
   useEffect(() => {
@@ -47,16 +43,6 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
       // С отступами первая карточка уже будет в центре при скролле в начало
       scrollRef.current.scrollLeft = 0;
     }
-    
-    // Определяем размер экрана
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   // Обновляем позицию при изменении размера окна
@@ -111,73 +97,13 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
     setCurrentCenterIndex(newIndex);
   };
 
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (!scrollRef.current) return;
-    setIsSwipeActive(true);
-    setStartX(e.pageX - scrollRef.current.offsetLeft);
-    setStartTime(Date.now());
-  };
-
-  const handleMouseUp = (e: React.MouseEvent) => {
-    if (!isSwipeActive || !scrollRef.current) return;
-    
-    setIsSwipeActive(false);
-    const endX = e.pageX - scrollRef.current.offsetLeft;
-    const endTime = Date.now();
-    
-    // Определяем направление свайпа
-    const deltaX = endX - startX;
-    const deltaTime = endTime - startTime;
-    
-    // Минимальная дистанция для свайпа (50px) и максимальное время (300ms)
-    if (Math.abs(deltaX) > 50 && deltaTime < 300) {
-      if (deltaX > 0) {
-        changeCard('left'); // Свайп вправо = предыдущая карточка
-      } else {
-        changeCard('right'); // Свайп влево = следующая карточка
-      }
-    }
-  };
-
-  // Touch события для мобильных устройств
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (!scrollRef.current) return;
-    setIsSwipeActive(true);
-    setStartX(e.touches[0].pageX - scrollRef.current.offsetLeft);
-    setStartTime(Date.now());
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (!isSwipeActive || !scrollRef.current) return;
-    
-    setIsSwipeActive(false);
-    const endX = e.changedTouches[0].pageX - scrollRef.current.offsetLeft;
-    const endTime = Date.now();
-    
-    // Определяем направление свайпа
-    const deltaX = endX - startX;
-    const deltaTime = endTime - startTime;
-    
-    // Минимальная дистанция для свайпа (50px) и максимальное время (300ms)
-    if (Math.abs(deltaX) > 50 && deltaTime < 300) {
-      if (deltaX > 0) {
-        changeCard('left'); // Свайп вправо = предыдущая карточка
-      } else {
-        changeCard('right'); // Свайп влево = следующая карточка
-      }
-    }
-  };
 
   return (
     <div className="relative h-[600px] w-full max-w-full overflow-hidden">
       
       <div
         ref={scrollRef}
-        className="flex gap-16 overflow-x-auto overflow-y-hidden pb-4 games-scroll cursor-pointer select-none h-full w-full"
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
+        className="flex gap-16 overflow-x-auto overflow-y-hidden pb-4 games-scroll select-none h-full w-full"
         style={{ 
           scrollbarWidth: 'none', 
           msOverflowStyle: 'none', 
@@ -201,7 +127,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
         }`}
         style={{ 
           left: 'calc(50% - 220px)', // Позиция слева от центра карточки
-          display: isMobile ? 'none' : 'block' // Скрываем на мобильных
+          display: 'block' // Показываем кнопки на всех устройствах
         }}
         aria-label="Предыдущая карточка"
         disabled={currentCenterIndex === 0}
@@ -220,7 +146,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
         }`}
         style={{ 
           right: 'calc(50% - 220px)', // Позиция справа от центра карточки
-          display: isMobile ? 'none' : 'block' // Скрываем на мобильных
+          display: 'block' // Показываем кнопки на всех устройствах
         }}
         aria-label="Следующая карточка"
         disabled={currentCenterIndex === 7}
