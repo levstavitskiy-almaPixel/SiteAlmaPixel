@@ -305,17 +305,17 @@ export default function App() {
                  <div className="flex justify-center lg:justify-end">
                    <div className="relative border-2 border-dashed border-yellow-400 p-2 group cursor-pointer" 
                         title="Анимация совы"
-                        onClick={() => alert('Анимация совы\nРазмер: 400x400px\nФайлы: owl_mc.json, owl_tex.png\nЦикл: включен')}>
+                        onClick={() => alert('Анимация совы\nРазмер: 200x200px\nФайлы: owl_mc.json, owl_tex.png\nЦикл: включен')}>
                      <MovieClipAnimation 
                        mcPath="/animations/owl_mc.json"
                        texturePath="/animations/owl_tex.png"
-                       width={400}
-                       height={400}
+                       width={200}
+                       height={200}
                        loop={true}
                        className="rounded-lg"
                      />
                      <div className="absolute -top-6 left-0 text-xs bg-yellow-400 text-black px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                       400x400px
+                       200x200px
                      </div>
                    </div>
                  </div>
