@@ -39,6 +39,8 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [currentCenterIndex, setCurrentCenterIndex] = useState(0);
+  const [touchStartTime, setTouchStartTime] = useState(0);
+  const [lastTouchX, setLastTouchX] = useState(0);
 
   // Инициализация: центрируем первую карточку при загрузке
   useEffect(() => {
@@ -130,36 +132,56 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   const handleTouchStart = (e: React.TouchEvent) => {
     if (!scrollRef.current) return;
     setIsDragging(true);
-    setStartX(e.touches[0].pageX - scrollRef.current.offsetLeft);
+    const touchX = e.touches[0].pageX - scrollRef.current.offsetLeft;
+    setStartX(touchX);
+    setLastTouchX(touchX);
     setScrollLeft(scrollRef.current.scrollLeft);
+    setTouchStartTime(Date.now());
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isDragging || !scrollRef.current) return;
     e.preventDefault();
-    const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
+    const touchX = e.touches[0].pageX - scrollRef.current.offsetLeft;
+    const walk = (touchX - startX) * 1.5; // Уменьшенный коэффициент для более точного контроля
     scrollRef.current.scrollLeft = scrollLeft - walk;
+    setLastTouchX(touchX);
   };
 
   const handleTouchEnd = () => {
     setIsDragging(false);
-    // Используем ту же логику притягивания, что и для мыши
-    if (scrollRef.current) {
-      const containerWidth = scrollRef.current.clientWidth;
-      const cardWidth = 350;
-      const scrollPosition = scrollRef.current.scrollLeft;
-      const paddingLeft = containerWidth / 2 - cardWidth / 2; // Отступ для центрирования
-      
+    if (!scrollRef.current) return;
+    
+    const touchEndTime = Date.now();
+    const touchDuration = touchEndTime - touchStartTime;
+    const containerWidth = scrollRef.current.clientWidth;
+    const cardWidth = 350;
+    const scrollPosition = scrollRef.current.scrollLeft;
+    const paddingLeft = containerWidth / 2 - cardWidth / 2;
+    
+    // Определяем скорость свайпа
+    const isQuickSwipe = touchDuration < 200; // Быстрый свайп менее 200мс
+    
+    if (isQuickSwipe) {
+      // Для быстрого свайпа - принудительно центрируем ближайшую карточку
       const centerPosition = scrollPosition + containerWidth / 2;
       const nearestIndex = Math.round((centerPosition - paddingLeft) / cardWidth);
       const targetScroll = nearestIndex * cardWidth;
       
-      // Позволяем центрировать любую карточку, включая первую и последнюю
-      const finalScroll = targetScroll;
+      scrollRef.current.scrollTo({
+        left: targetScroll,
+        behavior: 'smooth'
+      });
+      
+      setCurrentCenterIndex(nearestIndex);
+    } else {
+      // Для медленного свайпа - используем стандартную логику
+      const centerPosition = scrollPosition + containerWidth / 2;
+      const nearestIndex = Math.round((centerPosition - paddingLeft) / cardWidth);
+      const targetScroll = nearestIndex * cardWidth;
       
       scrollRef.current.scrollTo({
-        left: finalScroll,
+        left: targetScroll,
         behavior: 'smooth'
       });
       
