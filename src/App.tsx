@@ -216,17 +216,18 @@ export default function App() {
                 <a href="#contact" className="text-gray-300 hover:text-amber-400 transition-colors">{locale.nav.contact}</a>
               </nav>
 
-              <div className="flex items-center gap-2" style={{ position: 'absolute', right: '25%', top: '50%', transform: 'translateY(-50%)' }}>
+              <div className="flex items-center gap-2" style={{ position: 'absolute', right: '10px', top: '10px' }}>
                 {/* Language Switcher */}
                 <div className="flex gap-2">
                   {/* EN Button */}
                   <button
                     onClick={() => setLanguage('en')}
-                    className={`text-xl font-bold font-chiron-heading transition-colors ${
+                    className={`w-[100px] h-[100px] text-xl font-bold font-chiron-heading transition-colors flex items-center justify-center border-2 border-dashed border-yellow-400 rounded-lg ${
                       language === 'en' 
-                        ? 'text-white' 
-                        : 'text-gray-300 hover:text-white'
+                        ? 'text-white bg-gray-700' 
+                        : 'text-gray-300 hover:text-white hover:bg-gray-600'
                     }`}
+                    title="English"
                   >
                     EN
                   </button>
@@ -234,11 +235,12 @@ export default function App() {
                   {/* RU Button */}
                   <button
                     onClick={() => setLanguage('ru')}
-                    className={`text-xl font-bold font-chiron-heading transition-colors ${
+                    className={`w-[100px] h-[100px] text-xl font-bold font-chiron-heading transition-colors flex items-center justify-center border-2 border-dashed border-yellow-400 rounded-lg ${
                       language === 'ru' 
-                        ? 'text-white' 
-                        : 'text-gray-300 hover:text-white'
+                        ? 'text-white bg-gray-700' 
+                        : 'text-gray-300 hover:text-white hover:bg-gray-600'
                     }`}
+                    title="Русский"
                   >
                     РУ
                   </button>
