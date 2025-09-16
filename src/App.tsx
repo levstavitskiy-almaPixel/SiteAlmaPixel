@@ -52,6 +52,27 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
+  // Обновляем позицию при изменении размера окна
+  useEffect(() => {
+    const handleResize = () => {
+      if (scrollRef.current) {
+        const containerWidth = scrollRef.current.clientWidth;
+        const cardWidth = 350;
+        const scrollPosition = scrollRef.current.scrollLeft;
+        
+        // Пересчитываем позицию для текущей карточки
+        const centerPosition = scrollPosition + containerWidth / 2;
+        const nearestIndex = Math.round(centerPosition / cardWidth);
+        const targetScroll = nearestIndex * cardWidth - containerWidth / 2 + cardWidth / 2;
+        
+        scrollRef.current.scrollLeft = Math.max(0, targetScroll);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!scrollRef.current) return;
     setIsDragging(true);
@@ -87,8 +108,21 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
       // Вычисляем позицию скролла, чтобы карточка была в центре
       const targetScroll = nearestIndex * cardWidth - containerWidth / 2 + cardWidth / 2;
       
-      // Ограничиваем скролл, чтобы можно было прокрутить до последней карточки
-      const finalScroll = Math.max(0, Math.min(targetScroll, maxScroll));
+      // Ограничиваем скролл, но позволяем центрировать первую и последнюю карточки
+      let finalScroll = targetScroll;
+      
+      // Если пытаемся центрировать первую карточку
+      if (nearestIndex === 0) {
+        finalScroll = Math.max(0, cardWidth / 2 - containerWidth / 2);
+      }
+      // Если пытаемся центрировать последнюю карточку
+      else if (nearestIndex >= Math.floor(scrollRef.current.scrollWidth / cardWidth) - 1) {
+        finalScroll = Math.min(maxScroll, targetScroll);
+      }
+      // Для остальных карточек используем стандартную логику
+      else {
+        finalScroll = Math.max(0, Math.min(targetScroll, maxScroll));
+      }
       
       scrollRef.current.scrollTo({
         left: finalScroll,
@@ -105,6 +139,54 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
     const x = e.pageX - scrollRef.current.offsetLeft;
     const walk = (x - startX) * 2;
     scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  // Touch события для мобильных устройств
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!scrollRef.current) return;
+    setIsDragging(true);
+    setStartX(e.touches[0].pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    // Используем ту же логику притягивания, что и для мыши
+    if (scrollRef.current) {
+      const containerWidth = scrollRef.current.clientWidth;
+      const cardWidth = 350;
+      const scrollPosition = scrollRef.current.scrollLeft;
+      const maxScroll = scrollRef.current.scrollWidth - containerWidth;
+      
+      const centerPosition = scrollPosition + containerWidth / 2;
+      const nearestIndex = Math.round(centerPosition / cardWidth);
+      const targetScroll = nearestIndex * cardWidth - containerWidth / 2 + cardWidth / 2;
+      
+      let finalScroll = targetScroll;
+      
+      if (nearestIndex === 0) {
+        finalScroll = Math.max(0, cardWidth / 2 - containerWidth / 2);
+      } else if (nearestIndex >= Math.floor(scrollRef.current.scrollWidth / cardWidth) - 1) {
+        finalScroll = Math.min(maxScroll, targetScroll);
+      } else {
+        finalScroll = Math.max(0, Math.min(targetScroll, maxScroll));
+      }
+      
+      scrollRef.current.scrollTo({
+        left: finalScroll,
+        behavior: 'smooth'
+      });
+      
+      setCurrentCenterIndex(nearestIndex);
+    }
   };
 
   return (
@@ -128,6 +210,9 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
         onMouseLeave={handleMouseLeave}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', gap: '0px' }}
       >
         {children}
