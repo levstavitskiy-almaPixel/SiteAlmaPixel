@@ -45,7 +45,17 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   // Инициализация: центрируем первую карточку при загрузке
   useEffect(() => {
     if (scrollRef.current) {
-      // С отступами первая карточка уже будет в центре при скролле в начало
+      const containerWidth = scrollRef.current.clientWidth;
+      const cardWidth = 350;
+      
+      // Рассчитываем отступ для центрирования первой карточки
+      const paddingLeft = containerWidth / 2 - cardWidth / 2;
+      
+      // Устанавливаем отступы динамически
+      scrollRef.current.style.paddingLeft = `${paddingLeft}px`;
+      scrollRef.current.style.paddingRight = `${paddingLeft}px`;
+      
+      // Центрируем первую карточку
       scrollRef.current.scrollLeft = 0;
     }
   }, []);
@@ -58,8 +68,12 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
         const cardWidth = 350;
         const scrollPosition = scrollRef.current.scrollLeft;
         
+        // Пересчитываем отступы для нового размера экрана
+        const paddingLeft = containerWidth / 2 - cardWidth / 2;
+        scrollRef.current.style.paddingLeft = `${paddingLeft}px`;
+        scrollRef.current.style.paddingRight = `${paddingLeft}px`;
+        
         // Пересчитываем позицию для текущей карточки
-        const paddingLeft = containerWidth / 2 - cardWidth / 2; // Отступ для центрирования
         const centerPosition = scrollPosition + containerWidth / 2;
         const nearestIndex = Math.round((centerPosition - paddingLeft) / cardWidth);
         const targetScroll = nearestIndex * cardWidth;
@@ -225,9 +239,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
         style={{ 
           scrollbarWidth: 'none', 
           msOverflowStyle: 'none', 
-          gap: '0px',
-          paddingLeft: 'calc(50vw - 175px)', // Отступ для центрирования первой карточки
-          paddingRight: 'calc(50vw - 175px)'  // Отступ для центрирования последней карточки
+          gap: '0px'
         }}
       >
         {children}
