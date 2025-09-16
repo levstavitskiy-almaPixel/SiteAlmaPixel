@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import MovieClipAnimation from "./components/MovieClipAnimation";
 import MusicCard from "./components/MusicCard";
 import FlyingBirds from "./components/FlyingBirds";
+import SectionBirds from "./components/SectionBirds";
 import { locales, type Locale } from "./locales";
 
 // Функция для автоматического создания игр на основе доступных изображений
@@ -363,7 +364,7 @@ export default function App() {
         {/* Games */}
         <section 
           id="games" 
-          className="py-10 pb-20 bg-gray-900/50 overflow-y-hidden md:overflow-y-hidden" 
+          className="py-10 pb-20 bg-gray-900/50 overflow-y-hidden md:overflow-y-hidden relative" 
           style={{ height: 'auto', minHeight: '700px', border: '3px solid red' }}
           onClick={() => showDebugInfo('Games Section', {
             sectionId: 'games',
@@ -373,6 +374,7 @@ export default function App() {
             description: 'Секция с играми и горизонтальным скроллом'
           })}
         >
+          <SectionBirds sectionHeight={700} sectionOffset={0} birdCount={3} />
           <Container>
             <div className="text-center mb-8">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.games.title}</h2>
@@ -396,7 +398,7 @@ export default function App() {
         {/* About */}
         <section 
           id="about" 
-          className="py-20 md:overflow-y-hidden" 
+          className="py-20 md:overflow-y-hidden relative" 
           style={{ border: '3px solid blue' }}
           onClick={() => showDebugInfo('About Section', {
             sectionId: 'about',
@@ -405,6 +407,7 @@ export default function App() {
             description: 'Секция "О нас" с текстом и анимацией совы'
           })}
         >
+          <SectionBirds sectionHeight={600} sectionOffset={700} birdCount={4} />
           <Container>
             <div className="max-w-6xl mx-auto">
                <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -447,7 +450,7 @@ export default function App() {
         {/* Music */}
         <section 
           id="music" 
-          className="py-20 md:overflow-y-hidden" 
+          className="py-20 md:overflow-y-hidden relative" 
           style={{ border: '3px solid green' }}
           onClick={() => showDebugInfo('Music Section', {
             sectionId: 'music',
@@ -456,6 +459,7 @@ export default function App() {
             description: 'Секция с музыкой в 4 колонки и анимациями музыкантов'
           })}
         >
+          <SectionBirds sectionHeight={800} sectionOffset={1300} birdCount={2} />
           <Container>
             <div className="text-center mb-12">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.music.title}</h2>
@@ -525,7 +529,7 @@ export default function App() {
         {/* Contact */}
         <section 
           id="contact" 
-          className="py-20 bg-gray-900/50 md:overflow-y-hidden" 
+          className="py-20 bg-gray-900/50 md:overflow-y-hidden relative" 
           style={{ border: '3px solid yellow' }}
           onClick={() => showDebugInfo('Contact Section', {
             sectionId: 'contact',
@@ -534,6 +538,7 @@ export default function App() {
             description: 'Секция контактов с формой и анимацией яблока'
           })}
         >
+          <SectionBirds sectionHeight={600} sectionOffset={2100} birdCount={3} />
           <Container>
             <div className="max-w-sm mx-auto text-center">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 font-chiron-heading">{locale.sections.contact.title}</h2>
