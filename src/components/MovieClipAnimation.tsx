@@ -92,11 +92,57 @@ const MovieClipAnimation: React.FC<MovieClipAnimationProps> = ({
     }
     
     console.log('Found animation data:', animationData);
+    console.log('Requested animation:', animation);
     
     // Находим нужную анимацию по имени
     const animationLabel = animationData.labels.find(label => label.name === animation);
     if (!animationLabel) {
       console.error(`Animation "${animation}" not found. Available animations:`, animationData.labels.map(l => l.name));
+      // Попробуем использовать первую доступную анимацию
+      const firstAnimation = animationData.labels[0];
+      if (firstAnimation) {
+        console.log(`Using first available animation: "${firstAnimation.name}"`);
+        const animate = () => {
+          ctx.clearRect(0, 0, width, height);
+          
+          const frameIndex = firstAnimation.frame - 1 + currentFrame;
+          const frame = animationData.frames[frameIndex];
+          if (!frame) return;
+
+          const resource = mcData.res[frame.res];
+          if (!resource) return;
+
+          const centerX = width / 2;
+          const centerY = height / 2;
+          
+          const drawWidth = resource.w * scale;
+          const drawHeight = resource.h * scale;
+          
+          const drawX = centerX + frame.x * scale;
+          const drawY = centerY + frame.y * scale + offsetY;
+
+          ctx.drawImage(
+            image,
+            resource.x, resource.y, resource.w, resource.h,
+            drawX, drawY, drawWidth, drawHeight
+          );
+        };
+
+        animate();
+
+        const interval = setInterval(() => {
+          setCurrentFrame(prev => {
+            const next = prev + 1;
+            const maxFrames = firstAnimation.end - firstAnimation.frame + 1;
+            if (next >= maxFrames) {
+              return loop ? 0 : maxFrames - 1;
+            }
+            return next;
+          });
+        }, 1000 / animationData.frameRate);
+
+        return () => clearInterval(interval);
+      }
       return;
     }
     

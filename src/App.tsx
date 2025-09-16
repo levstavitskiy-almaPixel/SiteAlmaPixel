@@ -350,7 +350,7 @@ export default function App() {
           id="about" 
           className="py-20 md:overflow-y-hidden relative" 
         >
-          <SectionBirds sectionHeight={600} birdCount={4} />
+          <SectionBirds sectionHeight={600} birdCount={3} />
           <Container>
             <div className="max-w-6xl mx-auto">
                <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -395,7 +395,7 @@ export default function App() {
           id="music" 
           className="py-20 md:overflow-y-hidden relative" 
         >
-          <SectionBirds sectionHeight={800} birdCount={2} />
+          <SectionBirds sectionHeight={800} birdCount={3} />
           <Container>
             <div className="text-center mb-12">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.music.title}</h2>
