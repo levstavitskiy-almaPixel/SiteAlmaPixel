@@ -1,5 +1,5 @@
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import MovieClipAnimation from "./components/MovieClipAnimation";
 import MusicCard from "./components/MusicCard";
@@ -40,6 +40,18 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   const [scrollLeft, setScrollLeft] = useState(0);
   const [currentCenterIndex, setCurrentCenterIndex] = useState(0);
 
+  // Инициализация: центрируем первую карточку при загрузке
+  useEffect(() => {
+    if (scrollRef.current) {
+      const containerWidth = scrollRef.current.clientWidth;
+      const cardWidth = 400;
+      
+      // Центрируем первую карточку
+      const initialScroll = cardWidth / 2 - containerWidth / 2;
+      scrollRef.current.scrollLeft = Math.max(0, initialScroll);
+    }
+  }, []);
+
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!scrollRef.current) return;
     setIsDragging(true);
@@ -64,6 +76,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
       const containerWidth = scrollRef.current.clientWidth;
       const cardWidth = 400; // ширина карточки
       const scrollPosition = scrollRef.current.scrollLeft;
+      const maxScroll = scrollRef.current.scrollWidth - containerWidth;
       
       // Вычисляем позицию центра экрана относительно скролла
       const centerPosition = scrollPosition + containerWidth / 2;
@@ -74,8 +87,11 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
       // Вычисляем позицию скролла, чтобы карточка была в центре
       const targetScroll = nearestIndex * cardWidth - containerWidth / 2 + cardWidth / 2;
       
+      // Ограничиваем скролл, чтобы можно было прокрутить до последней карточки
+      const finalScroll = Math.max(0, Math.min(targetScroll, maxScroll));
+      
       scrollRef.current.scrollTo({
-        left: Math.max(0, targetScroll),
+        left: finalScroll,
         behavior: 'smooth'
       });
       
