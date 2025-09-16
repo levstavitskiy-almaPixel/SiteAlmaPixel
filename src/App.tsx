@@ -78,7 +78,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
               onMouseLeave={handleMouseLeave}
               onMouseUp={handleMouseUp}
               onMouseMove={handleMouseMove}
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', gap: '100px' }}
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', gap: '0px' }}
             >
     {children}
   </div>
