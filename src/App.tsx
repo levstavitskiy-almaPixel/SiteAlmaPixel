@@ -303,7 +303,7 @@ export default function App() {
                  
                  {/* Анимация совы */}
                  <div className="flex justify-center lg:justify-end">
-                   <div className="relative border-2 border-dashed border-yellow-400 p-2 group cursor-pointer" 
+                   <div className="relative border-2 border-dashed border-yellow-400 p-4 group cursor-pointer w-[240px] h-[240px] flex items-center justify-center" 
                         title="Анимация совы"
                         onClick={() => alert('Анимация совы\nРазмер: 200x200px\nФайлы: owl_mc.json, owl_tex.png\nЦикл: включен')}>
                      <MovieClipAnimation 
