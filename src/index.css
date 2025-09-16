@@ -80,6 +80,23 @@ html, body {
   padding: 0;
 }
 
+/* Отключение вертикального скролла внутри основных разделов только на десктопе */
+@media (min-width: 768px) {
+  section[id="games"], 
+  section[id="about"], 
+  section[id="music"], 
+  section[id="contact"] {
+    overflow-y: hidden !important;
+  }
+
+  section[id="games"] *, 
+  section[id="about"] *, 
+  section[id="music"] *, 
+  section[id="contact"] * {
+    overflow-y: hidden !important;
+  }
+}
+
 /* Улучшение качества изображений на мобильных устройствах */
 img {
   image-rendering: -webkit-optimize-contrast;
