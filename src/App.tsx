@@ -205,16 +205,16 @@ export default function App() {
                 <a href="#contact" className="text-gray-300 hover:text-amber-400 transition-colors">{locale.nav.contact}</a>
               </nav>
 
-              <div className="flex items-center gap-2" style={{ position: 'absolute', right: '25%', top: '10px' }}>
+              <div className="flex items-center gap-2" style={{ position: 'absolute', right: '25%', top: '50%', transform: 'translateY(-50%)' }}>
                 {/* Language Switcher */}
                 <div className="flex gap-2">
                   {/* EN Button */}
                   <button
                     onClick={() => setLanguage('en')}
-                    className={`px-3 py-1 text-sm font-medium transition-colors rounded ${
+                    className={`text-xl font-bold font-chiron-heading transition-colors ${
                       language === 'en' 
-                        ? 'text-white bg-gray-700' 
-                        : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                        ? 'text-white' 
+                        : 'text-gray-300 hover:text-white'
                     }`}
                   >
                     EN
@@ -223,10 +223,10 @@ export default function App() {
                   {/* RU Button */}
                   <button
                     onClick={() => setLanguage('ru')}
-                    className={`px-3 py-1 text-sm font-medium transition-colors rounded ${
+                    className={`text-xl font-bold font-chiron-heading transition-colors ${
                       language === 'ru' 
-                        ? 'text-white bg-gray-700' 
-                        : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                        ? 'text-white' 
+                        : 'text-gray-300 hover:text-white'
                     }`}
                   >
                     РУ
