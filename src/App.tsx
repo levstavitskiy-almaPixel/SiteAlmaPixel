@@ -163,7 +163,7 @@ export default function App() {
   return (
     <div className={dark ? "dark" : ""}>
         <div className="min-h-screen w-screen text-white overflow-x-hidden font-chiron-body" style={{ 
-          backgroundColor: '#edc77b',
+          backgroundColor: '#f5f4f0',
           backgroundImage: 'url(/BgSite.png)',
           backgroundRepeat: 'repeat',
           backgroundSize: 'auto'
