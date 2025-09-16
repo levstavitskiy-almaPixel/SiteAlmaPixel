@@ -142,22 +142,6 @@ export const locales: Record<string, Locale> = {
         duration: "3:17",
         src: "/music/ocean-depths.mp3",
         cover: "/music/covers/ocean.jpg"
-      },
-      {
-        id: "track7",
-        title: "Crystal Cave",
-        artist: "Alma Pixel",
-        duration: "3:52",
-        src: "/music/crystal-cave.mp3",
-        cover: "/music/covers/crystal.jpg"
-      },
-      {
-        id: "track8",
-        title: "Starlight Symphony",
-        artist: "Alma Pixel",
-        duration: "4:08",
-        src: "/music/starlight-symphony.mp3",
-        cover: "/music/covers/starlight.jpg"
       }
     ],
     sections: {
