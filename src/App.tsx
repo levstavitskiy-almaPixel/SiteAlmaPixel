@@ -62,16 +62,8 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
         const nearestIndex = Math.round((centerPosition - paddingLeft) / cardWidth);
         const targetScroll = nearestIndex * cardWidth;
         
-        // Позволяем центрировать любую карточку с плавной анимацией
-        scrollRef.current.style.transition = 'scroll-behavior 0.4s ease-out';
+        // Позволяем центрировать любую карточку
         scrollRef.current.scrollLeft = targetScroll;
-        
-        // Убираем transition после завершения анимации
-        setTimeout(() => {
-          if (scrollRef.current) {
-            scrollRef.current.style.transition = '';
-          }
-        }, 400);
       }
     };
 
@@ -117,19 +109,10 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
       // Позволяем центрировать любую карточку, включая первую и последнюю
       const finalScroll = targetScroll;
       
-      // Добавляем плавную анимацию с помощью CSS transition
-      scrollRef.current.style.transition = 'scroll-behavior 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
       scrollRef.current.scrollTo({
         left: finalScroll,
         behavior: 'smooth'
       });
-      
-      // Убираем transition после завершения анимации
-      setTimeout(() => {
-        if (scrollRef.current) {
-          scrollRef.current.style.transition = '';
-        }
-      }, 600);
       
       setCurrentCenterIndex(nearestIndex);
     }
@@ -139,7 +122,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
     if (!isDragging || !scrollRef.current) return;
     e.preventDefault();
     const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5; // Уменьшенный коэффициент для более плавного скролла
+    const walk = (x - startX) * 2.5; // Увеличенный коэффициент для более отзывчивого скролла
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
@@ -155,7 +138,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
     if (!isDragging || !scrollRef.current) return;
     e.preventDefault();
     const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5; // Уменьшенный коэффициент для более плавного скролла
+    const walk = (x - startX) * 2.5; // Увеличенный коэффициент для более отзывчивого скролла
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
@@ -175,19 +158,10 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
       // Позволяем центрировать любую карточку, включая первую и последнюю
       const finalScroll = targetScroll;
       
-      // Добавляем плавную анимацию с помощью CSS transition
-      scrollRef.current.style.transition = 'scroll-behavior 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
       scrollRef.current.scrollTo({
         left: finalScroll,
         behavior: 'smooth'
       });
-      
-      // Убираем transition после завершения анимации
-      setTimeout(() => {
-        if (scrollRef.current) {
-          scrollRef.current.style.transition = '';
-        }
-      }, 600);
       
       setCurrentCenterIndex(nearestIndex);
     }
@@ -195,17 +169,6 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="relative h-[600px] w-full max-w-full overflow-hidden">
-      {/* Центральная область с текстом */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-        <div className="bg-black/80 backdrop-blur-sm rounded-lg p-4 border-2 border-white/20">
-          <h3 className="text-white text-lg font-bold font-chiron-heading text-center">
-            Карточка {currentCenterIndex + 1} в центре
-          </h3>
-          <p className="text-gray-300 text-sm text-center mt-2">
-            Скроллите для просмотра других игр
-          </p>
-        </div>
-      </div>
       
       <div
         ref={scrollRef}
@@ -243,12 +206,9 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.6, delay: index * 0.1 }}
     className="group cursor-pointer w-full h-full"
-    style={{ border: '2px solid red' }}
-    title={`Карточка игры ${index + 1}\nРазмер контейнера: 350x600px\nФайл: ${game.src}\nАнимация: hover scale-105`}
-    onClick={() => alert(`Карточка игры ${index + 1}\nРазмер контейнера: 350x600px\nФайл: ${game.src}\nАнимация: hover scale-105`)}
   >
-    <div className="relative rounded-lg bg-gray-800 overflow-hidden w-full h-full" style={{ border: '2px solid blue' }}>
-      <div className="w-full h-[540px] flex items-center justify-center overflow-hidden" style={{ border: '2px solid green' }}>
+    <div className="relative rounded-lg bg-gray-800 overflow-hidden w-full h-full">
+      <div className="w-full h-[540px] flex items-center justify-center overflow-hidden">
         <img 
           src={game.src} 
           alt={game.alt} 
@@ -264,7 +224,7 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
       </div>
     </div>
     {/* Постоянно видимые названия и статус */}
-    <div className="h-[60px] bg-gray-800/50 px-4 py-2 flex flex-col justify-center" style={{ border: '2px solid yellow' }}>
+      <div className="h-[60px] bg-gray-800/50 px-4 py-2 flex flex-col justify-center">
       <h3 className="text-sm font-semibold text-white font-chiron-heading truncate">{game.title}</h3>
       <p className="text-xs text-gray-300 truncate">{game.subtitle}</p>
       <span className="text-xs font-medium text-amber-400 mt-1">{game.status}</span>
