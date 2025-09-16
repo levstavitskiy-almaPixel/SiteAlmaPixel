@@ -61,7 +61,7 @@ export const locales: Record<string, Locale> = {
     telegram: "@levstavitskiy",
     nav: {
       games: "COMING SOON",
-      about: "About",
+      about: "News",
       contact: "Contact"
     },
     gameTitles: [
@@ -150,9 +150,9 @@ export const locales: Record<string, Locale> = {
         description: "Our projects in development and concepts for future games"
       },
       about: {
-        title: "About",
-        description1: "We are a small team of developers inspired by studios like Amanita Design, creating games with a focus on atmosphere, music, and unique visual style.",
-        description2: "Each of our games is a journey into a special world where every detail is thought out, and the gameplay brings joy and tranquility."
+        title: "News",
+        description1: "Our projects in development and concepts for future games",
+        description2: "We are a small team of developers inspired by studios like Amanita Design, creating games with a focus on atmosphere, music, and unique visual style. Each of our games is a journey into a special world where every detail is thought out, and the gameplay brings joy and tranquility."
       },
       music: {
         title: "Music",
@@ -183,7 +183,7 @@ export const locales: Record<string, Locale> = {
     telegram: "@levstavitskiy",
     nav: {
       games: "Игры",
-      about: "О нас",
+      about: "Новости",
       contact: "Контакты"
     },
     gameTitles: [
@@ -272,9 +272,9 @@ export const locales: Record<string, Locale> = {
         description: "Наши проекты в разработке и концепты будущих игр"
       },
       about: {
-        title: "О нас",
-        description1: "Мы — небольшая команда разработчиков, вдохновленная работами таких студий как Amanita Design, создаем игры с акцентом на атмосферу, музыку и уникальный визуальный стиль.",
-        description2: "Каждая наша игра — это путешествие в особый мир, где каждая деталь продумана, а игровой процесс приносит радость и умиротворение."
+        title: "Новости",
+        description1: "Наши проекты в разработке и концепты будущих игр",
+        description2: "Мы — небольшая команда разработчиков, вдохновленная работами таких студий как Amanita Design, создаем игры с акцентом на атмосферу, музыку и уникальный визуальный стиль. Каждая наша игра — это путешествие в особый мир, где каждая деталь продумана, а игровой процесс приносит радость и умиротворение."
       },
       music: {
         title: "Музыка",
