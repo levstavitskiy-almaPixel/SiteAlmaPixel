@@ -43,12 +43,8 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   // Инициализация: центрируем первую карточку при загрузке
   useEffect(() => {
     if (scrollRef.current) {
-      const containerWidth = scrollRef.current.clientWidth;
-      const cardWidth = 350;
-      
-      // Центрируем первую карточку
-      const initialScroll = cardWidth / 2 - containerWidth / 2;
-      scrollRef.current.scrollLeft = Math.max(0, initialScroll);
+      // С отступами первая карточка уже будет в центре при скролле в начало
+      scrollRef.current.scrollLeft = 0;
     }
   }, []);
 
@@ -61,11 +57,13 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
         const scrollPosition = scrollRef.current.scrollLeft;
         
         // Пересчитываем позицию для текущей карточки
+        const paddingLeft = containerWidth / 2 - cardWidth / 2; // Отступ для центрирования
         const centerPosition = scrollPosition + containerWidth / 2;
-        const nearestIndex = Math.round(centerPosition / cardWidth);
-        const targetScroll = nearestIndex * cardWidth - containerWidth / 2 + cardWidth / 2;
+        const nearestIndex = Math.round((centerPosition - paddingLeft) / cardWidth);
+        const targetScroll = nearestIndex * cardWidth;
         
-        scrollRef.current.scrollLeft = Math.max(0, targetScroll);
+        // Позволяем центрировать любую карточку
+        scrollRef.current.scrollLeft = targetScroll;
       }
     };
 
@@ -97,32 +95,19 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
       const containerWidth = scrollRef.current.clientWidth;
       const cardWidth = 350; // ширина карточки
       const scrollPosition = scrollRef.current.scrollLeft;
-      const maxScroll = scrollRef.current.scrollWidth - containerWidth;
+      const paddingLeft = containerWidth / 2 - cardWidth / 2; // Отступ для центрирования
       
       // Вычисляем позицию центра экрана относительно скролла
       const centerPosition = scrollPosition + containerWidth / 2;
       
-      // Вычисляем индекс ближайшей карточки к центру
-      const nearestIndex = Math.round(centerPosition / cardWidth);
+      // Вычисляем индекс ближайшей карточки к центру (учитывая отступ)
+      const nearestIndex = Math.round((centerPosition - paddingLeft) / cardWidth);
       
       // Вычисляем позицию скролла, чтобы карточка была в центре
-      const targetScroll = nearestIndex * cardWidth - containerWidth / 2 + cardWidth / 2;
+      const targetScroll = nearestIndex * cardWidth;
       
-      // Ограничиваем скролл, но позволяем центрировать первую и последнюю карточки
-      let finalScroll = targetScroll;
-      
-      // Если пытаемся центрировать первую карточку
-      if (nearestIndex === 0) {
-        finalScroll = Math.max(0, cardWidth / 2 - containerWidth / 2);
-      }
-      // Если пытаемся центрировать последнюю карточку
-      else if (nearestIndex >= Math.floor(scrollRef.current.scrollWidth / cardWidth) - 1) {
-        finalScroll = Math.min(maxScroll, targetScroll);
-      }
-      // Для остальных карточек используем стандартную логику
-      else {
-        finalScroll = Math.max(0, Math.min(targetScroll, maxScroll));
-      }
+      // Позволяем центрировать любую карточку, включая первую и последнюю
+      const finalScroll = targetScroll;
       
       scrollRef.current.scrollTo({
         left: finalScroll,
@@ -164,21 +149,14 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
       const containerWidth = scrollRef.current.clientWidth;
       const cardWidth = 350;
       const scrollPosition = scrollRef.current.scrollLeft;
-      const maxScroll = scrollRef.current.scrollWidth - containerWidth;
+      const paddingLeft = containerWidth / 2 - cardWidth / 2; // Отступ для центрирования
       
       const centerPosition = scrollPosition + containerWidth / 2;
-      const nearestIndex = Math.round(centerPosition / cardWidth);
-      const targetScroll = nearestIndex * cardWidth - containerWidth / 2 + cardWidth / 2;
+      const nearestIndex = Math.round((centerPosition - paddingLeft) / cardWidth);
+      const targetScroll = nearestIndex * cardWidth;
       
-      let finalScroll = targetScroll;
-      
-      if (nearestIndex === 0) {
-        finalScroll = Math.max(0, cardWidth / 2 - containerWidth / 2);
-      } else if (nearestIndex >= Math.floor(scrollRef.current.scrollWidth / cardWidth) - 1) {
-        finalScroll = Math.min(maxScroll, targetScroll);
-      } else {
-        finalScroll = Math.max(0, Math.min(targetScroll, maxScroll));
-      }
+      // Позволяем центрировать любую карточку, включая первую и последнюю
+      const finalScroll = targetScroll;
       
       scrollRef.current.scrollTo({
         left: finalScroll,
@@ -213,7 +191,13 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', gap: '0px' }}
+        style={{ 
+          scrollbarWidth: 'none', 
+          msOverflowStyle: 'none', 
+          gap: '0px',
+          paddingLeft: 'calc(50vw - 175px)', // Отступ для центрирования первой карточки
+          paddingRight: 'calc(50vw - 175px)'  // Отступ для центрирования последней карточки
+        }}
       >
         {children}
       </div>
