@@ -386,7 +386,8 @@ export default function App() {
 
         {/* Games */}
         <section id="games" className="py-10 pb-20 bg-gray-900/50 overflow-y-hidden md:overflow-y-hidden" style={{ height: 'auto', minHeight: '700px' }}>
-          <Container>
+          <div className="px-4 sm:px-6 md:px-8 lg:px-[200px] xl:px-[200px]">
+            <Container>
             <div className="text-center mb-8 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.games.title}</h2>
             </div>
@@ -398,7 +399,8 @@ export default function App() {
                 </div>
               ))}
             </HorizontalScroll>
-          </Container>
+            </Container>
+          </div>
         </section>
 
         {/* Divider */}
@@ -408,7 +410,8 @@ export default function App() {
 
         {/* About */}
         <section id="about" className="py-20 md:overflow-y-hidden">
-          <Container>
+          <div className="px-4 sm:px-6 md:px-8 lg:px-[200px] xl:px-[200px]">
+            <Container>
             <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
                <div className="grid lg:grid-cols-2 gap-12 items-center">
                  {/* Текст */}
@@ -440,6 +443,7 @@ export default function App() {
                </div>
              </div>
            </Container>
+          </div>
          </section>
 
         {/* Divider */}
@@ -449,7 +453,8 @@ export default function App() {
 
         {/* Music */}
         <section id="music" className="py-20 md:overflow-y-hidden">
-          <Container>
+          <div className="px-4 sm:px-6 md:px-8 lg:px-[200px] xl:px-[200px]">
+            <Container>
             <div className="text-center mb-12 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.music.title}</h2>
               <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
@@ -508,6 +513,7 @@ export default function App() {
               />
             </div>
           </Container>
+          </div>
         </section>
 
         {/* Divider */}
@@ -517,7 +523,8 @@ export default function App() {
 
         {/* Contact */}
         <section id="contact" className="py-20 bg-gray-900/50 md:overflow-y-hidden">
-          <Container>
+          <div className="px-4 sm:px-6 md:px-8 lg:px-[200px] xl:px-[200px]">
+            <Container>
             <div className="max-w-sm mx-auto text-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 font-chiron-heading">{locale.sections.contact.title}</h2>
               <p className="text-base sm:text-lg text-gray-300 mb-8">
@@ -629,6 +636,7 @@ export default function App() {
               </div>
             </div>
           </Container>
+          </div>
         </section>
 
         {/* Footer */}
