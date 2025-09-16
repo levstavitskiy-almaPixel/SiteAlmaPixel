@@ -3,7 +3,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import MovieClipAnimation from "./components/MovieClipAnimation";
 import MusicCard from "./components/MusicCard";
-import FlyingBirds from "./components/FlyingBirds";
 import SectionBirds from "./components/SectionBirds";
 import { locales, type Locale } from "./locales";
 
@@ -247,9 +246,6 @@ export default function App() {
           backgroundRepeat: 'repeat',
           backgroundSize: 'auto'
         }}>
-          {/* Летающие птицы */}
-          <FlyingBirds />
-          
           {/* Header */}
           <header 
             className="sticky top-0 z-40 backdrop-blur-sm relative cloud-animation"
