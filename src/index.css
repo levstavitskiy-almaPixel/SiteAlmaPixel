@@ -71,9 +71,10 @@
   display: none;  /* Chrome, Safari and Opera */
 }
 
-/* Предотвращение горизонтального скролла на мобильных */
+/* Предотвращение горизонтального и вертикального скролла */
 html, body {
   overflow-x: hidden;
+  overflow-y: hidden;
   width: 100%;
   max-width: 100%;
   margin: 0;

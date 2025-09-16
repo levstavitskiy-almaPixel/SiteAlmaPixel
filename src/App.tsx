@@ -174,7 +174,7 @@ export default function App() {
 
   return (
     <div className={dark ? "dark" : ""}>
-        <div className="min-h-screen w-screen text-white overflow-x-hidden font-chiron-body" style={{ backgroundColor: '#edc77b', border: '3px solid red' }}>
+        <div className="min-h-screen w-screen text-white overflow-x-hidden overflow-y-hidden font-chiron-body" style={{ backgroundColor: '#edc77b', border: '3px solid red' }}>
           {/* Header */}
           <header 
             className="sticky top-0 z-40 backdrop-blur-sm relative cloud-animation"
