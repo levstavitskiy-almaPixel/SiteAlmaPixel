@@ -38,17 +38,11 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-  const [currentCenterIndex, setCurrentCenterIndex] = useState(0);
 
-  // Инициализация: центрируем первую карточку при загрузке
+  // Инициализация: начинаем с начала
   useEffect(() => {
     if (scrollRef.current) {
-      const containerWidth = scrollRef.current.clientWidth;
-      const cardWidth = 350;
-      
-      // Центрируем первую карточку
-      const initialScroll = cardWidth / 2 - containerWidth / 2;
-      scrollRef.current.scrollLeft = Math.max(0, initialScroll);
+      scrollRef.current.scrollLeft = 0;
     }
   }, []);
 
@@ -92,44 +86,6 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
     setIsDragging(false);
     if (scrollRef.current) {
       scrollRef.current.style.cursor = 'grab';
-      
-      // Притягивание к ближайшей карточке в центре экрана
-      const containerWidth = scrollRef.current.clientWidth;
-      const cardWidth = 350; // ширина карточки
-      const scrollPosition = scrollRef.current.scrollLeft;
-      const maxScroll = scrollRef.current.scrollWidth - containerWidth;
-      
-      // Вычисляем позицию центра экрана относительно скролла
-      const centerPosition = scrollPosition + containerWidth / 2;
-      
-      // Вычисляем индекс ближайшей карточки к центру
-      const nearestIndex = Math.round(centerPosition / cardWidth);
-      
-      // Вычисляем позицию скролла, чтобы карточка была в центре
-      const targetScroll = nearestIndex * cardWidth - containerWidth / 2 + cardWidth / 2;
-      
-      // Ограничиваем скролл, но позволяем центрировать первую и последнюю карточки
-      let finalScroll = targetScroll;
-      
-      // Если пытаемся центрировать первую карточку
-      if (nearestIndex === 0) {
-        finalScroll = Math.max(0, cardWidth / 2 - containerWidth / 2);
-      }
-      // Если пытаемся центрировать последнюю карточку
-      else if (nearestIndex >= Math.floor(scrollRef.current.scrollWidth / cardWidth) - 1) {
-        finalScroll = Math.min(maxScroll, targetScroll);
-      }
-      // Для остальных карточек используем стандартную логику
-      else {
-        finalScroll = Math.max(0, Math.min(targetScroll, maxScroll));
-      }
-      
-      scrollRef.current.scrollTo({
-        left: finalScroll,
-        behavior: 'smooth'
-      });
-      
-      setCurrentCenterIndex(nearestIndex);
     }
   };
 
@@ -159,50 +115,10 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
 
   const handleTouchEnd = () => {
     setIsDragging(false);
-    // Используем ту же логику притягивания, что и для мыши
-    if (scrollRef.current) {
-      const containerWidth = scrollRef.current.clientWidth;
-      const cardWidth = 350;
-      const scrollPosition = scrollRef.current.scrollLeft;
-      const maxScroll = scrollRef.current.scrollWidth - containerWidth;
-      
-      const centerPosition = scrollPosition + containerWidth / 2;
-      const nearestIndex = Math.round(centerPosition / cardWidth);
-      const targetScroll = nearestIndex * cardWidth - containerWidth / 2 + cardWidth / 2;
-      
-      let finalScroll = targetScroll;
-      
-      if (nearestIndex === 0) {
-        finalScroll = Math.max(0, cardWidth / 2 - containerWidth / 2);
-      } else if (nearestIndex >= Math.floor(scrollRef.current.scrollWidth / cardWidth) - 1) {
-        finalScroll = Math.min(maxScroll, targetScroll);
-      } else {
-        finalScroll = Math.max(0, Math.min(targetScroll, maxScroll));
-      }
-      
-      scrollRef.current.scrollTo({
-        left: finalScroll,
-        behavior: 'smooth'
-      });
-      
-      setCurrentCenterIndex(nearestIndex);
-    }
   };
 
   return (
     <div className="relative h-[600px] w-full max-w-full overflow-hidden">
-      {/* Центральная область с текстом */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-        <div className="bg-black/80 backdrop-blur-sm rounded-lg p-4 border-2 border-white/20">
-          <h3 className="text-white text-lg font-bold font-chiron-heading text-center">
-            Карточка {currentCenterIndex + 1} в центре
-          </h3>
-          <p className="text-gray-300 text-sm text-center mt-2">
-            Скроллите для просмотра других игр
-          </p>
-        </div>
-      </div>
-      
       <div
         ref={scrollRef}
         className="flex gap-16 overflow-x-auto overflow-y-hidden pb-4 games-scroll cursor-grab select-none h-full w-full"
@@ -236,7 +152,7 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
     onClick={() => alert(`Карточка игры ${index + 1}\nРазмер контейнера: 350x600px\nФайл: ${game.src}\nАнимация: hover scale-105`)}
   >
     <div className="relative rounded-lg bg-gray-800 overflow-hidden w-full h-full" style={{ border: '2px solid blue' }}>
-      <div className="w-full h-[540px] flex items-center justify-center overflow-hidden" style={{ border: '2px solid green' }}>
+      <div className="w-full h-[480px] flex items-center justify-center overflow-hidden" style={{ border: '2px solid green' }}>
         <img 
           src={game.src} 
           alt={game.alt} 
@@ -252,7 +168,7 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
       </div>
     </div>
     {/* Постоянно видимые названия и статус */}
-    <div className="h-[60px] bg-gray-800/50 px-4 py-2 flex flex-col justify-center" style={{ border: '2px solid yellow' }}>
+    <div className="h-[120px] bg-gray-800/50 px-4 py-2 flex flex-col justify-center" style={{ border: '2px solid yellow' }}>
       <h3 className="text-sm font-semibold text-white font-chiron-heading truncate">{game.title}</h3>
       <p className="text-xs text-gray-300 truncate">{game.subtitle}</p>
       <span className="text-xs font-medium text-amber-400 mt-1">{game.status}</span>
