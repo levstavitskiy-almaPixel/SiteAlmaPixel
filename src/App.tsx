@@ -98,7 +98,7 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
     className="group cursor-pointer w-full h-full"
   >
     <div className="relative rounded-lg bg-gray-800 overflow-hidden w-full h-full">
-      <div className="w-full h-full flex items-center justify-center overflow-hidden">
+      <div className="w-full h-4/5 flex items-center justify-center overflow-hidden">
         <img 
           src={game.src} 
           alt={game.alt} 
@@ -112,6 +112,12 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
         <h3 className="text-xs font-semibold font-chiron-heading">{game.title}</h3>
         <p className="text-xs opacity-90">{game.subtitle}</p>
       </div>
+    </div>
+    {/* Постоянно видимые названия и статус */}
+    <div className="h-1/5 bg-gray-800/50 p-2 flex flex-col justify-center">
+      <h3 className="text-sm font-semibold text-white font-chiron-heading truncate">{game.title}</h3>
+      <p className="text-xs text-gray-300 truncate">{game.subtitle}</p>
+      <span className="text-xs font-medium text-amber-400 mt-1">{game.status}</span>
     </div>
   </motion.div>
 );
