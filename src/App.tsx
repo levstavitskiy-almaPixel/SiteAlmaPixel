@@ -30,7 +30,7 @@ const generateGames = (locale: Locale) => {
 };
 
 const Container = ({ children }: { children: React.ReactNode }) => (
-  <div className="w-full overflow-x-hidden">{children}</div>
+  <div className="w-full overflow-x-hidden" style={{ border: '2px solid orange' }}>{children}</div>
 );
 
 const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
@@ -273,7 +273,8 @@ export default function App() {
           backgroundColor: '#f5f4f0',
           backgroundImage: 'url(/BgSite.png)',
           backgroundRepeat: 'repeat',
-          backgroundSize: 'auto'
+          backgroundSize: 'auto',
+          border: '5px solid purple'
         }}>
           {/* Летающие птицы */}
           <FlyingBirds />
@@ -347,7 +348,7 @@ export default function App() {
 
 
         {/* Games */}
-        <section id="games" className="py-10 pb-20 bg-gray-900/50 overflow-y-hidden md:overflow-y-hidden" style={{ height: 'auto', minHeight: '700px' }}>
+        <section id="games" className="py-10 pb-20 bg-gray-900/50 overflow-y-hidden md:overflow-y-hidden" style={{ height: 'auto', minHeight: '700px', border: '3px solid red' }}>
           <Container>
             <div className="text-center mb-8 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.games.title}</h2>
@@ -369,7 +370,7 @@ export default function App() {
         </div>
 
         {/* About */}
-        <section id="about" className="py-20 md:overflow-y-hidden">
+        <section id="about" className="py-20 md:overflow-y-hidden" style={{ border: '3px solid blue' }}>
           <Container>
             <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
                <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -410,7 +411,7 @@ export default function App() {
         </div>
 
         {/* Music */}
-        <section id="music" className="py-20 md:overflow-y-hidden">
+        <section id="music" className="py-20 md:overflow-y-hidden" style={{ border: '3px solid green' }}>
           <Container>
             <div className="text-center mb-12 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.music.title}</h2>
@@ -478,7 +479,7 @@ export default function App() {
         </div>
 
         {/* Contact */}
-        <section id="contact" className="py-20 bg-gray-900/50 md:overflow-y-hidden">
+        <section id="contact" className="py-20 bg-gray-900/50 md:overflow-y-hidden" style={{ border: '3px solid yellow' }}>
           <Container>
             <div className="max-w-sm mx-auto text-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 font-chiron-heading">{locale.sections.contact.title}</h2>
