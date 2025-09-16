@@ -348,7 +348,7 @@ export default function App() {
         {/* Games */}
         <section 
           id="games" 
-          className="py-10 pb-20 bg-gray-900/50 overflow-y-hidden md:overflow-y-hidden relative" 
+          className="py-10 pb-20 bg-gray-900/50 overflow-y-hidden md:overflow-y-hidden relative px-4 sm:px-6 md:px-8 lg:px-16 xl:px-20" 
           style={{ height: 'auto', minHeight: '700px' }}
         >
           <SectionBirds sectionHeight={700} sectionOffset={0} birdCount={3} />
@@ -375,7 +375,7 @@ export default function App() {
         {/* About */}
         <section 
           id="about" 
-          className="py-20 md:overflow-y-hidden relative"
+          className="py-20 md:overflow-y-hidden relative px-4 sm:px-6 md:px-8 lg:px-16 xl:px-20"
         >
           <SectionBirds sectionHeight={600} sectionOffset={700} birdCount={4} />
           <Container>
@@ -420,7 +420,7 @@ export default function App() {
         {/* Music */}
         <section 
           id="music" 
-          className="py-20 md:overflow-y-hidden relative"
+          className="py-20 md:overflow-y-hidden relative px-4 sm:px-6 md:px-8 lg:px-16 xl:px-20"
         >
           <SectionBirds sectionHeight={800} sectionOffset={1300} birdCount={2} />
           <Container>
@@ -492,7 +492,7 @@ export default function App() {
         {/* Contact */}
         <section 
           id="contact" 
-          className="py-20 bg-gray-900/50 md:overflow-y-hidden relative"
+          className="py-20 bg-gray-900/50 md:overflow-y-hidden relative px-4 sm:px-6 md:px-8 lg:px-16 xl:px-20"
         >
           <SectionBirds sectionHeight={600} sectionOffset={2100} birdCount={3} />
           <Container>
