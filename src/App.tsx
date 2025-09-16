@@ -31,7 +31,7 @@ const generateGames = (locale: Locale) => {
 };
 
 const Container = ({ children }: { children: React.ReactNode }) => (
-  <div className="w-full overflow-x-hidden px-4 sm:px-6 md:px-8 lg:px-[200px] xl:px-[200px]">{children}</div>
+  <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8">{children}</div>
 );
 
 const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
@@ -239,7 +239,6 @@ const IconMoon = (props: React.SVGProps<SVGSVGElement>) => (
 export default function App() {
   const [dark, setDark] = useState(true);
   const [currentTrack, setCurrentTrack] = useState<string | null>(null);
-  const [debugModal, setDebugModal] = useState<{isOpen: boolean, content: string}>({isOpen: false, content: ''});
   const [language, setLanguage] = useState<'en' | 'ru'>('en'); // English by default
   
   const locale = locales[language];
@@ -258,20 +257,6 @@ export default function App() {
     window.open(mailtoLink, '_blank');
   };
 
-  const showDebugInfo = (elementName: string, elementData: any) => {
-    const debugContent = `
-ЭЛЕМЕНТ: ${elementName}
-ВРЕМЯ: ${new Date().toLocaleString()}
-ДАННЫЕ: ${JSON.stringify(elementData, null, 2)}
-
-ИНСТРУКЦИЯ:
-1. Скопируйте всю информацию выше
-2. Вставьте в чат с описанием проблемы
-3. Укажите, что именно нужно исправить
-    `.trim();
-    
-    setDebugModal({isOpen: true, content: debugContent});
-  };
 
   const handlePlayTrack = (trackId: string) => {
     setCurrentTrack(trackId);
@@ -287,8 +272,7 @@ export default function App() {
           backgroundColor: '#f5f4f0',
           backgroundImage: 'url(/BgSite.png)',
           backgroundRepeat: 'repeat',
-          backgroundSize: 'auto',
-          border: '5px solid purple'
+          backgroundSize: 'auto'
         }}>
           {/* Летающие птицы */}
           <FlyingBirds />
@@ -365,14 +349,7 @@ export default function App() {
         <section 
           id="games" 
           className="py-10 pb-20 bg-gray-900/50 overflow-y-hidden md:overflow-y-hidden relative" 
-          style={{ height: 'auto', minHeight: '700px', border: '3px solid red' }}
-          onClick={() => showDebugInfo('Games Section', {
-            sectionId: 'games',
-            className: 'py-10 pb-20 bg-gray-900/50 overflow-y-hidden md:overflow-y-hidden',
-            style: { height: 'auto', minHeight: '700px' },
-            containerMargins: 'px-4 sm:px-6 md:px-8 lg:px-[200px] xl:px-[200px]',
-            description: 'Секция с играми и горизонтальным скроллом'
-          })}
+          style={{ height: 'auto', minHeight: '700px' }}
         >
           <SectionBirds sectionHeight={700} sectionOffset={0} birdCount={3} />
           <Container>
@@ -398,14 +375,7 @@ export default function App() {
         {/* About */}
         <section 
           id="about" 
-          className="py-20 md:overflow-y-hidden relative" 
-          style={{ border: '3px solid blue' }}
-          onClick={() => showDebugInfo('About Section', {
-            sectionId: 'about',
-            className: 'py-20 md:overflow-y-hidden',
-            containerMargins: 'px-4 sm:px-6 md:px-8 lg:px-[200px] xl:px-[200px]',
-            description: 'Секция "О нас" с текстом и анимацией совы'
-          })}
+          className="py-20 md:overflow-y-hidden relative"
         >
           <SectionBirds sectionHeight={600} sectionOffset={700} birdCount={4} />
           <Container>
@@ -450,14 +420,7 @@ export default function App() {
         {/* Music */}
         <section 
           id="music" 
-          className="py-20 md:overflow-y-hidden relative" 
-          style={{ border: '3px solid green' }}
-          onClick={() => showDebugInfo('Music Section', {
-            sectionId: 'music',
-            className: 'py-20 md:overflow-y-hidden',
-            containerMargins: 'px-4 sm:px-6 md:px-8 lg:px-[200px] xl:px-[200px]',
-            description: 'Секция с музыкой в 4 колонки и анимациями музыкантов'
-          })}
+          className="py-20 md:overflow-y-hidden relative"
         >
           <SectionBirds sectionHeight={800} sectionOffset={1300} birdCount={2} />
           <Container>
@@ -529,14 +492,7 @@ export default function App() {
         {/* Contact */}
         <section 
           id="contact" 
-          className="py-20 bg-gray-900/50 md:overflow-y-hidden relative" 
-          style={{ border: '3px solid yellow' }}
-          onClick={() => showDebugInfo('Contact Section', {
-            sectionId: 'contact',
-            className: 'py-20 bg-gray-900/50 md:overflow-y-hidden',
-            containerMargins: 'px-4 sm:px-6 md:px-8 lg:px-[200px] xl:px-[200px]',
-            description: 'Секция контактов с формой и анимацией яблока'
-          })}
+          className="py-20 bg-gray-900/50 md:overflow-y-hidden relative"
         >
           <SectionBirds sectionHeight={600} sectionOffset={2100} birdCount={3} />
           <Container>
@@ -680,43 +636,6 @@ export default function App() {
             </div>
           </Container>
         </footer>
-        
-        {/* Debug Modal */}
-        {debugModal.isOpen && (
-          <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-lg p-6 max-w-2xl w-full max-h-[80vh] overflow-auto">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold text-gray-800">Информация об элементе</h3>
-                <button
-                  onClick={() => setDebugModal({isOpen: false, content: ''})}
-                  className="text-gray-500 hover:text-gray-700 text-2xl"
-                >
-                  ×
-                </button>
-              </div>
-              <pre className="bg-gray-100 p-4 rounded text-sm text-gray-800 whitespace-pre-wrap overflow-auto">
-                {debugModal.content}
-              </pre>
-              <div className="mt-4 flex gap-2">
-                <button
-                  onClick={() => {
-                    navigator.clipboard.writeText(debugModal.content);
-                    alert('Информация скопирована в буфер обмена!');
-                  }}
-                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                >
-                  Копировать
-                </button>
-                <button
-                  onClick={() => setDebugModal({isOpen: false, content: ''})}
-                  className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-                >
-                  Закрыть
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
