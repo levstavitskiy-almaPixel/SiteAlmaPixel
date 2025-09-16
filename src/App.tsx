@@ -44,7 +44,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (scrollRef.current) {
       const containerWidth = scrollRef.current.clientWidth;
-      const cardWidth = 400;
+      const cardWidth = 350;
       
       // Центрируем первую карточку
       const initialScroll = cardWidth / 2 - containerWidth / 2;
@@ -74,7 +74,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
       
       // Притягивание к ближайшей карточке в центре экрана
       const containerWidth = scrollRef.current.clientWidth;
-      const cardWidth = 400; // ширина карточки
+      const cardWidth = 350; // ширина карточки
       const scrollPosition = scrollRef.current.scrollLeft;
       const maxScroll = scrollRef.current.scrollWidth - containerWidth;
       
@@ -147,8 +147,8 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
     transition={{ duration: 0.6, delay: index * 0.1 }}
     className="group cursor-pointer w-full h-full"
     style={{ border: '2px solid red' }}
-    title={`Карточка игры ${index + 1}\nРазмер контейнера: 400x500px\nФайл: ${game.src}\nАнимация: hover scale-105`}
-    onClick={() => alert(`Карточка игры ${index + 1}\nРазмер контейнера: 400x500px\nФайл: ${game.src}\nАнимация: hover scale-105`)}
+    title={`Карточка игры ${index + 1}\nРазмер контейнера: 350x550px\nФайл: ${game.src}\nАнимация: hover scale-105`}
+    onClick={() => alert(`Карточка игры ${index + 1}\nРазмер контейнера: 350x550px\nФайл: ${game.src}\nАнимация: hover scale-105`)}
   >
     <div className="relative rounded-lg bg-gray-800 overflow-hidden w-full h-full" style={{ border: '2px solid blue' }}>
       <div className="w-full h-4/5 flex items-center justify-center overflow-hidden" style={{ border: '2px solid green' }}>
@@ -308,7 +308,7 @@ export default function App() {
             
             <HorizontalScroll>
               {generateGames(locale).map((game, i) => (
-                <div key={i} className="flex-shrink-0 w-[400px] h-[500px] mx-1">
+                <div key={i} className="flex-shrink-0 w-[350px] h-[550px] mx-1">
                   <GameCard game={game} index={i} />
                 </div>
               ))}
