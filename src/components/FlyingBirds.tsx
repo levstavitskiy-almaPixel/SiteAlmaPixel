@@ -5,8 +5,8 @@ import MovieClipAnimation from './MovieClipAnimation';
 // Интерфейс для птицы
 interface Bird {
   id: number;
-  startX: string;
-  endX: string;
+  startX: number | string;
+  endX: number | string;
   startY: number;
   curveY: number[];
   delay: number;
@@ -22,7 +22,7 @@ const FlyingBirds: React.FC = () => {
   const birds: Bird[] = [
     {
       id: 1,
-      startX: '-250px', // За левой границей сайта
+      startX: -250, // За левой границей сайта (числовое значение)
       endX: 'calc(100vw + 250px)', // За правой границей сайта
       startY: 100,
       curveY: [100, 50, 120, 30, 100, 80, 100], // Более волнообразная кривая
@@ -34,7 +34,7 @@ const FlyingBirds: React.FC = () => {
     {
       id: 2,
       startX: 'calc(100vw + 250px)', // За правой границей сайта
-      endX: '-250px', // За левой границей сайта
+      endX: -250, // За левой границей сайта (числовое значение)
       startY: 200,
       curveY: [200, 150, 180, 220, 160, 200, 200], // Более волнообразная кривая
       delay: 3,
@@ -44,7 +44,7 @@ const FlyingBirds: React.FC = () => {
     },
     {
       id: 3,
-      startX: '-250px', // За левой границей сайта
+      startX: -250, // За левой границей сайта (числовое значение)
       endX: 'calc(100vw + 250px)', // За правой границей сайта
       startY: 300,
       curveY: [300, 250, 280, 320, 260, 300, 300], // Более волнообразная кривая
@@ -56,7 +56,7 @@ const FlyingBirds: React.FC = () => {
     {
       id: 4,
       startX: 'calc(100vw + 250px)', // За правой границей сайта
-      endX: '-250px', // За левой границей сайта
+      endX: -250, // За левой границей сайта (числовое значение)
       startY: 150,
       curveY: [150, 100, 130, 170, 110, 150, 150], // Более волнообразная кривая
       delay: 9,
@@ -66,7 +66,7 @@ const FlyingBirds: React.FC = () => {
     },
     {
       id: 5,
-      startX: '-250px', // За левой границей сайта
+      startX: -250, // За левой границей сайта (числовое значение)
       endX: 'calc(100vw + 250px)', // За правой границей сайта
       startY: 400,
       curveY: [400, 350, 380, 420, 360, 400, 400], // Более волнообразная кривая
