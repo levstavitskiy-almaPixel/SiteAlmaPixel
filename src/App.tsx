@@ -38,6 +38,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const lastMoveTime = useRef(0);
 
   // Инициализация: начинаем с начала
   useEffect(() => {
@@ -91,9 +92,14 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging || !scrollRef.current) return;
+    
+    const now = Date.now();
+    if (now - lastMoveTime.current < 16) return; // Throttle to ~60fps
+    lastMoveTime.current = now;
+    
     e.preventDefault();
     const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
+    const walk = (x - startX) * 1.2; // Еще более плавный скролл
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
@@ -107,9 +113,14 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isDragging || !scrollRef.current) return;
+    
+    const now = Date.now();
+    if (now - lastMoveTime.current < 16) return; // Throttle to ~60fps
+    lastMoveTime.current = now;
+    
     e.preventDefault();
     const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
+    const walk = (x - startX) * 1.2; // Еще более плавный скролл
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
@@ -118,10 +129,10 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <div className="relative h-[600px] w-full max-w-full overflow-hidden">
+    <div className="relative h-[600px] w-full max-w-full">
       <div
         ref={scrollRef}
-        className="flex gap-16 overflow-x-auto overflow-y-hidden pb-4 games-scroll cursor-grab select-none h-full w-full"
+        className="flex gap-4 overflow-x-auto overflow-y-hidden pb-4 games-scroll cursor-grab select-none h-full w-full"
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseLeave}
         onMouseUp={handleMouseUp}
@@ -129,7 +140,12 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', gap: '0px' }}
+        style={{ 
+          scrollbarWidth: 'none', 
+          msOverflowStyle: 'none',
+          scrollBehavior: 'auto', // Отключаем CSS smooth scroll для ручного управления
+          WebkitOverflowScrolling: 'touch'
+        }}
       >
         {children}
       </div>

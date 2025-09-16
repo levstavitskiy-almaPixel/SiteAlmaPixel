@@ -55,10 +55,26 @@
 .games-scroll {
   scrollbar-width: none;  /* Firefox */
   -ms-overflow-style: none;  /* IE and Edge */
+  scroll-behavior: auto; /* Отключаем CSS smooth scroll для ручного управления */
+  -webkit-overflow-scrolling: touch; /* Плавный скролл на iOS */
+  will-change: scroll-position; /* Оптимизация для GPU */
 }
 
 .games-scroll::-webkit-scrollbar {
   height: 0px;  /* Chrome, Safari and Opera - делаем высоту 0 вместо display: none */
+}
+
+/* Плавный скролл для всех элементов */
+* {
+  scroll-behavior: auto;
+}
+
+/* Оптимизация производительности для скролла */
+.games-scroll {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 /* Скрытие скроллбара для других элементов */
