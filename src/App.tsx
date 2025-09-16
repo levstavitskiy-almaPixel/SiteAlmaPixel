@@ -69,7 +69,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <div className="relative h-16 w-full max-w-full overflow-hidden">
+    <div className="relative h-[500px] w-full max-w-full overflow-hidden">
             <div
               ref={scrollRef}
               className="flex gap-32 overflow-x-auto pb-4 games-scroll cursor-grab select-none h-full w-full"
@@ -94,21 +94,21 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.6, delay: index * 0.1 }}
-    className="group cursor-pointer w-full"
+    className="group cursor-pointer w-full h-full"
   >
-    <div className="relative rounded-lg bg-gray-800 overflow-hidden mx-0.5 border-2 border-dashed border-yellow-400 p-1" 
+    <div className="relative rounded-lg bg-gray-800 overflow-hidden border-2 border-dashed border-yellow-400 p-2 w-full h-full" 
          title={`Карточка игры ${index + 1}`}
-         onClick={() => alert(`Карточка игры ${index + 1}\nРазмер контейнера: 2-3px ширина\nВысота: 1-1.5px\nФайл: ${game.src}\nАнимация: hover scale-105`)}>
-      <div className="w-full h-1 sm:h-1.5 flex items-center justify-center overflow-visible p-0.5 sm:p-1">
+         onClick={() => alert(`Карточка игры ${index + 1}\nРазмер контейнера: 400x450px\nФайл: ${game.src}\nАнимация: hover scale-105`)}>
+      <div className="w-full h-full flex items-center justify-center overflow-hidden">
         <img 
           src={game.src} 
           alt={game.alt} 
-          className="max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-105" 
+          className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105" 
           draggable={false}
           onDragStart={(e) => e.preventDefault()}
         />
       </div>
-      <div className="absolute -top-4 left-0 text-xs bg-yellow-400 text-black px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="absolute -top-6 left-0 text-xs bg-yellow-400 text-black px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
         Карточка {index + 1}
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
@@ -250,7 +250,7 @@ export default function App() {
 
 
         {/* Games */}
-        <section id="games" className="py-10 pb-20 bg-gray-900/50" style={{ height: '600px', border: '2px solid red' }}>
+        <section id="games" className="py-10 pb-20 bg-gray-900/50" style={{ height: '700px', border: '2px solid red' }}>
           <Container style={{ border: '2px solid blue' }}>
             <div className="text-center mb-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16" style={{ border: '2px solid green' }}>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.games.title}</h2>
@@ -261,16 +261,16 @@ export default function App() {
             
             <div className="relative border-2 border-dashed border-yellow-400 p-2 group cursor-pointer" 
                  title="Горизонтальный скролл игр"
-                 onClick={() => alert('Горизонтальный скролл игр\nВысота: 64px (h-16)\nШирина: 100% контейнера\nКарточек: 8 штук\nРазмер карточки: 2-3px')}>
+                 onClick={() => alert('Горизонтальный скролл игр\nВысота: 500px\nШирина: 100% контейнера\nКарточек: 8 штук\nРазмер карточки: 400x450px')}>
               <HorizontalScroll style={{ border: '2px solid yellow' }}>
-                {generateGames(locale).map((game, i) => (
-                  <div key={i} className="flex-shrink-0 w-2 sm:w-3 mx-0.5">
-                    <GameCard game={game} index={i} />
-                  </div>
-                ))}
+              {generateGames(locale).map((game, i) => (
+                <div key={i} className="flex-shrink-0 w-[400px] h-[450px] mx-2">
+                  <GameCard game={game} index={i} />
+                </div>
+              ))}
               </HorizontalScroll>
               <div className="absolute -top-6 left-0 text-xs bg-yellow-400 text-black px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                Скролл: 64px высота
+                Скролл: 500px высота
               </div>
             </div>
           </Container>
