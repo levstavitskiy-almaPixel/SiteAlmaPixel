@@ -9,6 +9,7 @@ interface MovieClipAnimationProps {
   className?: string;
   offsetY?: number;
   scale?: number;
+  animation?: string; // Добавляем поддержку выбора анимации
 }
 
 interface MovieClipData {
@@ -44,7 +45,8 @@ const MovieClipAnimation: React.FC<MovieClipAnimationProps> = ({
   loop = true,
   className = "",
   offsetY = 0,
-  scale = 1
+  scale = 1,
+  animation = "idle" // По умолчанию "idle", но можно указать "fly"
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [image, setImage] = useState<HTMLImageElement | null>(null);
@@ -83,18 +85,29 @@ const MovieClipAnimation: React.FC<MovieClipAnimationProps> = ({
     if (!ctx) return;
 
     // Находим анимацию по имени
-    const animation = Object.values(mcData.mc)[0]; // Берем первую анимацию
-    if (!animation) {
+    const animationData = Object.values(mcData.mc)[0]; // Берем первую анимацию
+    if (!animationData) {
       console.error('Animation not found in MovieClip data:', mcData);
       return;
     }
     
-    console.log('Found animation:', animation);
+    console.log('Found animation data:', animationData);
+    
+    // Находим нужную анимацию по имени
+    const animationLabel = animationData.labels.find(label => label.name === animation);
+    if (!animationLabel) {
+      console.error(`Animation "${animation}" not found. Available animations:`, animationData.labels.map(l => l.name));
+      return;
+    }
+    
+    console.log(`Playing animation "${animation}":`, animationLabel);
 
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
       
-      const frame = animation.frames[currentFrame];
+      // Вычисляем индекс кадра с учетом выбранной анимации
+      const frameIndex = animationLabel.frame - 1 + currentFrame; // -1 потому что индексы с 0
+      const frame = animationData.frames[frameIndex];
       if (!frame) return;
 
       const resource = mcData.res[frame.res];
@@ -125,15 +138,16 @@ const MovieClipAnimation: React.FC<MovieClipAnimationProps> = ({
     const interval = setInterval(() => {
       setCurrentFrame(prev => {
         const next = prev + 1;
-        if (next >= animation.frames.length) {
-          return loop ? 0 : animation.frames.length - 1;
+        const maxFrames = animationLabel.end - animationLabel.frame + 1; // Количество кадров в анимации
+        if (next >= maxFrames) {
+          return loop ? 0 : maxFrames - 1;
         }
         return next;
       });
-    }, 1000 / animation.frameRate);
+    }, 1000 / animationData.frameRate);
 
     return () => clearInterval(interval);
-  }, [isLoaded, image, mcData, currentFrame, width, height, loop]);
+  }, [isLoaded, image, mcData, currentFrame, width, height, loop, animation]);
 
   if (!isLoaded) {
     return (
