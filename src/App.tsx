@@ -31,7 +31,7 @@ const generateGames = (locale: Locale) => {
 };
 
   const Container = ({ children }: { children: React.ReactNode }) => (
-    <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8">{children}</div>
+    <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-[200px] xl:px-[200px]">{children}</div>
   );
 
 const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
