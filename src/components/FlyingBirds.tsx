@@ -86,10 +86,11 @@ const FlyingBirds: React.FC = () => {
       {birds.map((bird) => (
         <motion.div
           key={bird.id}
-          className="absolute w-16 h-16"
+          className="absolute w-20 h-20"
           style={{
             left: bird.startX,
-            top: bird.startY
+            top: bird.startY,
+            overflow: 'visible'
           }}
           animate={{
             x: [bird.startX, bird.endX],
@@ -107,12 +108,12 @@ const FlyingBirds: React.FC = () => {
             }
           }}
         >
-          <div className="w-full h-full flex items-center justify-center">
+          <div className="w-full h-full flex items-center justify-center" style={{ overflow: 'visible' }}>
             <MovieClipAnimation
               mcPath="/animations/bird_ske_mc.json"
               texturePath="/animations/bird_ske_tex.png"
-              width={48}
-              height={48}
+              width={64}
+              height={64}
               loop={true}
               animation="fly"
               className="w-full h-full"
