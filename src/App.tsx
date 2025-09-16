@@ -72,12 +72,12 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
     <div className="relative h-[500px] w-full max-w-full overflow-hidden">
             <div
               ref={scrollRef}
-              className="flex gap-32 overflow-x-auto overflow-y-hidden pb-4 games-scroll cursor-grab select-none h-full w-full"
+              className="flex gap-16 overflow-x-auto overflow-y-hidden pb-4 games-scroll cursor-grab select-none h-full w-full"
               onMouseDown={handleMouseDown}
               onMouseLeave={handleMouseLeave}
               onMouseUp={handleMouseUp}
               onMouseMove={handleMouseMove}
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', gap: '128px' }}
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', gap: '64px' }}
             >
     {children}
   </div>
@@ -111,13 +111,6 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
         <h3 className="text-xs font-semibold font-chiron-heading">{game.title}</h3>
         <p className="text-xs opacity-90">{game.subtitle}</p>
       </div>
-    </div>
-    <div className="mt-0.5 px-0.5">
-      <h3 className="text-xs font-semibold text-white font-chiron-heading">{game.title}</h3>
-      <p className="text-xs text-gray-300">{game.subtitle}</p>
-      <span className="inline-block mt-0.5 text-xs font-medium text-amber-400">
-        {game.status}
-      </span>
     </div>
   </motion.div>
 );
@@ -250,7 +243,7 @@ export default function App() {
             
             <HorizontalScroll>
               {generateGames(locale).map((game, i) => (
-                <div key={i} className="flex-shrink-0 w-[400px] h-[450px] mx-2">
+                <div key={i} className="flex-shrink-0 w-[400px] h-[450px] mx-1">
                   <GameCard game={game} index={i} />
                 </div>
               ))}
