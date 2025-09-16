@@ -39,6 +39,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   const [startX, setStartX] = useState(0);
   const [startTime, setStartTime] = useState(0);
   const [currentCenterIndex, setCurrentCenterIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   // Инициализация: центрируем первую карточку при загрузке
   useEffect(() => {
@@ -46,6 +47,16 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
       // С отступами первая карточка уже будет в центре при скролле в начало
       scrollRef.current.scrollLeft = 0;
     }
+    
+    // Определяем размер экрана
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   // Обновляем позицию при изменении размера окна
@@ -184,33 +195,41 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
         {children}
       </div>
       
-      {/* Кнопки навигации */}
+      {/* Кнопки навигации в центре экрана */}
       <button 
         onClick={() => changeCard('left')}
-        className={`absolute left-4 top-1/2 transform -translate-y-1/2 z-20 p-3 rounded-full transition-all duration-200 ${
+        className={`absolute top-1/2 transform -translate-y-1/2 z-20 p-4 rounded-full transition-all duration-200 shadow-lg ${
           currentCenterIndex === 0 
             ? 'bg-black/30 text-gray-500 cursor-not-allowed' 
-            : 'bg-black/70 hover:bg-black/90 text-white hover:scale-110'
+            : 'bg-black/80 hover:bg-black/95 text-white hover:scale-110 border-2 border-white/20'
         }`}
+        style={{ 
+          left: 'calc(50% - 220px)', // Позиция слева от центра карточки
+          display: isMobile ? 'none' : 'block' // Скрываем на мобильных
+        }}
         aria-label="Предыдущая карточка"
         disabled={currentCenterIndex === 0}
       >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
           <polyline points="15,18 9,12 15,6"></polyline>
         </svg>
       </button>
       
       <button 
         onClick={() => changeCard('right')}
-        className={`absolute right-4 top-1/2 transform -translate-y-1/2 z-20 p-3 rounded-full transition-all duration-200 ${
+        className={`absolute top-1/2 transform -translate-y-1/2 z-20 p-4 rounded-full transition-all duration-200 shadow-lg ${
           currentCenterIndex === 7 
             ? 'bg-black/30 text-gray-500 cursor-not-allowed' 
-            : 'bg-black/70 hover:bg-black/90 text-white hover:scale-110'
+            : 'bg-black/80 hover:bg-black/95 text-white hover:scale-110 border-2 border-white/20'
         }`}
+        style={{ 
+          right: 'calc(50% - 220px)', // Позиция справа от центра карточки
+          display: isMobile ? 'none' : 'block' // Скрываем на мобильных
+        }}
         aria-label="Следующая карточка"
         disabled={currentCenterIndex === 7}
       >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
           <polyline points="9,18 15,12 9,6"></polyline>
         </svg>
       </button>
