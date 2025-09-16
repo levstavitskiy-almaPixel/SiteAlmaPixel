@@ -174,7 +174,7 @@ export default function App() {
 
   return (
     <div className={dark ? "dark" : ""}>
-        <div className="min-h-screen w-screen text-white overflow-x-hidden overflow-y-hidden font-chiron-body" style={{ backgroundColor: '#edc77b', border: '3px solid red' }}>
+        <div className="min-h-screen w-screen text-white overflow-x-hidden font-chiron-body" style={{ backgroundColor: '#edc77b', border: '3px solid red' }}>
           {/* Header */}
           <header 
             className="sticky top-0 z-40 backdrop-blur-sm relative cloud-animation"
@@ -250,7 +250,7 @@ export default function App() {
 
 
         {/* Games */}
-        <section id="games" className="py-10 pb-20 bg-gray-900/50" style={{ height: '700px', border: '2px solid red' }}>
+        <section id="games" className="py-10 pb-20 bg-gray-900/50 overflow-y-hidden" style={{ height: '700px', border: '2px solid red' }}>
           <Container style={{ border: '2px solid blue' }}>
             <div className="text-center mb-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16" style={{ border: '2px solid green' }}>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.games.title}</h2>
@@ -282,7 +282,7 @@ export default function App() {
         </div>
 
         {/* About */}
-        <section id="about" className="py-20" style={{ border: '2px solid orange' }}>
+        <section id="about" className="py-20 overflow-y-hidden" style={{ border: '2px solid orange' }}>
           <Container style={{ border: '2px solid purple' }}>
             <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16" style={{ border: '2px solid cyan' }}>
                <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -328,7 +328,7 @@ export default function App() {
         </div>
 
         {/* Music */}
-        <section id="music" className="py-20" style={{ border: '2px solid magenta' }}>
+        <section id="music" className="py-20 overflow-y-hidden" style={{ border: '2px solid magenta' }}>
           <Container style={{ border: '2px solid lime' }}>
             <div className="text-center mb-12 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.music.title}</h2>
@@ -413,7 +413,7 @@ export default function App() {
         </div>
 
         {/* Contact */}
-        <section id="contact" className="py-20 bg-gray-900/50" style={{ border: '2px solid pink' }}>
+        <section id="contact" className="py-20 bg-gray-900/50 overflow-y-hidden" style={{ border: '2px solid pink' }}>
           <Container style={{ border: '2px solid brown' }}>
             <div className="max-w-sm mx-auto text-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 font-chiron-heading">{locale.sections.contact.title}</h2>
