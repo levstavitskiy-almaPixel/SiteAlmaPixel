@@ -96,9 +96,7 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
     transition={{ duration: 0.6, delay: index * 0.1 }}
     className="group cursor-pointer w-full h-full"
   >
-    <div className="relative rounded-lg bg-gray-800 overflow-hidden border-2 border-dashed border-yellow-400 p-2 w-full h-full" 
-         title={`Карточка игры ${index + 1}`}
-         onClick={() => alert(`Карточка игры ${index + 1}\nРазмер контейнера: 400x450px\nФайл: ${game.src}\nАнимация: hover scale-105`)}>
+    <div className="relative rounded-lg bg-gray-800 overflow-hidden w-full h-full">
       <div className="w-full h-full flex items-center justify-center overflow-hidden">
         <img 
           src={game.src} 
@@ -107,9 +105,6 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
           draggable={false}
           onDragStart={(e) => e.preventDefault()}
         />
-      </div>
-      <div className="absolute -top-6 left-0 text-xs bg-yellow-400 text-black px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-        Карточка {index + 1}
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
       <div className="absolute bottom-1 left-1 right-1 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
@@ -174,7 +169,7 @@ export default function App() {
 
   return (
     <div className={dark ? "dark" : ""}>
-        <div className="min-h-screen w-screen text-white overflow-x-hidden font-chiron-body" style={{ backgroundColor: '#edc77b', border: '3px solid red' }}>
+        <div className="min-h-screen w-screen text-white overflow-x-hidden font-chiron-body" style={{ backgroundColor: '#edc77b' }}>
           {/* Header */}
           <header 
             className="sticky top-0 z-40 backdrop-blur-sm relative cloud-animation"
@@ -182,16 +177,13 @@ export default function App() {
               backgroundImage: 'url(/Cloud.png)',
               backgroundSize: 'auto 100%',
               backgroundRepeat: 'repeat-x',
-              backgroundPosition: '0% 20%',
-              border: '2px solid white'
+              backgroundPosition: '0% 20%'
             }}
           >
-            <Container style={{ border: '2px solid gray' }}>
+            <Container>
             <div className="flex h-[300px] items-start justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative z-10 pt-2">
               <div className="flex items-center gap-3">
-                <div className="w-[90px] h-[90px] flex items-center justify-center border-2 border-dashed border-yellow-400 relative group cursor-pointer" 
-                     title="Логотип Alma Pixel - 90x90px"
-                     onClick={() => alert('Логотип Alma Pixel\nРазмер: 90x90px\nФайл: AlmaPixelLogo.png')}>
+                <div className="w-[90px] h-[90px] flex items-center justify-center">
                   <img 
                     src="/AlmaPixelLogo.png?v=2" 
                     alt="Alma Pixel Logo" 
@@ -199,9 +191,6 @@ export default function App() {
                     draggable={false}
                     onDragStart={(e) => e.preventDefault()}
                   />
-                  <div className="absolute -top-6 left-0 text-xs bg-yellow-400 text-black px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                    90x90px
-                  </div>
                 </div>
                 <div>
                   <h1 className="text-xl font-bold text-white font-chiron-heading">{locale.brand}</h1>
@@ -222,12 +211,11 @@ export default function App() {
                   {/* EN Button */}
                   <button
                     onClick={() => setLanguage('en')}
-                    className={`w-[100px] h-[100px] text-xl font-bold font-chiron-heading transition-colors flex items-center justify-center border-2 border-dashed border-yellow-400 rounded-lg ${
+                    className={`w-[100px] h-[100px] text-xl font-bold font-chiron-heading transition-colors flex items-center justify-center rounded-lg ${
                       language === 'en' 
                         ? 'text-white bg-gray-700' 
                         : 'text-gray-300 hover:text-white hover:bg-gray-600'
                     }`}
-                    title="English"
                   >
                     EN
                   </button>
@@ -235,12 +223,11 @@ export default function App() {
                   {/* RU Button */}
                   <button
                     onClick={() => setLanguage('ru')}
-                    className={`w-[100px] h-[100px] text-xl font-bold font-chiron-heading transition-colors flex items-center justify-center border-2 border-dashed border-yellow-400 rounded-lg ${
+                    className={`w-[100px] h-[100px] text-xl font-bold font-chiron-heading transition-colors flex items-center justify-center rounded-lg ${
                       language === 'ru' 
                         ? 'text-white bg-gray-700' 
                         : 'text-gray-300 hover:text-white hover:bg-gray-600'
                     }`}
-                    title="Русский"
                   >
                     РУ
                   </button>
@@ -252,29 +239,22 @@ export default function App() {
 
 
         {/* Games */}
-        <section id="games" className="py-10 pb-20 bg-gray-900/50 overflow-y-hidden md:overflow-y-hidden" style={{ height: 'auto', minHeight: '700px', border: '2px solid red' }}>
-          <Container style={{ border: '2px solid blue' }}>
-            <div className="text-center mb-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16" style={{ border: '2px solid green' }}>
+        <section id="games" className="py-10 pb-20 bg-gray-900/50 overflow-y-hidden md:overflow-y-hidden" style={{ height: 'auto', minHeight: '700px' }}>
+          <Container>
+            <div className="text-center mb-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.games.title}</h2>
               <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
                 {locale.sections.games.description}
               </p>
             </div>
             
-            <div className="relative border-2 border-dashed border-yellow-400 p-2 group cursor-pointer" 
-                 title="Горизонтальный скролл игр"
-                 onClick={() => alert('Горизонтальный скролл игр\nВысота: 500px\nШирина: 100% контейнера\nКарточек: 8 штук\nРазмер карточки: 400x450px')}>
-              <HorizontalScroll style={{ border: '2px solid yellow' }}>
+            <HorizontalScroll>
               {generateGames(locale).map((game, i) => (
                 <div key={i} className="flex-shrink-0 w-[400px] h-[450px] mx-2">
                   <GameCard game={game} index={i} />
                 </div>
               ))}
-              </HorizontalScroll>
-              <div className="absolute -top-6 left-0 text-xs bg-yellow-400 text-black px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                Скролл: 500px высота
-              </div>
-            </div>
+            </HorizontalScroll>
           </Container>
         </section>
 
@@ -284,9 +264,9 @@ export default function App() {
         </div>
 
         {/* About */}
-        <section id="about" className="py-20 md:overflow-y-hidden" style={{ border: '2px solid orange' }}>
-          <Container style={{ border: '2px solid purple' }}>
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16" style={{ border: '2px solid cyan' }}>
+        <section id="about" className="py-20 md:overflow-y-hidden">
+          <Container>
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
                <div className="grid lg:grid-cols-2 gap-12 items-center">
                  {/* Текст */}
                  <div className="text-center lg:text-left">
@@ -303,9 +283,7 @@ export default function App() {
                  
                  {/* Анимация совы */}
                  <div className="flex justify-center lg:justify-end">
-                   <div className="relative border-2 border-dashed border-yellow-400 p-4 group cursor-pointer w-[240px] h-[240px] flex items-center justify-center" 
-                        title="Анимация совы"
-                        onClick={() => alert('Анимация совы\nРазмер: 200x200px\nФайлы: owl_mc.json, owl_tex.png\nЦикл: включен')}>
+                   <div className="w-[240px] h-[240px] flex items-center justify-center">
                      <MovieClipAnimation 
                        mcPath="/animations/owl_mc.json"
                        texturePath="/animations/owl_tex.png"
@@ -314,9 +292,6 @@ export default function App() {
                        loop={true}
                        className="rounded-lg"
                      />
-                     <div className="absolute -top-6 left-0 text-xs bg-yellow-400 text-black px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                       200x200px
-                     </div>
                    </div>
                  </div>
                </div>
@@ -330,8 +305,8 @@ export default function App() {
         </div>
 
         {/* Music */}
-        <section id="music" className="py-20 md:overflow-y-hidden" style={{ border: '2px solid magenta' }}>
-          <Container style={{ border: '2px solid lime' }}>
+        <section id="music" className="py-20 md:overflow-y-hidden">
+          <Container>
             <div className="text-center mb-12 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.music.title}</h2>
               <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
@@ -354,57 +329,36 @@ export default function App() {
             {/* Анимации музыкантов */}
             <div className="mt-16 flex flex-row items-center justify-center -space-x-4 sm:-space-x-8">
               {/* Анимация лягушки-барда */}
-              <div className="relative border-2 border-dashed border-yellow-400 p-1 group cursor-pointer" 
-                   title="Анимация лягушки-барда"
-                   onClick={() => alert('Анимация лягушки-барда\nРазмер: 200x200px (мобил), 400x400px (десктоп)\nФайлы: frog_bard_mc.json, frog_bard_tex.png\nСмещение Y: 35px')}>
-                <MovieClipAnimation 
-                  mcPath="/animations/frog_bard_mc.json"
-                  texturePath="/animations/frog_bard_tex.png"
-                  width={200}
-                  height={200}
-                  loop={true}
-                  className="rounded-lg sm:w-[400px] sm:h-[400px]"
-                  offsetY={35}
-                />
-                <div className="absolute -top-6 left-0 text-xs bg-yellow-400 text-black px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                  200x200px
-                </div>
-              </div>
+              <MovieClipAnimation 
+                mcPath="/animations/frog_bard_mc.json"
+                texturePath="/animations/frog_bard_tex.png"
+                width={200}
+                height={200}
+                loop={true}
+                className="rounded-lg sm:w-[400px] sm:h-[400px]"
+                offsetY={35}
+              />
               
               {/* Анимация musicKar */}
-              <div className="relative border-2 border-dashed border-yellow-400 p-1 group cursor-pointer" 
-                   title="Анимация musicKar"
-                   onClick={() => alert('Анимация musicKar\nРазмер: 200x200px (мобил), 400x400px (десктоп)\nФайлы: musicKar_mc.json, musicKar_tex.png\nСмещение Y: 20px')}>
-                <MovieClipAnimation 
-                  mcPath="/animations/musicKar_mc.json"
-                  texturePath="/animations/musicKar_tex.png"
-                  width={200}
-                  height={200}
-                  loop={true}
-                  className="rounded-lg sm:w-[400px] sm:h-[400px]"
-                  offsetY={20}
-                />
-                <div className="absolute -top-6 left-0 text-xs bg-yellow-400 text-black px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                  200x200px
-                </div>
-              </div>
+              <MovieClipAnimation 
+                mcPath="/animations/musicKar_mc.json"
+                texturePath="/animations/musicKar_tex.png"
+                width={200}
+                height={200}
+                loop={true}
+                className="rounded-lg sm:w-[400px] sm:h-[400px]"
+                offsetY={20}
+              />
               
               {/* Анимация лисы-музыканта */}
-              <div className="relative border-2 border-dashed border-yellow-400 p-1 group cursor-pointer" 
-                   title="Анимация лисы-музыканта"
-                   onClick={() => alert('Анимация лисы-музыканта\nРазмер: 200x200px (мобил), 400x400px (десктоп)\nФайлы: fox_Music_mc.json, fox_Music_tex.png\nСмещение Y: нет')}>
-                <MovieClipAnimation 
-                  mcPath="/animations/fox_Music_mc.json"
-                  texturePath="/animations/fox_Music_tex.png"
-                  width={200}
-                  height={200}
-                  loop={true}
-                  className="rounded-lg sm:w-[400px] sm:h-[400px]"
-                />
-                <div className="absolute -top-6 left-0 text-xs bg-yellow-400 text-black px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                  200x200px
-                </div>
-              </div>
+              <MovieClipAnimation 
+                mcPath="/animations/fox_Music_mc.json"
+                texturePath="/animations/fox_Music_tex.png"
+                width={200}
+                height={200}
+                loop={true}
+                className="rounded-lg sm:w-[400px] sm:h-[400px]"
+              />
             </div>
           </Container>
         </section>
@@ -415,8 +369,8 @@ export default function App() {
         </div>
 
         {/* Contact */}
-        <section id="contact" className="py-20 bg-gray-900/50 md:overflow-y-hidden" style={{ border: '2px solid pink' }}>
-          <Container style={{ border: '2px solid brown' }}>
+        <section id="contact" className="py-20 bg-gray-900/50 md:overflow-y-hidden">
+          <Container>
             <div className="max-w-sm mx-auto text-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 font-chiron-heading">{locale.sections.contact.title}</h2>
               <p className="text-base sm:text-lg text-gray-300 mb-8">
@@ -430,9 +384,7 @@ export default function App() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="mb-8"
               >
-                <div className="relative mx-auto border-2 border-dashed border-yellow-400 p-2 group cursor-pointer" 
-                     title="Анимация Yabloko"
-                     onClick={() => alert('Анимация Yabloko\nРазмер: 400x400px\nФайлы: Yabloko_mc.json, Yabloko_tex.png\nЦикл: включен')}>
+                <div className="relative mx-auto">
                   <MovieClipAnimation 
                     mcPath="/animations/Yabloko_mc.json"
                     texturePath="/animations/Yabloko_tex.png"
@@ -441,9 +393,6 @@ export default function App() {
                     loop={true}
                     className="rounded-lg"
                   />
-                  <div className="absolute -top-6 left-0 text-xs bg-yellow-400 text-black px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                    400x400px
-                  </div>
                 </div>
               </motion.div>
               
@@ -545,9 +494,7 @@ export default function App() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="mb-6"
               >
-                <div className="relative mx-auto border-2 border-dashed border-yellow-400 p-2 group cursor-pointer" 
-                     title="Изображение BangerDonats"
-                     onClick={() => alert('Изображение BangerDonats\nРазмер: 600x600px\nФайл: BangerDonats.png\nСтиль: rounded-lg shadow-2xl')}>
+                <div className="relative mx-auto">
                   <img 
                     src="/BangerDonats.png?v=1" 
                     alt="Banger Donats - Alma Pixel" 
@@ -556,9 +503,6 @@ export default function App() {
                     draggable={false}
                     onDragStart={(e) => e.preventDefault()}
                   />
-                  <div className="absolute -top-6 left-0 text-xs bg-yellow-400 text-black px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                    600x600px
-                  </div>
                 </div>
               </motion.div>
               
