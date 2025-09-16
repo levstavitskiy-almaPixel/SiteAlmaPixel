@@ -35,12 +35,20 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 
 const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [currentCenterIndex, setCurrentCenterIndex] = useState(0);
 
   // Инициализация: центрируем первую карточку при загрузке
   useEffect(() => {
     if (scrollRef.current) {
-      // С отступами первая карточка уже будет в центре при скролле в начало
-      scrollRef.current.scrollLeft = 0;
+      const containerWidth = scrollRef.current.clientWidth;
+      const cardWidth = 350;
+      
+      // Центрируем первую карточку
+      const initialScroll = cardWidth / 2 - containerWidth / 2;
+      scrollRef.current.scrollLeft = Math.max(0, initialScroll);
     }
   }, []);
 
@@ -53,13 +61,11 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
         const scrollPosition = scrollRef.current.scrollLeft;
         
         // Пересчитываем позицию для текущей карточки
-        const paddingLeft = containerWidth / 2 - cardWidth / 2; // Отступ для центрирования
         const centerPosition = scrollPosition + containerWidth / 2;
-        const nearestIndex = Math.round((centerPosition - paddingLeft) / cardWidth);
-        const targetScroll = nearestIndex * cardWidth;
+        const nearestIndex = Math.round(centerPosition / cardWidth);
+        const targetScroll = nearestIndex * cardWidth - containerWidth / 2 + cardWidth / 2;
         
-        // Позволяем центрировать любую карточку
-        scrollRef.current.scrollLeft = targetScroll;
+        scrollRef.current.scrollLeft = Math.max(0, targetScroll);
       }
     };
 
@@ -67,22 +73,147 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+    scrollRef.current.style.cursor = 'grabbing';
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+    if (scrollRef.current) {
+      scrollRef.current.style.cursor = 'grab';
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    if (scrollRef.current) {
+      scrollRef.current.style.cursor = 'grab';
+      
+      // Притягивание к ближайшей карточке в центре экрана
+      const containerWidth = scrollRef.current.clientWidth;
+      const cardWidth = 350; // ширина карточки
+      const scrollPosition = scrollRef.current.scrollLeft;
+      const maxScroll = scrollRef.current.scrollWidth - containerWidth;
+      
+      // Вычисляем позицию центра экрана относительно скролла
+      const centerPosition = scrollPosition + containerWidth / 2;
+      
+      // Вычисляем индекс ближайшей карточки к центру
+      const nearestIndex = Math.round(centerPosition / cardWidth);
+      
+      // Вычисляем позицию скролла, чтобы карточка была в центре
+      const targetScroll = nearestIndex * cardWidth - containerWidth / 2 + cardWidth / 2;
+      
+      // Ограничиваем скролл, но позволяем центрировать первую и последнюю карточки
+      let finalScroll = targetScroll;
+      
+      // Если пытаемся центрировать первую карточку
+      if (nearestIndex === 0) {
+        finalScroll = Math.max(0, cardWidth / 2 - containerWidth / 2);
+      }
+      // Если пытаемся центрировать последнюю карточку
+      else if (nearestIndex >= Math.floor(scrollRef.current.scrollWidth / cardWidth) - 1) {
+        finalScroll = Math.min(maxScroll, targetScroll);
+      }
+      // Для остальных карточек используем стандартную логику
+      else {
+        finalScroll = Math.max(0, Math.min(targetScroll, maxScroll));
+      }
+      
+      scrollRef.current.scrollTo({
+        left: finalScroll,
+        behavior: 'smooth'
+      });
+      
+      setCurrentCenterIndex(nearestIndex);
+    }
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  // Touch события для мобильных устройств
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!scrollRef.current) return;
+    setIsDragging(true);
+    setStartX(e.touches[0].pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    // Используем ту же логику притягивания, что и для мыши
+    if (scrollRef.current) {
+      const containerWidth = scrollRef.current.clientWidth;
+      const cardWidth = 350;
+      const scrollPosition = scrollRef.current.scrollLeft;
+      const maxScroll = scrollRef.current.scrollWidth - containerWidth;
+      
+      const centerPosition = scrollPosition + containerWidth / 2;
+      const nearestIndex = Math.round(centerPosition / cardWidth);
+      const targetScroll = nearestIndex * cardWidth - containerWidth / 2 + cardWidth / 2;
+      
+      let finalScroll = targetScroll;
+      
+      if (nearestIndex === 0) {
+        finalScroll = Math.max(0, cardWidth / 2 - containerWidth / 2);
+      } else if (nearestIndex >= Math.floor(scrollRef.current.scrollWidth / cardWidth) - 1) {
+        finalScroll = Math.min(maxScroll, targetScroll);
+      } else {
+        finalScroll = Math.max(0, Math.min(targetScroll, maxScroll));
+      }
+      
+      scrollRef.current.scrollTo({
+        left: finalScroll,
+        behavior: 'smooth'
+      });
+      
+      setCurrentCenterIndex(nearestIndex);
+    }
+  };
 
   return (
     <div className="relative h-[600px] w-full max-w-full overflow-hidden">
+      {/* Центральная область с текстом */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+        <div className="bg-black/80 backdrop-blur-sm rounded-lg p-4 border-2 border-white/20">
+          <h3 className="text-white text-lg font-bold font-chiron-heading text-center">
+            Карточка {currentCenterIndex + 1} в центре
+          </h3>
+          <p className="text-gray-300 text-sm text-center mt-2">
+            Скроллите для просмотра других игр
+          </p>
+        </div>
+      </div>
       
       <div
         ref={scrollRef}
-        className="flex gap-16 overflow-x-auto overflow-y-hidden pb-4 games-scroll select-none h-full w-full"
-        style={{ 
-          scrollbarWidth: 'none', 
-          msOverflowStyle: 'none', 
-          gap: '0px',
-          paddingLeft: 'calc(50vw - 175px)', // Отступ для центрирования первой карточки
-          paddingRight: 'calc(50vw - 175px)',  // Отступ для центрирования последней карточки
-          scrollBehavior: 'smooth',
-          WebkitOverflowScrolling: 'touch' // Плавный скролл на iOS
-        }}
+        className="flex gap-16 overflow-x-auto overflow-y-hidden pb-4 games-scroll cursor-grab select-none h-full w-full"
+        onMouseDown={handleMouseDown}
+        onMouseLeave={handleMouseLeave}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', gap: '0px' }}
       >
         {children}
       </div>
@@ -100,13 +231,16 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.6, delay: index * 0.1 }}
     className="group cursor-pointer w-full h-full"
+    style={{ border: '2px solid red' }}
+    title={`Карточка игры ${index + 1}\nРазмер контейнера: 350x600px\nФайл: ${game.src}\nАнимация: hover scale-105`}
+    onClick={() => alert(`Карточка игры ${index + 1}\nРазмер контейнера: 350x600px\nФайл: ${game.src}\nАнимация: hover scale-105`)}
   >
-    <div className="relative rounded-lg bg-gray-800 overflow-hidden w-full h-full">
-      <div className="w-full h-[540px] flex items-center justify-center overflow-hidden">
+    <div className="relative rounded-lg bg-gray-800 overflow-hidden w-full h-full" style={{ border: '2px solid blue' }}>
+      <div className="w-full h-[540px] flex items-center justify-center overflow-hidden" style={{ border: '2px solid green' }}>
         <img 
           src={game.src} 
           alt={game.alt} 
-          className="w-full h-full object-contain transition-transform duration-700 ease-out group-hover:scale-105" 
+          className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105" 
           draggable={false}
           onDragStart={(e) => e.preventDefault()}
         />
@@ -118,7 +252,7 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
       </div>
     </div>
     {/* Постоянно видимые названия и статус */}
-      <div className="h-[60px] bg-gray-800/50 px-4 py-2 flex flex-col justify-center">
+    <div className="h-[60px] bg-gray-800/50 px-4 py-2 flex flex-col justify-center" style={{ border: '2px solid yellow' }}>
       <h3 className="text-sm font-semibold text-white font-chiron-heading truncate">{game.title}</h3>
       <p className="text-xs text-gray-300 truncate">{game.subtitle}</p>
       <span className="text-xs font-medium text-amber-400 mt-1">{game.status}</span>
@@ -323,7 +457,8 @@ export default function App() {
               </p>
             </div>
             
-            <HorizontalScroll>
+            {/* Music cards in 4 rows */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
               {locale.musicTracks.map((track) => (
                 <MusicCard
                   key={track.id}
@@ -333,7 +468,7 @@ export default function App() {
                   onStop={handleStopTrack}
                 />
               ))}
-            </HorizontalScroll>
+            </div>
             
             {/* Анимации музыкантов */}
             <div className="mt-16 flex flex-row items-center justify-center -space-x-48 sm:-space-x-56">
