@@ -30,9 +30,9 @@ const generateGames = (locale: Locale) => {
   return games;
 };
 
-const Container = ({ children }: { children: React.ReactNode }) => (
-  <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8">{children}</div>
-);
+  const Container = ({ children }: { children: React.ReactNode }) => (
+    <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8">{children}</div>
+  );
 
 const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -163,7 +163,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <div className="relative h-[200px] w-full max-w-full">
+    <div className="relative h-[600px] w-full max-w-full">
       <div
         ref={scrollRef}
         className="flex gap-4 overflow-x-auto overflow-y-hidden pb-4 games-scroll cursor-grab select-none h-full w-full"
@@ -199,7 +199,7 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
     className="group cursor-pointer w-full h-full"
   >
     <div className="relative rounded-lg bg-gray-800 overflow-hidden w-full h-full">
-      <div className="w-full h-[80px] flex items-center justify-center overflow-hidden">
+      <div className="w-full h-[480px] flex items-center justify-center overflow-hidden">
         <img 
           src={game.src} 
           alt={game.alt} 
@@ -348,7 +348,7 @@ export default function App() {
         {/* Games */}
         <section 
           id="games" 
-          className="py-10 pb-20 bg-gray-900/50 overflow-y-hidden md:overflow-y-hidden relative px-4 sm:px-6 md:px-8 lg:px-16 xl:px-20" 
+          className="py-10 pb-20 bg-gray-900/50 overflow-y-hidden md:overflow-y-hidden relative" 
           style={{ height: 'auto', minHeight: '700px' }}
         >
           <SectionBirds sectionHeight={700} sectionOffset={0} birdCount={3} />
@@ -357,15 +357,13 @@ export default function App() {
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.games.title}</h2>
             </div>
             
-            <div className="px-4 sm:px-6 md:px-8 lg:px-[200px] xl:px-[200px]">
-              <HorizontalScroll>
-                {generateGames(locale).map((game, i) => (
-                  <div key={i} className="flex-shrink-0 w-[350px] h-[200px] mx-1">
-                    <GameCard game={game} index={i} />
-                  </div>
-                ))}
-              </HorizontalScroll>
-            </div>
+            <HorizontalScroll>
+              {generateGames(locale).map((game, i) => (
+                <div key={i} className="flex-shrink-0 w-[350px] h-[600px] mx-1">
+                  <GameCard game={game} index={i} />
+                </div>
+              ))}
+            </HorizontalScroll>
           </Container>
         </section>
 
@@ -377,7 +375,7 @@ export default function App() {
         {/* About */}
         <section 
           id="about" 
-          className="py-20 md:overflow-y-hidden relative px-4 sm:px-6 md:px-8 lg:px-16 xl:px-20"
+          className="py-20 md:overflow-y-hidden relative" 
         >
           <SectionBirds sectionHeight={600} sectionOffset={700} birdCount={4} />
           <Container>
@@ -422,7 +420,7 @@ export default function App() {
         {/* Music */}
         <section 
           id="music" 
-          className="py-20 md:overflow-y-hidden relative px-4 sm:px-6 md:px-8 lg:px-16 xl:px-20"
+          className="py-20 md:overflow-y-hidden relative" 
         >
           <SectionBirds sectionHeight={800} sectionOffset={1300} birdCount={2} />
           <Container>
@@ -494,7 +492,7 @@ export default function App() {
         {/* Contact */}
         <section 
           id="contact" 
-          className="py-20 bg-gray-900/50 md:overflow-y-hidden relative px-4 sm:px-6 md:px-8 lg:px-16 xl:px-20"
+          className="py-20 bg-gray-900/50 md:overflow-y-hidden relative" 
         >
           <SectionBirds sectionHeight={600} sectionOffset={2100} birdCount={3} />
           <Container>
