@@ -114,8 +114,8 @@ const FlyingBirds: React.FC = () => {
             <MovieClipAnimation
               mcPath="/animations/bird_ske_mc.json"
               texturePath="/animations/bird_ske_tex.png"
-              width={36}
-              height={36}
+              width={100}
+              height={100}
               loop={true}
               animation="fly"
               className="w-full h-full"
