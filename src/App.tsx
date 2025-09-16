@@ -60,17 +60,22 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
     if (scrollRef.current) {
       scrollRef.current.style.cursor = 'grab';
       
-      // Притягивание к ближайшей карточке
+      // Притягивание к ближайшей карточке в центре экрана
       const containerWidth = scrollRef.current.clientWidth;
       const cardWidth = 400; // ширина карточки
       const scrollPosition = scrollRef.current.scrollLeft;
       
+      // Вычисляем позицию центра экрана относительно скролла
+      const centerPosition = scrollPosition + containerWidth / 2;
+      
       // Вычисляем индекс ближайшей карточки к центру
-      const nearestIndex = Math.round(scrollPosition / cardWidth);
-      const targetScroll = nearestIndex * cardWidth;
+      const nearestIndex = Math.round(centerPosition / cardWidth);
+      
+      // Вычисляем позицию скролла, чтобы карточка была в центре
+      const targetScroll = nearestIndex * cardWidth - containerWidth / 2 + cardWidth / 2;
       
       scrollRef.current.scrollTo({
-        left: targetScroll,
+        left: Math.max(0, targetScroll),
         behavior: 'smooth'
       });
       
