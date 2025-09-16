@@ -136,7 +136,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <div className="relative h-[600px] w-full max-w-full px-0 lg:px-[300px]">
+    <div className="relative h-[600px] w-full max-w-full px-0 lg:px-[200px]">
       <div
         ref={scrollRef}
         className="flex gap-4 overflow-x-auto overflow-y-hidden pb-4 games-scroll cursor-grab select-none h-full w-full"
