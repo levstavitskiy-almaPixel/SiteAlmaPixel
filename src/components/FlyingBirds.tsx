@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import MovieClipAnimation from './MovieClipAnimation';
 
 interface FlyingBirdProps {
   id: number;
@@ -20,11 +21,6 @@ const FlyingBird: React.FC<FlyingBirdProps> = ({
 }) => {
   const isLeftToRight = direction === 'left-to-right';
   
-  // Создаем кривую траекторию для птицы
-  const path = isLeftToRight 
-    ? `M -100 ${startY} Q 50 ${startY - curveHeight} 100 ${startY} T 300 ${startY + curveHeight} T 500 ${startY} T 700 ${startY - curveHeight} T 900 ${startY} T 1100 ${startY + curveHeight}`
-    : `M 1100 ${startY} Q 900 ${startY + curveHeight} 700 ${startY} T 500 ${startY - curveHeight} T 300 ${startY} T 100 ${startY + curveHeight} T -100 ${startY}`;
-
   return (
     <motion.div
       className="absolute pointer-events-none z-10"
@@ -51,69 +47,20 @@ const FlyingBird: React.FC<FlyingBirdProps> = ({
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="w-8 h-8"
+        className="w-12 h-12"
+        style={{
+          transform: isLeftToRight ? 'scaleX(1)' : 'scaleX(-1)' // Отражаем птицу для полета влево
+        }}
       >
-        {/* SVG птица с анимацией крыльев */}
-        <svg
-          viewBox="0 0 24 24"
-          className="w-full h-full text-blue-300 opacity-80"
-          style={{
-            filter: 'drop-shadow(0 0 4px rgba(147, 197, 253, 0.5))'
-          }}
-        >
-          {/* Тело птицы */}
-          <ellipse
-            cx="12"
-            cy="12"
-            rx="6"
-            ry="4"
-            fill="currentColor"
-          />
-          
-          {/* Крылья с анимацией */}
-          <motion.g
-            animate={{
-              rotate: [-10, 10, -10]
-            }}
-            transition={{
-              duration: 0.3,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          >
-            <path
-              d="M 6 12 Q 2 8 6 6 Q 10 8 6 12"
-              fill="currentColor"
-              opacity="0.8"
-            />
-            <path
-              d="M 18 12 Q 22 8 18 6 Q 14 8 18 12"
-              fill="currentColor"
-              opacity="0.8"
-            />
-          </motion.g>
-          
-          {/* Хвост */}
-          <path
-            d="M 2 12 Q 4 14 6 12"
-            fill="currentColor"
-            opacity="0.7"
-          />
-          
-          {/* Глаз */}
-          <circle
-            cx="14"
-            cy="10"
-            r="1"
-            fill="white"
-          />
-          <circle
-            cx="14"
-            cy="10"
-            r="0.5"
-            fill="black"
-          />
-        </svg>
+        <MovieClipAnimation
+          mcPath="/animations/bird_ske_mc.json"
+          texturePath="/animations/bird_ske_tex.png"
+          width={48}
+          height={48}
+          loop={true}
+          animation="fly"
+          className="w-full h-full"
+        />
       </motion.div>
     </motion.div>
   );
