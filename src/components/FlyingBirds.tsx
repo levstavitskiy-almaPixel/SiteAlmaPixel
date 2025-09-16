@@ -2,136 +2,60 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import MovieClipAnimation from './MovieClipAnimation';
 
-interface FlyingBirdProps {
-  id: number;
-  delay: number;
-  duration: number;
-  direction: 'left-to-right' | 'right-to-left';
-  startY: number;
-  curveHeight: number;
-}
-
-const FlyingBird: React.FC<FlyingBirdProps> = ({ 
-  id, 
-  delay, 
-  duration, 
-  direction, 
-  startY, 
-  curveHeight 
-}) => {
-  const isLeftToRight = direction === 'left-to-right';
-  
+const FlyingBird: React.FC = () => {
   return (
     <motion.div
-      className="absolute pointer-events-none z-10"
+      className="absolute pointer-events-none z-20"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.5, delay }}
+      transition={{ duration: 0.5 }}
     >
-      {/* Отладочная траектория - в пределах экрана */}
-      <svg 
-        className="absolute inset-0 w-full h-full"
-        style={{ 
-          width: '100vw', 
-          height: '100vh'
-        }}
-      >
-        <path
-          d={`M ${isLeftToRight ? '0' : '100vw'} ${startY} Q ${isLeftToRight ? '25vw' : '75vw'} ${startY - curveHeight} ${isLeftToRight ? '50vw' : '50vw'} ${startY} T ${isLeftToRight ? '75vw' : '25vw'} ${startY + curveHeight} T ${isLeftToRight ? '100vw' : '0'} ${startY}`}
-          stroke="red"
-          strokeWidth="2"
-          fill="none"
-          opacity="0.5"
-        />
-        {/* Точки траектории */}
-        <circle cx={isLeftToRight ? '0' : '100vw'} cy={startY} r="3" fill="green" />
-        <circle cx={isLeftToRight ? '25vw' : '75vw'} cy={startY - curveHeight} r="3" fill="blue" />
-        <circle cx="50vw" cy={startY} r="3" fill="blue" />
-        <circle cx={isLeftToRight ? '75vw' : '25vw'} cy={startY + curveHeight} r="3" fill="blue" />
-        <circle cx={isLeftToRight ? '100vw' : '0'} cy={startY} r="3" fill="red" />
-      </svg>
-      
-      {/* Отладочная информация */}
-      <div 
-        className="absolute text-xs bg-yellow-400 text-black px-1 rounded"
-        style={{ 
-          top: startY - 20, 
-          left: isLeftToRight ? '10px' : 'calc(100vw - 100px)' 
-        }}
-      >
-        Птица {id}: {direction} Y:{startY} H:{curveHeight}
-      </div>
-      
+      {/* Простая траектория в About секции */}
       <motion.div
         animate={{
-          x: isLeftToRight ? ['0vw', '100vw'] : ['100vw', '0vw'],
-          y: [
-            startY,
-            startY - curveHeight,
-            startY,
-            startY + curveHeight,
-            startY
-          ]
+          x: ['0vw', '100vw'],
+          y: [200, 150, 200, 180, 200]
         }}
         transition={{
-          duration,
-          delay,
+          duration: 8,
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="w-12 h-12 border-2 border-yellow-400"
+        className="w-16 h-16 border-4 border-red-500 bg-yellow-300"
         style={{
-          transform: isLeftToRight ? 'scaleX(1)' : 'scaleX(-1)'
+          position: 'absolute',
+          top: '200px',
+          left: '0px'
         }}
       >
         <MovieClipAnimation
           mcPath="/animations/bird_ske_mc.json"
           texturePath="/animations/bird_ske_tex.png"
-          width={48}
-          height={48}
+          width={64}
+          height={64}
           loop={true}
           animation="fly"
           className="w-full h-full"
         />
       </motion.div>
+      
+      {/* Отладочная информация */}
+      <div className="absolute top-4 left-4 bg-red-500 text-white p-2 rounded z-50">
+        <div>Птица в About секции</div>
+        <div>Размер: 64x64px</div>
+        <div>Анимация: fly</div>
+        <div>Z-index: 20</div>
+      </div>
     </motion.div>
   );
 };
 
 const FlyingBirds: React.FC = () => {
-  // Генерируем случайные параметры для 3-6 птиц
-  const birdCount = Math.floor(Math.random() * 4) + 3; // 3-6 птиц
-  const birds = Array.from({ length: birdCount }, (_, i) => ({
-    id: i,
-    delay: Math.random() * 5, // Задержка 0-5 секунд
-    duration: 15 + Math.random() * 10, // Длительность 15-25 секунд
-    direction: Math.random() > 0.5 ? 'left-to-right' : 'right-to-left' as const,
-    startY: 50 + Math.random() * 200, // Высота 50-250px
-    curveHeight: 30 + Math.random() * 40 // Высота кривой 30-70px
-  }));
-
-  console.log('FlyingBirds generated:', birds);
+  console.log('FlyingBirds component rendered');
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden">
-      {/* Отладочная информация */}
-      <div className="absolute top-4 left-4 bg-red-500 text-white p-2 rounded z-50">
-        <div>Птиц: {birdCount}</div>
-        <div>Z-index: 10</div>
-        <div>Position: fixed</div>
-      </div>
-      
-      {birds.map((bird) => (
-        <FlyingBird
-          key={bird.id}
-          id={bird.id}
-          delay={bird.delay}
-          duration={bird.duration}
-          direction={bird.direction}
-          startY={bird.startY}
-          curveHeight={bird.curveHeight}
-        />
-      ))}
+      <FlyingBird />
     </div>
   );
 };
