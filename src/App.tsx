@@ -35,7 +35,6 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 
 const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [currentCenterIndex, setCurrentCenterIndex] = useState(0);
 
   // Инициализация: центрируем первую карточку при загрузке
   useEffect(() => {
@@ -68,52 +67,13 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Функция для смены карточки
-  const changeCard = (direction: 'left' | 'right') => {
-    if (!scrollRef.current) return;
-    
-    const cardWidth = 350;
-    
-    // Используем текущий индекс из состояния
-    const currentIndex = currentCenterIndex;
-    
-    // Вычисляем новый индекс
-    let newIndex = currentIndex;
-    if (direction === 'left') {
-      newIndex = Math.max(0, currentIndex - 1);
-    } else {
-      newIndex = Math.min(7, currentIndex + 1); // 8 карточек всего (0-7)
-    }
-    
-    // Вычисляем новую позицию скролла
-    const targetScroll = newIndex * cardWidth;
-    
-    // Плавно переходим к новой карточке
-    scrollRef.current.scrollTo({
-      left: targetScroll,
-      behavior: 'smooth'
-    });
-    
-    setCurrentCenterIndex(newIndex);
-  };
-
-  // Блокируем touch скролл на мобильных устройствах
-  const preventTouchScroll = (e: React.TouchEvent) => {
-    e.preventDefault();
-  };
-
-  const preventWheelScroll = (e: React.WheelEvent) => {
-    e.preventDefault();
-  };
 
   return (
     <div className="relative h-[600px] w-full max-w-full overflow-hidden">
       
       <div
         ref={scrollRef}
-        className="flex gap-16 overflow-x-auto overflow-y-hidden pb-4 games-scroll select-none h-full w-full no-scroll"
-        onTouchMove={preventTouchScroll}
-        onWheel={preventWheelScroll}
+        className="flex gap-16 overflow-x-auto overflow-y-hidden pb-4 games-scroll select-none h-full w-full"
         style={{ 
           scrollbarWidth: 'none', 
           msOverflowStyle: 'none', 
@@ -121,52 +81,11 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
           paddingLeft: 'calc(50vw - 175px)', // Отступ для центрирования первой карточки
           paddingRight: 'calc(50vw - 175px)',  // Отступ для центрирования последней карточки
           scrollBehavior: 'smooth',
-          touchAction: 'none', // Блокируем touch скролл
-          overscrollBehavior: 'none', // Блокируем overscroll
-          WebkitOverflowScrolling: 'auto' // Отключаем плавный скролл на iOS
+          WebkitOverflowScrolling: 'touch' // Плавный скролл на iOS
         }}
       >
         {children}
       </div>
-      
-      {/* Кнопки навигации в центре экрана */}
-      <button 
-        onClick={() => changeCard('left')}
-        className={`absolute top-1/2 transform -translate-y-1/2 z-20 p-4 rounded-full transition-all duration-200 shadow-lg ${
-          currentCenterIndex === 0 
-            ? 'bg-black/30 text-gray-500 cursor-not-allowed' 
-            : 'bg-black/80 hover:bg-black/95 text-white hover:scale-110 border-2 border-white/20'
-        }`}
-        style={{ 
-          left: 'calc(50% - 220px)', // Позиция слева от центра карточки
-          display: 'block' // Показываем кнопки на всех устройствах
-        }}
-        aria-label="Предыдущая карточка"
-        disabled={currentCenterIndex === 0}
-      >
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-          <polyline points="15,18 9,12 15,6"></polyline>
-        </svg>
-      </button>
-      
-      <button 
-        onClick={() => changeCard('right')}
-        className={`absolute top-1/2 transform -translate-y-1/2 z-20 p-4 rounded-full transition-all duration-200 shadow-lg ${
-          currentCenterIndex === 7 
-            ? 'bg-black/30 text-gray-500 cursor-not-allowed' 
-            : 'bg-black/80 hover:bg-black/95 text-white hover:scale-110 border-2 border-white/20'
-        }`}
-        style={{ 
-          right: 'calc(50% - 220px)', // Позиция справа от центра карточки
-          display: 'block' // Показываем кнопки на всех устройствах
-        }}
-        aria-label="Следующая карточка"
-        disabled={currentCenterIndex === 7}
-      >
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-          <polyline points="9,18 15,12 9,6"></polyline>
-        </svg>
-      </button>
       
       {/* Градиенты для скролла */}
       <div className="absolute left-0 top-0 bottom-4 w-8 bg-gradient-to-r from-gray-900/50 to-transparent pointer-events-none"></div>
