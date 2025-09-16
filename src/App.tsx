@@ -339,6 +339,7 @@ export default function App() {
                 loop={true}
                 className="rounded-lg"
                 offsetY={35}
+                animation="damage"
               />
               
               {/* Анимация musicKar */}
@@ -350,6 +351,7 @@ export default function App() {
                 loop={true}
                 className="rounded-lg"
                 offsetY={20}
+                animation="idle"
               />
               
               {/* Анимация лисы-музыканта */}
@@ -360,6 +362,7 @@ export default function App() {
                 height={450}
                 loop={true}
                 className="rounded-lg"
+                animation="music"
               />
             </div>
           </Container>
