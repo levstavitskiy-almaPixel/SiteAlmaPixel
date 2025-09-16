@@ -28,28 +28,27 @@ const FlyingBird: React.FC<FlyingBirdProps> = ({
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, delay }}
     >
-      {/* Отладочная траектория */}
+      {/* Отладочная траектория - в пределах экрана */}
       <svg 
         className="absolute inset-0 w-full h-full"
         style={{ 
-          width: '1200px', 
-          height: '300px',
-          left: isLeftToRight ? '0' : '-1200px'
+          width: '100vw', 
+          height: '100vh'
         }}
       >
         <path
-          d={`M 0 ${startY} Q 300 ${startY - curveHeight} 600 ${startY} T 900 ${startY + curveHeight} T 1200 ${startY}`}
+          d={`M ${isLeftToRight ? '0' : '100vw'} ${startY} Q ${isLeftToRight ? '25vw' : '75vw'} ${startY - curveHeight} ${isLeftToRight ? '50vw' : '50vw'} ${startY} T ${isLeftToRight ? '75vw' : '25vw'} ${startY + curveHeight} T ${isLeftToRight ? '100vw' : '0'} ${startY}`}
           stroke="red"
           strokeWidth="2"
           fill="none"
           opacity="0.5"
         />
         {/* Точки траектории */}
-        <circle cx="0" cy={startY} r="3" fill="green" />
-        <circle cx="300" cy={startY - curveHeight} r="3" fill="blue" />
-        <circle cx="600" cy={startY} r="3" fill="blue" />
-        <circle cx="900" cy={startY + curveHeight} r="3" fill="blue" />
-        <circle cx="1200" cy={startY} r="3" fill="red" />
+        <circle cx={isLeftToRight ? '0' : '100vw'} cy={startY} r="3" fill="green" />
+        <circle cx={isLeftToRight ? '25vw' : '75vw'} cy={startY - curveHeight} r="3" fill="blue" />
+        <circle cx="50vw" cy={startY} r="3" fill="blue" />
+        <circle cx={isLeftToRight ? '75vw' : '25vw'} cy={startY + curveHeight} r="3" fill="blue" />
+        <circle cx={isLeftToRight ? '100vw' : '0'} cy={startY} r="3" fill="red" />
       </svg>
       
       {/* Отладочная информация */}
@@ -57,7 +56,7 @@ const FlyingBird: React.FC<FlyingBirdProps> = ({
         className="absolute text-xs bg-yellow-400 text-black px-1 rounded"
         style={{ 
           top: startY - 20, 
-          left: isLeftToRight ? '10px' : '-100px' 
+          left: isLeftToRight ? '10px' : 'calc(100vw - 100px)' 
         }}
       >
         Птица {id}: {direction} Y:{startY} H:{curveHeight}
@@ -65,14 +64,12 @@ const FlyingBird: React.FC<FlyingBirdProps> = ({
       
       <motion.div
         animate={{
-          x: isLeftToRight ? [0, 1200] : [0, -1200],
+          x: isLeftToRight ? ['0vw', '100vw'] : ['100vw', '0vw'],
           y: [
             startY,
             startY - curveHeight,
             startY,
             startY + curveHeight,
-            startY,
-            startY - curveHeight,
             startY
           ]
         }}
