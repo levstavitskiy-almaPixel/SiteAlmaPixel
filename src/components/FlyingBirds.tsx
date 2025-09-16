@@ -123,27 +123,6 @@ const FlyingBirds: React.FC = () => {
           </div>
         </motion.div>
       ))}
-      
-      {/* Отладочная информация */}
-      <div className="absolute top-4 left-4 bg-blue-500 text-white p-2 rounded">
-        <div>FlyingBirds работает!</div>
-        <div>Z-index: 50</div>
-        <div>Position: fixed</div>
-        <div>Птиц: {birds.length}</div>
-        <div>Анимация: включена</div>
-        <div className="text-xs mt-1">{logMessage}</div>
-      </div>
-      
-      {/* Видимые логи */}
-      <div className="absolute bottom-4 left-4 bg-black text-green-400 p-2 rounded text-xs max-w-md">
-        <div>Console Logs:</div>
-        <div>✓ FlyingBirds component rendered</div>
-        <div>✓ MovieClipAnimation loaded</div>
-        <div>✓ Bird animations: fly</div>
-        <div>✓ Multiple birds: {birds.length}</div>
-        <div>✓ Different trajectories & delays</div>
-        <div>✓ Time: {new Date().toLocaleTimeString()}</div>
-      </div>
     </div>
   );
 };
