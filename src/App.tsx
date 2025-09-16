@@ -151,7 +151,7 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
     onClick={() => alert(`Карточка игры ${index + 1}\nРазмер контейнера: 350x550px\nФайл: ${game.src}\nАнимация: hover scale-105`)}
   >
     <div className="relative rounded-lg bg-gray-800 overflow-hidden w-full h-full" style={{ border: '2px solid blue' }}>
-      <div className="w-full h-4/5 flex items-center justify-center overflow-hidden" style={{ border: '2px solid green' }}>
+      <div className="w-full h-[490px] flex items-center justify-center overflow-hidden" style={{ border: '2px solid green' }}>
         <img 
           src={game.src} 
           alt={game.alt} 
@@ -167,7 +167,7 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
       </div>
     </div>
     {/* Постоянно видимые названия и статус */}
-    <div className="h-1/5 bg-gray-800/50 px-4 py-2 flex flex-col justify-center" style={{ border: '2px solid yellow' }}>
+    <div className="h-[60px] bg-gray-800/50 px-4 py-2 flex flex-col justify-center" style={{ border: '2px solid yellow' }}>
       <h3 className="text-sm font-semibold text-white font-chiron-heading truncate">{game.title}</h3>
       <p className="text-xs text-gray-300 truncate">{game.subtitle}</p>
       <span className="text-xs font-medium text-amber-400 mt-1">{game.status}</span>
