@@ -40,10 +40,22 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   const [scrollLeft, setScrollLeft] = useState(0);
   const lastMoveTime = useRef(0);
 
-  // Инициализация: начинаем с начала
+  // Инициализация: начинаем с левого края
   useEffect(() => {
     if (scrollRef.current) {
+      // Принудительно устанавливаем скролл в начало
       scrollRef.current.scrollLeft = 0;
+      
+      // Дополнительная проверка для мобильных устройств
+      const isMobile = window.innerWidth < 768;
+      if (isMobile) {
+        // На мобильных устройствах убеждаемся, что скролл начинается с левого края
+        setTimeout(() => {
+          if (scrollRef.current) {
+            scrollRef.current.scrollLeft = 0;
+          }
+        }, 100);
+      }
     }
   }, []);
 
@@ -51,16 +63,24 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const handleResize = () => {
       if (scrollRef.current) {
-        const containerWidth = scrollRef.current.clientWidth;
-        const cardWidth = 350;
-        const scrollPosition = scrollRef.current.scrollLeft;
+        const isMobile = window.innerWidth < 768;
         
-        // Пересчитываем позицию для текущей карточки
-        const centerPosition = scrollPosition + containerWidth / 2;
-        const nearestIndex = Math.round(centerPosition / cardWidth);
-        const targetScroll = nearestIndex * cardWidth - containerWidth / 2 + cardWidth / 2;
-        
-        scrollRef.current.scrollLeft = Math.max(0, targetScroll);
+        if (isMobile) {
+          // На мобильных устройствах всегда начинаем с левого края
+          scrollRef.current.scrollLeft = 0;
+        } else {
+          // На десктопе сохраняем текущую позицию
+          const containerWidth = scrollRef.current.clientWidth;
+          const cardWidth = 350;
+          const scrollPosition = scrollRef.current.scrollLeft;
+          
+          // Пересчитываем позицию для текущей карточки
+          const centerPosition = scrollPosition + containerWidth / 2;
+          const nearestIndex = Math.round(centerPosition / cardWidth);
+          const targetScroll = nearestIndex * cardWidth - containerWidth / 2 + cardWidth / 2;
+          
+          scrollRef.current.scrollLeft = Math.max(0, targetScroll);
+        }
       }
     };
 
@@ -126,6 +146,19 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
 
   const handleTouchEnd = () => {
     setIsDragging(false);
+    
+    // На мобильных устройствах убеждаемся, что скролл начинается с левого края
+    if (scrollRef.current) {
+      const isMobile = window.innerWidth < 768;
+      if (isMobile) {
+        // На мобильных устройствах не привязываемся к центру, просто сбрасываем в начало
+        setTimeout(() => {
+          if (scrollRef.current) {
+            scrollRef.current.scrollLeft = 0;
+          }
+        }, 50);
+      }
+    }
   };
 
   return (

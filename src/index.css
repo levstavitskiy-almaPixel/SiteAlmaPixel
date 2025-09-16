@@ -77,6 +77,21 @@
   -webkit-backface-visibility: hidden;
 }
 
+/* Мобильная оптимизация скролла */
+@media (max-width: 767px) {
+  .games-scroll {
+    scroll-behavior: auto;
+    -webkit-overflow-scrolling: touch;
+    /* Принудительно начинаем с левого края на мобильных */
+    scroll-snap-align: start;
+  }
+  
+  /* Убеждаемся, что контент начинается с левого края */
+  .games-scroll > *:first-child {
+    margin-left: 0;
+  }
+}
+
 /* Скрытие скроллбара для других элементов */
 .scrollbar-hide {
   -ms-overflow-style: none;  /* IE and Edge */
