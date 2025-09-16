@@ -250,7 +250,7 @@ export default function App() {
 
 
         {/* Games */}
-        <section id="games" className="py-10 bg-gray-900/50" style={{ height: '500px', border: '2px solid red' }}>
+        <section id="games" className="py-10 pb-20 bg-gray-900/50" style={{ height: '600px', border: '2px solid red' }}>
           <Container style={{ border: '2px solid blue' }}>
             <div className="text-center mb-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16" style={{ border: '2px solid green' }}>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.games.title}</h2>
