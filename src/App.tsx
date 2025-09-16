@@ -209,10 +209,10 @@ export default function App() {
                   {/* EN Button */}
                   <button
                     onClick={() => setLanguage('en')}
-                    className={`w-[100px] h-[100px] text-xl font-bold font-chiron-heading transition-colors flex items-center justify-center rounded-lg ${
+                    className={`text-xl font-bold font-chiron-heading transition-colors ${
                       language === 'en' 
-                        ? 'text-white bg-gray-700' 
-                        : 'text-gray-300 hover:text-white hover:bg-gray-600'
+                        ? 'text-white' 
+                        : 'text-gray-300 hover:text-white'
                     }`}
                   >
                     EN
@@ -221,10 +221,10 @@ export default function App() {
                   {/* RU Button */}
                   <button
                     onClick={() => setLanguage('ru')}
-                    className={`w-[100px] h-[100px] text-xl font-bold font-chiron-heading transition-colors flex items-center justify-center rounded-lg ${
+                    className={`text-xl font-bold font-chiron-heading transition-colors ${
                       language === 'ru' 
-                        ? 'text-white bg-gray-700' 
-                        : 'text-gray-300 hover:text-white hover:bg-gray-600'
+                        ? 'text-white' 
+                        : 'text-gray-300 hover:text-white'
                     }`}
                   >
                     РУ
