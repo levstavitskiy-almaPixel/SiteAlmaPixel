@@ -87,7 +87,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <div className="relative h-[500px] w-full max-w-full overflow-hidden">
+    <div className="relative h-[600px] w-full max-w-full overflow-hidden">
       {/* Центральная область с текстом */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
         <div className="bg-black/80 backdrop-blur-sm rounded-lg p-4 border-2 border-white/20">
@@ -281,11 +281,8 @@ export default function App() {
         {/* Games */}
         <section id="games" className="py-10 pb-20 bg-gray-900/50 overflow-y-hidden md:overflow-y-hidden" style={{ height: 'auto', minHeight: '700px' }}>
           <Container>
-            <div className="text-center mb-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+            <div className="text-center mb-8 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.games.title}</h2>
-              <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
-                {locale.sections.games.description}
-              </p>
             </div>
             
             <HorizontalScroll>
