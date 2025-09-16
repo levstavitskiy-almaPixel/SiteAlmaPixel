@@ -232,11 +232,11 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
     transition={{ duration: 0.6, delay: index * 0.1 }}
     className="group cursor-pointer w-full h-full"
     style={{ border: '2px solid red' }}
-    title={`Карточка игры ${index + 1}\nРазмер контейнера: 350x550px\nФайл: ${game.src}\nАнимация: hover scale-105`}
-    onClick={() => alert(`Карточка игры ${index + 1}\nРазмер контейнера: 350x550px\nФайл: ${game.src}\nАнимация: hover scale-105`)}
+    title={`Карточка игры ${index + 1}\nРазмер контейнера: 350x600px\nФайл: ${game.src}\nАнимация: hover scale-105`}
+    onClick={() => alert(`Карточка игры ${index + 1}\nРазмер контейнера: 350x600px\nФайл: ${game.src}\nАнимация: hover scale-105`)}
   >
     <div className="relative rounded-lg bg-gray-800 overflow-hidden w-full h-full" style={{ border: '2px solid blue' }}>
-      <div className="w-full h-[490px] flex items-center justify-center overflow-hidden" style={{ border: '2px solid green' }}>
+      <div className="w-full h-[540px] flex items-center justify-center overflow-hidden" style={{ border: '2px solid green' }}>
         <img 
           src={game.src} 
           alt={game.alt} 
@@ -393,7 +393,7 @@ export default function App() {
             
             <HorizontalScroll>
               {generateGames(locale).map((game, i) => (
-                <div key={i} className="flex-shrink-0 w-[350px] h-[550px] mx-1">
+                <div key={i} className="flex-shrink-0 w-[350px] h-[600px] mx-1">
                   <GameCard game={game} index={i} />
                 </div>
               ))}
