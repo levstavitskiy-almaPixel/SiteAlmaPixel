@@ -86,10 +86,12 @@ const FlyingBirds: React.FC = () => {
       {birds.map((bird) => (
         <motion.div
           key={bird.id}
-          className="absolute w-24 h-24"
+          className="absolute"
           style={{
             left: bird.startX,
             top: bird.startY,
+            width: '250px',
+            height: '250px',
             overflow: 'visible'
           }}
           animate={{
