@@ -169,18 +169,19 @@ export default function App() {
 
   return (
     <div className={dark ? "dark" : ""}>
-      <div className="min-h-screen w-screen text-white overflow-x-hidden font-chiron-body" style={{ backgroundColor: '#edc77b' }}>
-        {/* Header */}
-        <header 
-          className="sticky top-0 z-40 backdrop-blur-sm relative cloud-animation"
-          style={{
-            backgroundImage: 'url(/Cloud.png)',
-            backgroundSize: 'auto 100%',
-            backgroundRepeat: 'repeat-x',
-            backgroundPosition: '0% 20%'
-          }}
-        >
-          <Container>
+        <div className="min-h-screen w-screen text-white overflow-x-hidden font-chiron-body" style={{ backgroundColor: '#edc77b', border: '3px solid red' }}>
+          {/* Header */}
+          <header 
+            className="sticky top-0 z-40 backdrop-blur-sm relative cloud-animation"
+            style={{
+              backgroundImage: 'url(/Cloud.png)',
+              backgroundSize: 'auto 100%',
+              backgroundRepeat: 'repeat-x',
+              backgroundPosition: '0% 20%',
+              border: '2px solid white'
+            }}
+          >
+            <Container style={{ border: '2px solid gray' }}>
             <div className="flex h-[300px] items-start justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative z-10 pt-2">
               <div className="flex items-center gap-3">
                 <div className="w-[90px] h-[90px] flex items-center justify-center">
@@ -239,16 +240,16 @@ export default function App() {
 
 
         {/* Games */}
-        <section id="games" className="py-10 bg-gray-900/50" style={{ height: '500px' }}>
-          <Container>
-            <div className="text-center mb-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+        <section id="games" className="py-10 bg-gray-900/50" style={{ height: '500px', border: '2px solid red' }}>
+          <Container style={{ border: '2px solid blue' }}>
+            <div className="text-center mb-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16" style={{ border: '2px solid green' }}>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.games.title}</h2>
               <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
                 {locale.sections.games.description}
               </p>
             </div>
             
-            <HorizontalScroll>
+            <HorizontalScroll style={{ border: '2px solid yellow' }}>
               {generateGames(locale).map((game, i) => (
                 <div key={i} className="flex-shrink-0 w-2 sm:w-3 mx-0.5">
                   <GameCard game={game} index={i} />
@@ -264,9 +265,9 @@ export default function App() {
         </div>
 
         {/* About */}
-         <section id="about" className="py-20">
-           <Container>
-             <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+        <section id="about" className="py-20" style={{ border: '2px solid orange' }}>
+          <Container style={{ border: '2px solid purple' }}>
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16" style={{ border: '2px solid cyan' }}>
                <div className="grid lg:grid-cols-2 gap-12 items-center">
                  {/* Текст */}
                  <div className="text-center lg:text-left">
@@ -303,8 +304,8 @@ export default function App() {
         </div>
 
         {/* Music */}
-        <section id="music" className="py-20">
-          <Container>
+        <section id="music" className="py-20" style={{ border: '2px solid magenta' }}>
+          <Container style={{ border: '2px solid lime' }}>
             <div className="text-center mb-12 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.music.title}</h2>
               <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
@@ -367,8 +368,8 @@ export default function App() {
         </div>
 
         {/* Contact */}
-        <section id="contact" className="py-20 bg-gray-900/50">
-          <Container>
+        <section id="contact" className="py-20 bg-gray-900/50" style={{ border: '2px solid pink' }}>
+          <Container style={{ border: '2px solid brown' }}>
             <div className="max-w-sm mx-auto text-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 font-chiron-heading">{locale.sections.contact.title}</h2>
               <p className="text-base sm:text-lg text-gray-300 mb-8">
