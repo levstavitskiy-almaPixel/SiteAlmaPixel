@@ -78,7 +78,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
               onMouseLeave={handleMouseLeave}
               onMouseUp={handleMouseUp}
               onMouseMove={handleMouseMove}
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', gap: '64px' }}
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', gap: '100px' }}
             >
     {children}
   </div>
@@ -114,7 +114,7 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
       </div>
     </div>
     {/* Постоянно видимые названия и статус */}
-    <div className="h-1/5 bg-gray-800/50 p-2 flex flex-col justify-center">
+    <div className="h-1/5 bg-gray-800/50 px-4 py-2 flex flex-col justify-center">
       <h3 className="text-sm font-semibold text-white font-chiron-heading truncate">{game.title}</h3>
       <p className="text-xs text-gray-300 truncate">{game.subtitle}</p>
       <span className="text-xs font-medium text-amber-400 mt-1">{game.status}</span>
