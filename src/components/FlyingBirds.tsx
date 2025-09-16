@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import MovieClipAnimation from './MovieClipAnimation';
 
 const FlyingBirds: React.FC = () => {
   console.log('FlyingBirds component rendered');
+  
+  // Состояние для отслеживания направления полета
+  const [isFlyingRight, setIsFlyingRight] = useState(false);
   
   // Добавляем видимые логи на страницу
   const logMessage = 'FlyingBirds component rendered at: ' + new Date().toLocaleTimeString();
@@ -15,12 +18,17 @@ const FlyingBirds: React.FC = () => {
         className="absolute top-20 left-20 w-20 h-20"
         animate={{
           x: ['0vw', '100vw'],
-          y: [0, -50, 0, 30, 0]
+          y: [0, -50, 0, 30, 0],
+          scaleX: [1, 1, -1, -1, 1] // Флип при движении вправо
         }}
         transition={{
           duration: 8,
           repeat: Infinity,
           ease: "easeInOut"
+        }}
+        onAnimationComplete={() => {
+          // Обновляем состояние направления
+          setIsFlyingRight(prev => !prev);
         }}
       >
         <div className="w-full h-full border-4 border-yellow-400 bg-blue-200 flex items-center justify-center">
@@ -42,6 +50,7 @@ const FlyingBirds: React.FC = () => {
         <div>Z-index: 50</div>
         <div>Position: fixed</div>
         <div>Анимация: включена</div>
+        <div>Направление: {isFlyingRight ? 'Вправо (флип)' : 'Влево (нормально)'}</div>
         <div className="text-xs mt-1">{logMessage}</div>
       </div>
       
@@ -51,6 +60,7 @@ const FlyingBirds: React.FC = () => {
         <div>✓ FlyingBirds component rendered</div>
         <div>✓ MovieClipAnimation loaded</div>
         <div>✓ Bird animation: fly</div>
+        <div>✓ Direction flip: enabled</div>
         <div>✓ Time: {new Date().toLocaleTimeString()}</div>
       </div>
     </div>
