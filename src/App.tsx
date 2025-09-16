@@ -46,17 +46,6 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
     if (scrollRef.current) {
       // Принудительно устанавливаем скролл в начало
       scrollRef.current.scrollLeft = 0;
-      
-      // Дополнительная проверка для мобильных устройств
-      const isMobile = window.innerWidth < 768;
-      if (isMobile) {
-        // На мобильных устройствах убеждаемся, что скролл начинается с левого края
-        setTimeout(() => {
-          if (scrollRef.current) {
-            scrollRef.current.scrollLeft = 0;
-          }
-        }, 100);
-      }
     }
   }, []);
 
@@ -66,10 +55,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
       if (scrollRef.current) {
         const isMobile = window.innerWidth < 768;
         
-        if (isMobile) {
-          // На мобильных устройствах всегда начинаем с левого края
-          scrollRef.current.scrollLeft = 0;
-        } else {
+        if (!isMobile) {
           // На десктопе сохраняем текущую позицию
           const containerWidth = scrollRef.current.clientWidth;
           const cardWidth = 350;
@@ -147,19 +133,6 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
 
   const handleTouchEnd = () => {
     setIsDragging(false);
-    
-    // На мобильных устройствах убеждаемся, что скролл начинается с левого края
-    if (scrollRef.current) {
-      const isMobile = window.innerWidth < 768;
-      if (isMobile) {
-        // На мобильных устройствах не привязываемся к центру, просто сбрасываем в начало
-        setTimeout(() => {
-          if (scrollRef.current) {
-            scrollRef.current.scrollLeft = 0;
-          }
-        }, 50);
-      }
-    }
   };
 
   return (
