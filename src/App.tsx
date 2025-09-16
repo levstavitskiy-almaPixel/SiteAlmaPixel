@@ -59,8 +59,9 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
         const scrollPosition = scrollRef.current.scrollLeft;
         
         // Пересчитываем позицию для текущей карточки
+        const paddingLeft = containerWidth / 2 - cardWidth / 2; // Отступ для центрирования
         const centerPosition = scrollPosition + containerWidth / 2;
-        const nearestIndex = Math.round(centerPosition / cardWidth);
+        const nearestIndex = Math.round((centerPosition - paddingLeft) / cardWidth);
         const targetScroll = nearestIndex * cardWidth;
         
         // Позволяем центрировать любую карточку
@@ -96,12 +97,13 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
       const containerWidth = scrollRef.current.clientWidth;
       const cardWidth = 350; // ширина карточки
       const scrollPosition = scrollRef.current.scrollLeft;
+      const paddingLeft = containerWidth / 2 - cardWidth / 2; // Отступ для центрирования
       
       // Вычисляем позицию центра экрана относительно скролла
       const centerPosition = scrollPosition + containerWidth / 2;
       
-      // Вычисляем индекс ближайшей карточки к центру
-      const nearestIndex = Math.round(centerPosition / cardWidth);
+      // Вычисляем индекс ближайшей карточки к центру (учитывая отступ)
+      const nearestIndex = Math.round((centerPosition - paddingLeft) / cardWidth);
       
       // Вычисляем позицию скролла, чтобы карточка была в центре
       const targetScroll = nearestIndex * cardWidth;
@@ -160,17 +162,40 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
     // Определяем скорость свайпа
     const isQuickSwipe = touchDuration < 200; // Быстрый свайп менее 200мс
     
-    // Упрощенная логика центрирования для всех типов свайпов
-    const centerPosition = scrollPosition + containerWidth / 2;
-    const nearestIndex = Math.round(centerPosition / cardWidth);
-    const targetScroll = nearestIndex * cardWidth;
-    
-    scrollRef.current.scrollTo({
-      left: targetScroll,
-      behavior: 'smooth'
-    });
-    
-    setCurrentCenterIndex(nearestIndex);
+    if (isQuickSwipe) {
+      // Быстрый свайп - проматываем с инерцией
+      const swipeDistance = lastTouchX - startX;
+      const swipeVelocity = Math.abs(swipeDistance) / touchDuration; // пикселей в миллисекунду
+      
+      // Определяем направление и количество карточек для проматывания
+      const direction = swipeDistance > 0 ? -1 : 1; // отрицательное = влево, положительное = вправо
+      const cardsToSkip = Math.min(Math.floor(swipeVelocity / 2), 3); // максимум 3 карточки
+      
+      const centerPosition = scrollPosition + containerWidth / 2;
+      const currentIndex = Math.round((centerPosition - paddingLeft) / cardWidth);
+      const targetIndex = Math.max(0, Math.min(currentIndex + (direction * cardsToSkip), 7)); // 8 карточек всего
+      
+      const targetScroll = targetIndex * cardWidth;
+      
+      scrollRef.current.scrollTo({
+        left: targetScroll,
+        behavior: 'smooth'
+      });
+      
+      setCurrentCenterIndex(targetIndex);
+    } else {
+      // Медленный свайп - ставим карточку устойчиво в центр
+      const centerPosition = scrollPosition + containerWidth / 2;
+      const nearestIndex = Math.round((centerPosition - paddingLeft) / cardWidth);
+      const targetScroll = nearestIndex * cardWidth;
+      
+      scrollRef.current.scrollTo({
+        left: targetScroll,
+        behavior: 'smooth'
+      });
+      
+      setCurrentCenterIndex(nearestIndex);
+    }
   };
 
   return (
