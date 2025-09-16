@@ -86,22 +86,13 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   const changeCard = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return;
     
-    const containerWidth = scrollRef.current.clientWidth;
     const cardWidth = 350;
-    const scrollPosition = scrollRef.current.scrollLeft;
     
-    // Определяем текущий индекс карточки более точно
-    // Учитываем отступы для центрирования
-    const paddingLeft = containerWidth / 2 - cardWidth / 2;
-    const centerPosition = scrollPosition + containerWidth / 2;
-    const currentIndex = Math.round((centerPosition - paddingLeft) / cardWidth);
+    // Используем текущий индекс из состояния
+    const currentIndex = currentCenterIndex;
     
     console.log('Debug changeCard:', {
       direction,
-      scrollPosition,
-      containerWidth,
-      paddingLeft,
-      centerPosition,
       currentIndex,
       currentCenterIndex
     });
