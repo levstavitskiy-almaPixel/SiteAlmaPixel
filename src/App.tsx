@@ -397,6 +397,7 @@ export default function App() {
                     height={400}
                     loop={true}
                     className="rounded-lg"
+                    animation="animtion0"
                   />
                 </div>
               </motion.div>
