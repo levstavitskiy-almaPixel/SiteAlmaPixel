@@ -211,27 +211,25 @@ export default function App() {
                   {/* EN Button */}
                   <button
                     onClick={() => setLanguage('en')}
-                    className="w-[60px] h-[60px] transition-opacity hover:opacity-80"
+                    className={`px-3 py-1 text-sm font-medium transition-colors rounded ${
+                      language === 'en' 
+                        ? 'text-white bg-gray-700' 
+                        : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                    }`}
                   >
-                    <img 
-                      src="/Buttons.png" 
-                      alt="EN Button" 
-                      className="w-full h-full object-contain"
-                      draggable={false}
-                    />
+                    EN
                   </button>
                   
                   {/* RU Button */}
                   <button
                     onClick={() => setLanguage('ru')}
-                    className="w-[60px] h-[60px] transition-opacity hover:opacity-80"
+                    className={`px-3 py-1 text-sm font-medium transition-colors rounded ${
+                      language === 'ru' 
+                        ? 'text-white bg-gray-700' 
+                        : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                    }`}
                   >
-                    <img 
-                      src="/Buttons.png" 
-                      alt="RU Button" 
-                      className="w-full h-full object-contain"
-                      draggable={false}
-                    />
+                    РУ
                   </button>
                 </div>
               </div>
