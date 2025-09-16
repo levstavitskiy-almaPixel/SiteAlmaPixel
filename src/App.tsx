@@ -35,6 +35,7 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 
 const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollboosterRef = useRef<any>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
@@ -59,6 +60,39 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
       scrollRef.current.scrollLeft = 0;
       setCurrentCenterIndex(0);
     }
+  }, []);
+
+  // Добавляем CSS стили для ScrollBooster
+  useEffect(() => {
+    const scrollBoosterStyles = `
+      .scrollbooster-viewport {
+        cursor: -webkit-grab;
+        cursor: grab;
+        padding-bottom: 30px;
+        margin-bottom: -30px;
+      }
+      .scrollbooster-viewport:active {
+        cursor: -webkit-grabbing;
+        cursor: grabbing;
+      }
+      .scrollbooster-content {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+      .arrow-left,
+      .arrow-right {
+        cursor: pointer;
+      }
+    `;
+    
+    const styleSheet = document.createElement('style');
+    styleSheet.textContent = scrollBoosterStyles;
+    document.head.appendChild(styleSheet);
+    
+    return () => {
+      document.head.removeChild(styleSheet);
+    };
   }, []);
 
   // Обновляем позицию при изменении размера окна
@@ -213,6 +247,29 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  // Функции для стрелок навигации
+  const scrollLeftArrow = () => {
+    if (!scrollRef.current) return;
+    const cardWidth = 350;
+    const shiftSize = cardWidth; // Сдвигаем на одну карточку
+    
+    scrollRef.current.scrollTo({
+      left: scrollRef.current.scrollLeft - shiftSize,
+      behavior: 'smooth'
+    });
+  };
+
+  const scrollRightArrow = () => {
+    if (!scrollRef.current) return;
+    const cardWidth = 350;
+    const shiftSize = cardWidth; // Сдвигаем на одну карточку
+    
+    scrollRef.current.scrollTo({
+      left: scrollRef.current.scrollLeft + shiftSize,
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <div className="relative h-[600px] w-full max-w-full overflow-hidden">
       {/* Центральная область с текстом */}
@@ -245,6 +302,27 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
       >
         {children}
       </div>
+      
+      {/* Стрелки навигации */}
+      <button 
+        onClick={scrollLeftArrow}
+        className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-colors arrow-left"
+        aria-label="Предыдущая карточка"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <polyline points="15,18 9,12 15,6"></polyline>
+        </svg>
+      </button>
+      
+      <button 
+        onClick={scrollRightArrow}
+        className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-colors arrow-right"
+        aria-label="Следующая карточка"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <polyline points="9,18 15,12 9,6"></polyline>
+        </svg>
+      </button>
       
       {/* Градиенты для скролла */}
       <div className="absolute left-0 top-0 bottom-4 w-8 bg-gradient-to-r from-gray-900/50 to-transparent pointer-events-none"></div>
