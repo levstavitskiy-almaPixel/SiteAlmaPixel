@@ -147,12 +147,9 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.6, delay: index * 0.1 }}
     className="group cursor-pointer w-full h-full"
-    style={{ border: '2px solid red' }}
-    title={`Карточка игры ${index + 1}\nРазмер контейнера: 350x600px\nФайл: ${game.src}\nАнимация: hover scale-105`}
-    onClick={() => alert(`Карточка игры ${index + 1}\nРазмер контейнера: 350x600px\nФайл: ${game.src}\nАнимация: hover scale-105`)}
   >
-    <div className="relative rounded-lg bg-gray-800 overflow-hidden w-full h-full" style={{ border: '2px solid blue' }}>
-      <div className="w-full h-[480px] flex items-center justify-center overflow-hidden" style={{ border: '2px solid green' }}>
+    <div className="relative rounded-lg bg-gray-800 overflow-hidden w-full h-full">
+      <div className="w-full h-[480px] flex items-center justify-center overflow-hidden">
         <img 
           src={game.src} 
           alt={game.alt} 
@@ -168,7 +165,7 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
       </div>
     </div>
     {/* Постоянно видимые названия и статус */}
-    <div className="h-[120px] bg-gray-800/50 px-4 py-2 flex flex-col justify-center" style={{ border: '2px solid yellow' }}>
+    <div className="h-[120px] bg-gray-800/50 px-4 py-2 flex flex-col justify-center">
       <h3 className="text-sm font-semibold text-white font-chiron-heading truncate">{game.title}</h3>
       <p className="text-xs text-gray-300 truncate">{game.subtitle}</p>
       <span className="text-xs font-medium text-amber-400 mt-1">{game.status}</span>
@@ -302,7 +299,7 @@ export default function App() {
 
         {/* Games */}
         <section id="games" className="py-10 pb-20 bg-gray-900/50 overflow-y-hidden md:overflow-y-hidden" style={{ height: 'auto', minHeight: '700px' }}>
-          <div className="px-4 sm:px-6 md:px-8 lg:px-[200px] xl:px-[200px]">
+          <div className="px-4 sm:px-6 md:px-8 lg:px-0 xl:px-0">
             <Container>
             <div className="text-center mb-8 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.games.title}</h2>
@@ -326,7 +323,7 @@ export default function App() {
 
         {/* About */}
         <section id="about" className="py-20 md:overflow-y-hidden">
-          <div className="px-4 sm:px-6 md:px-8 lg:px-[200px] xl:px-[200px]">
+          <div className="px-4 sm:px-6 md:px-8 lg:px-0 xl:px-0">
             <Container>
             <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
                <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -369,7 +366,7 @@ export default function App() {
 
         {/* Music */}
         <section id="music" className="py-20 md:overflow-y-hidden">
-          <div className="px-4 sm:px-6 md:px-8 lg:px-[200px] xl:px-[200px]">
+          <div className="px-4 sm:px-6 md:px-8 lg:px-0 xl:px-0">
             <Container>
             <div className="text-center mb-12 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.music.title}</h2>
@@ -439,7 +436,7 @@ export default function App() {
 
         {/* Contact */}
         <section id="contact" className="py-20 bg-gray-900/50 md:overflow-y-hidden">
-          <div className="px-4 sm:px-6 md:px-8 lg:px-[200px] xl:px-[200px]">
+          <div className="px-4 sm:px-6 md:px-8 lg:px-0 xl:px-0">
             <Container>
             <div className="max-w-sm mx-auto text-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 font-chiron-heading">{locale.sections.contact.title}</h2>
