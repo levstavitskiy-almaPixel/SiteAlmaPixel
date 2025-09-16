@@ -35,9 +35,9 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 
 const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
+  const [isSwipeActive, setIsSwipeActive] = useState(false);
   const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
+  const [startTime, setStartTime] = useState(0);
   const [currentCenterIndex, setCurrentCenterIndex] = useState(0);
 
   // Инициализация: центрируем первую карточку при загрузке
@@ -71,99 +71,93 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Функция для смены карточки
+  const changeCard = (direction: 'left' | 'right') => {
+    if (!scrollRef.current) return;
+    
+    const containerWidth = scrollRef.current.clientWidth;
+    const cardWidth = 350;
+    const paddingLeft = containerWidth / 2 - cardWidth / 2;
+    const scrollPosition = scrollRef.current.scrollLeft;
+    
+    // Определяем текущий индекс карточки
+    const centerPosition = scrollPosition + containerWidth / 2;
+    const currentIndex = Math.round((centerPosition - paddingLeft) / cardWidth);
+    
+    // Вычисляем новый индекс
+    let newIndex = currentIndex;
+    if (direction === 'left') {
+      newIndex = Math.max(0, currentIndex - 1);
+    } else {
+      newIndex = Math.min(7, currentIndex + 1); // 8 карточек всего (0-7)
+    }
+    
+    // Вычисляем новую позицию скролла
+    const targetScroll = newIndex * cardWidth;
+    
+    // Плавно переходим к новой карточке
+    scrollRef.current.scrollTo({
+      left: targetScroll,
+      behavior: 'smooth'
+    });
+    
+    setCurrentCenterIndex(newIndex);
+  };
+
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!scrollRef.current) return;
-    setIsDragging(true);
+    setIsSwipeActive(true);
     setStartX(e.pageX - scrollRef.current.offsetLeft);
-    setScrollLeft(scrollRef.current.scrollLeft);
-    scrollRef.current.style.cursor = 'grabbing';
+    setStartTime(Date.now());
   };
 
-  const handleMouseLeave = () => {
-    setIsDragging(false);
-    if (scrollRef.current) {
-      scrollRef.current.style.cursor = 'grab';
+  const handleMouseUp = (e: React.MouseEvent) => {
+    if (!isSwipeActive || !scrollRef.current) return;
+    
+    setIsSwipeActive(false);
+    const endX = e.pageX - scrollRef.current.offsetLeft;
+    const endTime = Date.now();
+    
+    // Определяем направление свайпа
+    const deltaX = endX - startX;
+    const deltaTime = endTime - startTime;
+    
+    // Минимальная дистанция для свайпа (50px) и максимальное время (300ms)
+    if (Math.abs(deltaX) > 50 && deltaTime < 300) {
+      if (deltaX > 0) {
+        changeCard('left'); // Свайп вправо = предыдущая карточка
+      } else {
+        changeCard('right'); // Свайп влево = следующая карточка
+      }
     }
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-    if (scrollRef.current) {
-      scrollRef.current.style.cursor = 'grab';
-      
-      // Притягивание к ближайшей карточке в центре экрана
-      const containerWidth = scrollRef.current.clientWidth;
-      const cardWidth = 350; // ширина карточки
-      const scrollPosition = scrollRef.current.scrollLeft;
-      const paddingLeft = containerWidth / 2 - cardWidth / 2; // Отступ для центрирования
-      
-      // Вычисляем позицию центра экрана относительно скролла
-      const centerPosition = scrollPosition + containerWidth / 2;
-      
-      // Вычисляем индекс ближайшей карточки к центру (учитывая отступ)
-      const nearestIndex = Math.round((centerPosition - paddingLeft) / cardWidth);
-      
-      // Вычисляем позицию скролла, чтобы карточка была в центре
-      const targetScroll = nearestIndex * cardWidth;
-      
-      // Позволяем центрировать любую карточку, включая первую и последнюю
-      const finalScroll = targetScroll;
-      
-      scrollRef.current.scrollTo({
-        left: finalScroll,
-        behavior: 'smooth'
-      });
-      
-      setCurrentCenterIndex(nearestIndex);
-    }
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !scrollRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2.5; // Увеличенный коэффициент для более отзывчивого скролла
-    scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
   // Touch события для мобильных устройств
   const handleTouchStart = (e: React.TouchEvent) => {
     if (!scrollRef.current) return;
-    setIsDragging(true);
+    setIsSwipeActive(true);
     setStartX(e.touches[0].pageX - scrollRef.current.offsetLeft);
-    setScrollLeft(scrollRef.current.scrollLeft);
+    setStartTime(Date.now());
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging || !scrollRef.current) return;
-    e.preventDefault();
-    const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2.5; // Увеличенный коэффициент для более отзывчивого скролла
-    scrollRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const handleTouchEnd = () => {
-    setIsDragging(false);
-    // Используем ту же логику притягивания, что и для мыши
-    if (scrollRef.current) {
-      const containerWidth = scrollRef.current.clientWidth;
-      const cardWidth = 350;
-      const scrollPosition = scrollRef.current.scrollLeft;
-      const paddingLeft = containerWidth / 2 - cardWidth / 2; // Отступ для центрирования
-      
-      const centerPosition = scrollPosition + containerWidth / 2;
-      const nearestIndex = Math.round((centerPosition - paddingLeft) / cardWidth);
-      const targetScroll = nearestIndex * cardWidth;
-      
-      // Позволяем центрировать любую карточку, включая первую и последнюю
-      const finalScroll = targetScroll;
-      
-      scrollRef.current.scrollTo({
-        left: finalScroll,
-        behavior: 'smooth'
-      });
-      
-      setCurrentCenterIndex(nearestIndex);
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!isSwipeActive || !scrollRef.current) return;
+    
+    setIsSwipeActive(false);
+    const endX = e.changedTouches[0].pageX - scrollRef.current.offsetLeft;
+    const endTime = Date.now();
+    
+    // Определяем направление свайпа
+    const deltaX = endX - startX;
+    const deltaTime = endTime - startTime;
+    
+    // Минимальная дистанция для свайпа (50px) и максимальное время (300ms)
+    if (Math.abs(deltaX) > 50 && deltaTime < 300) {
+      if (deltaX > 0) {
+        changeCard('left'); // Свайп вправо = предыдущая карточка
+      } else {
+        changeCard('right'); // Свайп влево = следующая карточка
+      }
     }
   };
 
@@ -172,13 +166,10 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
       
       <div
         ref={scrollRef}
-        className="flex gap-16 overflow-x-auto overflow-y-hidden pb-4 games-scroll cursor-grab select-none h-full w-full"
+        className="flex gap-16 overflow-x-auto overflow-y-hidden pb-4 games-scroll cursor-pointer select-none h-full w-full"
         onMouseDown={handleMouseDown}
-        onMouseLeave={handleMouseLeave}
         onMouseUp={handleMouseUp}
-        onMouseMove={handleMouseMove}
         onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
         style={{ 
           scrollbarWidth: 'none', 
