@@ -28,6 +28,41 @@ const FlyingBird: React.FC<FlyingBirdProps> = ({
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, delay }}
     >
+      {/* Отладочная траектория */}
+      <svg 
+        className="absolute inset-0 w-full h-full"
+        style={{ 
+          width: '1200px', 
+          height: '300px',
+          left: isLeftToRight ? '0' : '-1200px'
+        }}
+      >
+        <path
+          d={`M 0 ${startY} Q 300 ${startY - curveHeight} 600 ${startY} T 900 ${startY + curveHeight} T 1200 ${startY}`}
+          stroke="red"
+          strokeWidth="2"
+          fill="none"
+          opacity="0.5"
+        />
+        {/* Точки траектории */}
+        <circle cx="0" cy={startY} r="3" fill="green" />
+        <circle cx="300" cy={startY - curveHeight} r="3" fill="blue" />
+        <circle cx="600" cy={startY} r="3" fill="blue" />
+        <circle cx="900" cy={startY + curveHeight} r="3" fill="blue" />
+        <circle cx="1200" cy={startY} r="3" fill="red" />
+      </svg>
+      
+      {/* Отладочная информация */}
+      <div 
+        className="absolute text-xs bg-yellow-400 text-black px-1 rounded"
+        style={{ 
+          top: startY - 20, 
+          left: isLeftToRight ? '10px' : '-100px' 
+        }}
+      >
+        Птица {id}: {direction} Y:{startY} H:{curveHeight}
+      </div>
+      
       <motion.div
         animate={{
           x: isLeftToRight ? [0, 1200] : [0, -1200],
@@ -47,9 +82,9 @@ const FlyingBird: React.FC<FlyingBirdProps> = ({
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="w-12 h-12"
+        className="w-12 h-12 border-2 border-yellow-400"
         style={{
-          transform: isLeftToRight ? 'scaleX(1)' : 'scaleX(-1)' // Отражаем птицу для полета влево
+          transform: isLeftToRight ? 'scaleX(1)' : 'scaleX(-1)'
         }}
       >
         <MovieClipAnimation
@@ -78,8 +113,17 @@ const FlyingBirds: React.FC = () => {
     curveHeight: 30 + Math.random() * 40 // Высота кривой 30-70px
   }));
 
+  console.log('FlyingBirds generated:', birds);
+
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden">
+      {/* Отладочная информация */}
+      <div className="absolute top-4 left-4 bg-red-500 text-white p-2 rounded z-50">
+        <div>Птиц: {birdCount}</div>
+        <div>Z-index: 10</div>
+        <div>Position: fixed</div>
+      </div>
+      
       {birds.map((bird) => (
         <FlyingBird
           key={bird.id}
