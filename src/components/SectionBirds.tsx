@@ -17,19 +17,18 @@ interface Bird {
 
 interface SectionBirdsProps {
   sectionHeight: number;
-  sectionOffset: number;
   birdCount?: number;
 }
 
 const SectionBirds: React.FC<SectionBirdsProps> = ({ 
   sectionHeight, 
-  sectionOffset, 
   birdCount = 3 
 }) => {
   // Генерируем птиц для конкретного раздела
   const birds: Bird[] = Array.from({ length: birdCount }, (_, index) => {
     const isLeftToRight = index % 2 === 0;
-    const baseY = sectionOffset + (sectionHeight / birdCount) * index + 50;
+    // Распределяем птиц равномерно по высоте раздела
+    const baseY = (sectionHeight / birdCount) * index + 100;
     
     return {
       id: index + 1,
