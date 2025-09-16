@@ -169,12 +169,6 @@ export default function App() {
           backgroundRepeat: 'repeat',
           backgroundSize: 'auto'
         }}>
-          {/* Отладочная информация для птиц */}
-          <div className="fixed top-4 right-4 bg-green-500 text-white p-2 rounded z-50">
-            <div>App.tsx загружен</div>
-            <div>FlyingBirds должен быть ниже</div>
-          </div>
-          
           {/* Летающие птицы */}
           <FlyingBirds />
           
