@@ -163,7 +163,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <div className="relative h-[600px] w-full max-w-full">
+    <div className="relative h-[200px] w-full max-w-full">
       <div
         ref={scrollRef}
         className="flex gap-4 overflow-x-auto overflow-y-hidden pb-4 games-scroll cursor-grab select-none h-full w-full"
@@ -199,7 +199,7 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
     className="group cursor-pointer w-full h-full"
   >
     <div className="relative rounded-lg bg-gray-800 overflow-hidden w-full h-full">
-      <div className="w-full h-[480px] flex items-center justify-center overflow-hidden">
+      <div className="w-full h-[80px] flex items-center justify-center overflow-hidden">
         <img 
           src={game.src} 
           alt={game.alt} 
@@ -360,7 +360,7 @@ export default function App() {
             <div className="px-4 sm:px-6 md:px-8 lg:px-[200px] xl:px-[200px]">
               <HorizontalScroll>
                 {generateGames(locale).map((game, i) => (
-                  <div key={i} className="flex-shrink-0 w-[350px] h-[600px] mx-1">
+                  <div key={i} className="flex-shrink-0 w-[350px] h-[200px] mx-1">
                     <GameCard game={game} index={i} />
                   </div>
                 ))}
