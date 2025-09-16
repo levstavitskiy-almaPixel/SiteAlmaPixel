@@ -38,6 +38,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [currentCenterIndex, setCurrentCenterIndex] = useState(0);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!scrollRef.current) return;
@@ -58,6 +59,22 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
     setIsDragging(false);
     if (scrollRef.current) {
       scrollRef.current.style.cursor = 'grab';
+      
+      // Притягивание к ближайшей карточке
+      const containerWidth = scrollRef.current.clientWidth;
+      const cardWidth = 400; // ширина карточки
+      const scrollPosition = scrollRef.current.scrollLeft;
+      
+      // Вычисляем индекс ближайшей карточки к центру
+      const nearestIndex = Math.round(scrollPosition / cardWidth);
+      const targetScroll = nearestIndex * cardWidth;
+      
+      scrollRef.current.scrollTo({
+        left: targetScroll,
+        behavior: 'smooth'
+      });
+      
+      setCurrentCenterIndex(nearestIndex);
     }
   };
 
@@ -71,17 +88,29 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="relative h-[500px] w-full max-w-full overflow-hidden">
-            <div
-              ref={scrollRef}
-              className="flex gap-16 overflow-x-auto overflow-y-hidden pb-4 games-scroll cursor-grab select-none h-full w-full"
-              onMouseDown={handleMouseDown}
-              onMouseLeave={handleMouseLeave}
-              onMouseUp={handleMouseUp}
-              onMouseMove={handleMouseMove}
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', gap: '0px' }}
-            >
-    {children}
-  </div>
+      {/* Центральная область с текстом */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+        <div className="bg-black/80 backdrop-blur-sm rounded-lg p-4 border-2 border-white/20">
+          <h3 className="text-white text-lg font-bold font-chiron-heading text-center">
+            Карточка {currentCenterIndex + 1} в центре
+          </h3>
+          <p className="text-gray-300 text-sm text-center mt-2">
+            Скроллите для просмотра других игр
+          </p>
+        </div>
+      </div>
+      
+      <div
+        ref={scrollRef}
+        className="flex gap-16 overflow-x-auto overflow-y-hidden pb-4 games-scroll cursor-grab select-none h-full w-full"
+        onMouseDown={handleMouseDown}
+        onMouseLeave={handleMouseLeave}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', gap: '0px' }}
+      >
+        {children}
+      </div>
       
       {/* Градиенты для скролла */}
       <div className="absolute left-0 top-0 bottom-4 w-8 bg-gradient-to-r from-gray-900/50 to-transparent pointer-events-none"></div>
@@ -96,9 +125,12 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.6, delay: index * 0.1 }}
     className="group cursor-pointer w-full h-full"
+    style={{ border: '2px solid red' }}
+    title={`Карточка игры ${index + 1}\nРазмер контейнера: 400x450px\nФайл: ${game.src}\nАнимация: hover scale-105`}
+    onClick={() => alert(`Карточка игры ${index + 1}\nРазмер контейнера: 400x450px\nФайл: ${game.src}\nАнимация: hover scale-105`)}
   >
-    <div className="relative rounded-lg bg-gray-800 overflow-hidden w-full h-full">
-      <div className="w-full h-4/5 flex items-center justify-center overflow-hidden">
+    <div className="relative rounded-lg bg-gray-800 overflow-hidden w-full h-full" style={{ border: '2px solid blue' }}>
+      <div className="w-full h-4/5 flex items-center justify-center overflow-hidden" style={{ border: '2px solid green' }}>
         <img 
           src={game.src} 
           alt={game.alt} 
@@ -114,7 +146,7 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
       </div>
     </div>
     {/* Постоянно видимые названия и статус */}
-    <div className="h-1/5 bg-gray-800/50 px-4 py-2 flex flex-col justify-center">
+    <div className="h-1/5 bg-gray-800/50 px-4 py-2 flex flex-col justify-center" style={{ border: '2px solid yellow' }}>
       <h3 className="text-sm font-semibold text-white font-chiron-heading truncate">{game.title}</h3>
       <p className="text-xs text-gray-300 truncate">{game.subtitle}</p>
       <span className="text-xs font-medium text-amber-400 mt-1">{game.status}</span>
