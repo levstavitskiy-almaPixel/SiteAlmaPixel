@@ -19,12 +19,16 @@ const FlyingBirds: React.FC = () => {
         animate={{
           x: ['0vw', '100vw'],
           y: [0, -50, 0, 30, 0],
-          scaleX: [1, 1, -1, -1, 1] // Флип при движении вправо
+          scaleX: [1, 1, -1, -1, 1] // Резкий флип перед полетом вправо
         }}
         transition={{
           duration: 8,
           repeat: Infinity,
-          ease: "easeInOut"
+          ease: "easeInOut",
+          scaleX: {
+            duration: 0.1, // Быстрый поворот
+            ease: "linear"
+          }
         }}
         onAnimationComplete={() => {
           // Обновляем состояние направления
