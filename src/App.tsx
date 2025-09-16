@@ -340,10 +340,10 @@ export default function App() {
               <MovieClipAnimation 
                 mcPath="/animations/frog_bard_mc.json"
                 texturePath="/animations/frog_bard_tex.png"
-                width={200}
-                height={200}
+                width={400}
+                height={450}
                 loop={true}
-                className="rounded-lg sm:w-[400px] sm:h-[400px]"
+                className="rounded-lg"
                 offsetY={35}
               />
               
@@ -351,10 +351,10 @@ export default function App() {
               <MovieClipAnimation 
                 mcPath="/animations/musicKar_mc.json"
                 texturePath="/animations/musicKar_tex.png"
-                width={200}
-                height={200}
+                width={400}
+                height={450}
                 loop={true}
-                className="rounded-lg sm:w-[400px] sm:h-[400px]"
+                className="rounded-lg"
                 offsetY={20}
               />
               
@@ -362,10 +362,10 @@ export default function App() {
               <MovieClipAnimation 
                 mcPath="/animations/fox_Music_mc.json"
                 texturePath="/animations/fox_Music_tex.png"
-                width={200}
-                height={200}
+                width={400}
+                height={450}
                 loop={true}
-                className="rounded-lg sm:w-[400px] sm:h-[400px]"
+                className="rounded-lg"
               />
             </div>
           </Container>
