@@ -183,9 +183,9 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
     </div>
     {/* Постоянно видимые названия и статус */}
-    <div className="h-[120px] bg-gray-800/90 px-4 py-3 flex flex-col justify-center border-t border-gray-700">
-      <h3 className="text-sm font-semibold text-white font-chiron-heading truncate mb-1">{game.title}</h3>
-      <p className="text-xs text-gray-300 truncate mb-2">{game.subtitle}</p>
+    <div className="h-[120px] bg-gray-800/90 px-4 py-3 flex flex-col justify-center items-center text-center border-t border-gray-700">
+      <h3 className="text-sm font-semibold text-white font-chiron-heading mb-1 leading-tight">{game.title}</h3>
+      <p className="text-xs text-gray-300 mb-2 leading-tight">{game.subtitle}</p>
       <span className="text-xs font-medium text-amber-400">{game.status}</span>
     </div>
   </motion.div>
