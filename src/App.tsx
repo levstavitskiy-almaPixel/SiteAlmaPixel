@@ -589,3 +589,5 @@ export default function App() {
     </div>
   );
 }
+
+// Force redeploy - trigger GitHub Actions
