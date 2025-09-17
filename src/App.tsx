@@ -168,10 +168,10 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.6, delay: index * 0.1 }}
-    className="group cursor-pointer w-full h-full"
+    className="group cursor-pointer w-full h-full flex flex-col"
   >
-    <div className="relative rounded-lg bg-gray-800 overflow-hidden w-full h-full">
-      <div className="w-full h-[480px] flex items-center justify-center overflow-hidden">
+    <div className="relative rounded-lg bg-gray-800 overflow-hidden flex-1">
+      <div className="w-full h-full flex items-center justify-center overflow-hidden">
         <img 
           src={game.src} 
           alt={game.alt} 
