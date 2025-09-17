@@ -223,7 +223,7 @@ export default function App() {
     const email = formData.get('email') as string;
     const message = formData.get('message') as string;
     
-    const mailtoBody = encodeURIComponent(`${locale.sections.contact.form.messageBody}\n\n${message}\n\n---\n${locale.sections.contact.form.senderInfo}\n${locale.sections.contact.form.name}: ${name}\n${locale.sections.contact.form.email}: ${email}`);
+    const mailtoBody = encodeURIComponent(`Message:\n\n${message}\n\n---\nSender Info:\nName: ${name}\nEmail: ${email}`);
     const mailtoSubject = encodeURIComponent(`${locale.sections.contact.form.subject} - ${name}`);
     const mailtoLink = `mailto:${locale.email}?subject=${mailtoSubject}&body=${mailtoBody}`;
     

@@ -25,7 +25,6 @@ const SectionBirds: React.FC<SectionBirdsProps> = ({
   birdCount = 3 
 }) => {
   console.log(`SectionBirds: Creating ${birdCount} birds for section height ${sectionHeight}`);
-  console.log('SectionBirds: Birds array:', birds);
   
   // Генерируем птиц для конкретного раздела
   const birds: Bird[] = Array.from({ length: birdCount }, (_, index) => {
@@ -55,6 +54,8 @@ const SectionBirds: React.FC<SectionBirdsProps> = ({
         : [1, 1, 1, 1, 1, 1, 1]
     };
   });
+
+  console.log('SectionBirds: Birds array:', birds);
 
   return (
     <div className="absolute inset-0 pointer-events-none z-30 overflow-hidden">
