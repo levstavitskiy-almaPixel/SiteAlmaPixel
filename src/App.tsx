@@ -163,6 +163,125 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
+const MusicHorizontalScroll = ({ children }: { children: React.ReactNode }) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const lastMoveTime = useRef(0);
+
+  // Инициализация: начинаем с левого края
+  useEffect(() => {
+    if (scrollRef.current) {
+      // Принудительно устанавливаем скролл в начало
+      scrollRef.current.scrollLeft = 0;
+    }
+  }, []);
+
+  // Обновляем позицию при изменении размера окна
+  useEffect(() => {
+    const handleResize = () => {
+      if (scrollRef.current) {
+        const isMobile = window.innerWidth < 768;
+        
+        if (!isMobile) {
+          // На десктопе сохраняем текущую позицию
+          const containerWidth = scrollRef.current.clientWidth;
+          const cardWidth = 200;
+          const scrollPosition = scrollRef.current.scrollLeft;
+          
+          // Пересчитываем позицию для текущей карточки
+          const centerPosition = scrollPosition + containerWidth / 2;
+          const nearestIndex = Math.round(centerPosition / cardWidth);
+          const targetScroll = nearestIndex * cardWidth - containerWidth / 2 + cardWidth / 2;
+          
+          scrollRef.current.scrollLeft = Math.max(0, targetScroll);
+        }
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+    scrollRef.current.style.cursor = 'grabbing';
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+    if (scrollRef.current) {
+      scrollRef.current.style.cursor = 'grab';
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    if (scrollRef.current) {
+      scrollRef.current.style.cursor = 'grab';
+    }
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!scrollRef.current) return;
+    setIsDragging(true);
+    setStartX(e.touches[0].pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+  };
+
+  return (
+    <div className="relative h-[350px] w-full max-w-full px-4 sm:px-8 md:px-16 lg:px-24 xl:px-32 2xl:px-48">
+      <div
+        ref={scrollRef}
+        className="flex gap-4 overflow-x-auto overflow-y-hidden pb-4 games-scroll cursor-grab select-none h-full w-full"
+        onMouseDown={handleMouseDown}
+        onMouseLeave={handleMouseLeave}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        style={{ 
+          scrollbarWidth: 'none', 
+          msOverflowStyle: 'none',
+          scrollBehavior: 'auto', // Отключаем CSS smooth scroll для ручного управления
+          WebkitOverflowScrolling: 'touch'
+        }}
+      >
+        {children}
+      </div>
+      
+      {/* Градиенты для скролла */}
+      <div className="absolute left-0 top-0 bottom-4 w-4 sm:w-6 md:w-8 lg:w-12 xl:w-16 2xl:w-20 bg-gradient-to-r from-gray-900/50 to-transparent pointer-events-none"></div>
+      <div className="absolute right-0 top-0 bottom-4 w-4 sm:w-6 md:w-8 lg:w-12 xl:w-16 2xl:w-20 bg-gradient-to-l from-gray-900/50 to-transparent pointer-events-none"></div>
+    </div>
+  );
+};
+
 const GameCard = ({ game, index }: { game: any; index: number }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
@@ -273,7 +392,7 @@ export default function App() {
             <Container>
             <div className="flex h-[350px] items-start justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative z-10 pt-2">
               <div className="flex items-center gap-3">
-                <div className="w-[90px] h-[90px] flex items-center justify-center">
+                <div className="w-[110px] h-[110px] flex items-center justify-center">
                   <img 
                     src="/AlmaPixelLogo.png?v=2" 
                     alt="Alma Pixel Logo" 
@@ -332,7 +451,15 @@ export default function App() {
         <section 
           id="games" 
           className="py-10 pb-20 overflow-y-hidden md:overflow-y-hidden relative" 
-          style={{ height: 'auto', minHeight: '700px', backgroundColor: '#216477' }}
+          style={{ 
+            height: 'auto', 
+            minHeight: '700px', 
+            backgroundColor: '#216477',
+            backgroundImage: 'url(/BgSite2.png)',
+            backgroundSize: 'auto',
+            backgroundRepeat: 'repeat',
+            backgroundPosition: '0 0'
+          }}
         >
           <Container>
             <div className="text-center mb-8">
@@ -389,18 +516,19 @@ export default function App() {
               </p>
             </div>
             
-            {/* Music cards in 2 rows */}
-            <div className="flex justify-center items-center gap-0 max-w-lg mx-auto">
+            {/* Music cards with horizontal scroll */}
+            <MusicHorizontalScroll>
               {locale.musicTracks.map((track) => (
-                <MusicCard
-                  key={track.id}
-                  track={track}
-                  isPlaying={currentTrack === track.id}
-                  onPlay={handlePlayTrack}
-                  onStop={handleStopTrack}
-                />
+                <div key={track.id} className="flex-shrink-0 w-[200px] h-[330px] mx-1">
+                  <MusicCard
+                    track={track}
+                    isPlaying={currentTrack === track.id}
+                    onPlay={handlePlayTrack}
+                    onStop={handleStopTrack}
+                  />
+                </div>
               ))}
-            </div>
+            </MusicHorizontalScroll>
             
             {/* Анимации музыкантов */}
             <div className="mt-16 relative flex justify-center">

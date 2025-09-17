@@ -53,7 +53,7 @@ const MusicCard: React.FC<MusicCardProps> = ({ track, isPlaying, onPlay, onStop 
   };
 
   return (
-    <div className="w-[200px] h-[330px]">
+    <div className="w-full h-full">
       <motion.div
         className="bg-gray-800 rounded-lg overflow-hidden shadow-2xl group cursor-pointer"
         whileHover={{ scale: 1.02 }}
