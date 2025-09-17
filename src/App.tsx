@@ -135,7 +135,7 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <div className="relative h-[600px] w-full max-w-full px-[200px]">
+    <div className="relative h-[600px] w-full max-w-full px-4 sm:px-8 md:px-16 lg:px-24 xl:px-32 2xl:px-48">
       <div
         ref={scrollRef}
         className="flex gap-4 overflow-x-auto overflow-y-hidden pb-4 games-scroll cursor-grab select-none h-full w-full"
@@ -157,8 +157,8 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
       </div>
       
       {/* Градиенты для скролла */}
-      <div className="absolute left-0 top-0 bottom-4 w-8 bg-gradient-to-r from-gray-900/50 to-transparent pointer-events-none"></div>
-      <div className="absolute right-0 top-0 bottom-4 w-8 bg-gradient-to-l from-gray-900/50 to-transparent pointer-events-none"></div>
+      <div className="absolute left-0 top-0 bottom-4 w-4 sm:w-6 md:w-8 lg:w-12 xl:w-16 2xl:w-20 bg-gradient-to-r from-gray-900/50 to-transparent pointer-events-none"></div>
+      <div className="absolute right-0 top-0 bottom-4 w-4 sm:w-6 md:w-8 lg:w-12 xl:w-16 2xl:w-20 bg-gradient-to-l from-gray-900/50 to-transparent pointer-events-none"></div>
     </div>
   );
 };
