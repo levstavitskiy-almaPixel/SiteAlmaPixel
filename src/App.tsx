@@ -349,36 +349,14 @@ export default function App() {
           className="py-20 md:overflow-y-hidden relative" 
         >
           <Container>
-            <div className="max-w-6xl mx-auto">
-               <div className="grid lg:grid-cols-2 gap-12 items-center">
-                 {/* Текст */}
-                 <div className="text-center lg:text-left">
-                   <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 font-chiron-heading">{locale.sections.about.title}</h2>
-                   <div className="prose prose-lg text-gray-300">
-                     <p className="text-xl leading-relaxed mb-6">
-                       {locale.sections.about.description1}
-                     </p>
-                     <p className="text-lg leading-relaxed">
-                       {locale.sections.about.description2}
-                     </p>
-                   </div>
-                 </div>
-                 
-                 {/* Анимация совы */}
-                 <div className="flex justify-center lg:justify-end">
-                   <div className="w-[240px] h-[240px] flex items-center justify-center">
-                     <MovieClipAnimation 
-                       mcPath="/animations/owl_mc.json"
-                       texturePath="/animations/owl_tex.png"
-                       width={200}
-                       height={200}
-                       loop={true}
-                       className="rounded-lg"
-                     />
-                   </div>
-                 </div>
-               </div>
-             </div>
+            <div className="text-center">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 font-chiron-heading">{locale.sections.about.title}</h2>
+              <div className="prose prose-lg text-gray-300 max-w-4xl mx-auto">
+                <p className="text-xl leading-relaxed">
+                  {locale.sections.about.description1}
+                </p>
+              </div>
+            </div>
           </Container>
          </section>
 
