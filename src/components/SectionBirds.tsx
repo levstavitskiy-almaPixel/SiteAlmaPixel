@@ -26,14 +26,13 @@ const SectionBirds: React.FC<SectionBirdsProps> = ({
 }) => {
   // Генерируем птиц для конкретного раздела
   const birds: Bird[] = Array.from({ length: birdCount }, (_, index) => {
-    const isLeftToRight = index % 2 === 0;
-    // Распределяем птиц равномерно по высоте раздела
+    // Все птицы летят слева направо
     const baseY = (sectionHeight / birdCount) * index + 100;
     
     return {
       id: index + 1,
-      startX: isLeftToRight ? -200 : 'calc(100vw + 200px)',
-      endX: isLeftToRight ? 'calc(100vw + 200px)' : -200,
+      startX: -200, // Все начинают слева
+      endX: 'calc(100vw + 200px)', // Все заканчивают справа
       startY: baseY,
       curveY: [
         baseY,
@@ -46,10 +45,8 @@ const SectionBirds: React.FC<SectionBirdsProps> = ({
       ],
       delay: index * 2,
       duration: 8 + (index * 2),
-      direction: isLeftToRight ? 'left-to-right' : 'right-to-left',
-      scaleX: isLeftToRight 
-        ? [-1, -1, -1, -1, -1, -1, -1] 
-        : [1, 1, 1, 1, 1, 1, 1]
+      direction: 'left-to-right', // Все летят слева направо
+      scaleX: [-1, -1, -1, -1, -1, -1, -1] // Поворачиваем на 180° для полета вправо
     };
   });
 
