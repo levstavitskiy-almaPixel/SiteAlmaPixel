@@ -327,15 +327,15 @@ export default function App() {
             <div className="text-center mb-8">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.games.title}</h2>
             </div>
-            
-            <HorizontalScroll>
-              {generateGames(locale).map((game, i) => (
-                <div key={i} className="flex-shrink-0 w-[350px] h-[600px] mx-1">
-                  <GameCard game={game} index={i} />
-                </div>
-              ))}
-            </HorizontalScroll>
           </Container>
+          
+          <HorizontalScroll>
+            {generateGames(locale).map((game, i) => (
+              <div key={i} className="flex-shrink-0 w-[350px] h-[600px] mx-1">
+                <GameCard game={game} index={i} />
+              </div>
+            ))}
+          </HorizontalScroll>
         </section>
 
         {/* Divider */}
