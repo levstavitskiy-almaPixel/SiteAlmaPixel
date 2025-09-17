@@ -31,7 +31,7 @@ const SectionBirds: React.FC<SectionBirdsProps> = ({
     
     return {
       id: index + 1,
-      startX: '-200px', // Все начинают слева
+      startX: -200, // Все начинают слева
       endX: 'calc(100vw + 200px)', // Все заканчивают справа
       startY: baseY,
       curveY: [
@@ -55,10 +55,6 @@ const SectionBirds: React.FC<SectionBirdsProps> = ({
 
   return (
     <div className="absolute inset-0 pointer-events-none z-30 overflow-hidden">
-      {/* Отладочная информация */}
-      <div className="absolute top-2 left-2 bg-red-500 text-white p-2 text-xs z-50">
-        SectionBirds: {birdCount} birds, height: {sectionHeight}
-      </div>
       {birds.map((bird) => (
         <motion.div
           key={bird.id}
