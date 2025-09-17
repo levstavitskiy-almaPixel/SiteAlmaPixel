@@ -24,9 +24,6 @@ const SectionBirds: React.FC<SectionBirdsProps> = ({
   sectionHeight, 
   birdCount = 3 
 }) => {
-  console.log(`SectionBirds: Creating ${birdCount} birds for section height ${sectionHeight}`);
-  console.log('SectionBirds: Birds array:', birds);
-  
   // Генерируем птиц для конкретного раздела
   const birds: Bird[] = Array.from({ length: birdCount }, (_, index) => {
     const isLeftToRight = index % 2 === 0;
@@ -56,12 +53,11 @@ const SectionBirds: React.FC<SectionBirdsProps> = ({
     };
   });
 
+  console.log(`SectionBirds: Creating ${birdCount} birds for section height ${sectionHeight}`);
+  console.log('SectionBirds: Birds array:', birds);
+
   return (
     <div className="absolute inset-0 pointer-events-none z-30 overflow-hidden">
-      {/* Отладочная информация */}
-      <div className="absolute top-2 left-2 bg-red-500 text-white p-2 text-xs z-50">
-        SectionBirds: {birdCount} birds, height: {sectionHeight}
-      </div>
       {birds.map((bird) => (
         <motion.div
           key={bird.id}
