@@ -180,17 +180,13 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
           onDragStart={(e) => e.preventDefault()}
         />
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-      <div className="absolute bottom-1 left-1 right-1 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-        <h3 className="text-xs font-semibold font-chiron-heading">{game.title}</h3>
-        <p className="text-xs opacity-90">{game.subtitle}</p>
-      </div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
     </div>
     {/* Постоянно видимые названия и статус */}
-    <div className="h-[120px] bg-gray-800/50 px-4 py-2 flex flex-col justify-center">
-      <h3 className="text-sm font-semibold text-white font-chiron-heading truncate">{game.title}</h3>
-      <p className="text-xs text-gray-300 truncate">{game.subtitle}</p>
-      <span className="text-xs font-medium text-amber-400 mt-1">{game.status}</span>
+    <div className="h-[120px] bg-gray-800/90 px-4 py-3 flex flex-col justify-center border-t border-gray-700">
+      <h3 className="text-sm font-semibold text-white font-chiron-heading truncate mb-1">{game.title}</h3>
+      <p className="text-xs text-gray-300 truncate mb-2">{game.subtitle}</p>
+      <span className="text-xs font-medium text-amber-400">{game.status}</span>
     </div>
   </motion.div>
 );
