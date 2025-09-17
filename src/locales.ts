@@ -72,6 +72,7 @@ export const locales: Record<string, Locale> = {
       "Coming soon",
       "Coming soon",
       "Coming soon",
+      "Coming soon",
       "Coming soon"
     ],
     gameSubtitles: [
@@ -97,51 +98,35 @@ export const locales: Record<string, Locale> = {
     musicTracks: [
       {
         id: "track1",
-        title: "Forest Melody",
-        artist: "Alma Pixel",
+        title: "Forest",
+        artist: "Stavitskaya Daria",
         duration: "3:24",
-        src: "/music/forest-melody.mp3",
+        src: "/music/Stavitskaya_Daria_Forest.mp3",
         cover: "/music/covers/forest.jpg"
       },
       {
         id: "track2", 
-        title: "Cosmic Journey",
-        artist: "Alma Pixel",
+        title: "Location bone",
+        artist: "Stavitskaya Daria",
         duration: "4:12",
-        src: "/music/cosmic-journey.mp3",
-        cover: "/music/covers/cosmic.jpg"
+        src: "/music/Stavitskaya_Daria_Location_bone.mp3",
+        cover: "/music/covers/bone.jpg"
       },
       {
         id: "track3",
-        title: "Pixel Dreams",
-        artist: "Alma Pixel", 
+        title: "Location Forest",
+        artist: "Stavitskaya Daria", 
         duration: "2:58",
-        src: "/music/pixel-dreams.mp3",
-        cover: "/music/covers/pixel.jpg"
+        src: "/music/Stavitskaya_Daria_Location_Forest.mp3",
+        cover: "/music/covers/forest-location.jpg"
       },
       {
         id: "track4",
-        title: "Mystic Garden",
-        artist: "Alma Pixel",
+        title: "Location swamp",
+        artist: "Stavitskaya Daria",
         duration: "3:45",
-        src: "/music/mystic-garden.mp3", 
-        cover: "/music/covers/mystic.jpg"
-      },
-      {
-        id: "track5",
-        title: "Neon City",
-        artist: "Alma Pixel",
-        duration: "4:33",
-        src: "/music/neon-city.mp3",
-        cover: "/music/covers/neon.jpg"
-      },
-      {
-        id: "track6",
-        title: "Ocean Depths",
-        artist: "Alma Pixel",
-        duration: "3:17",
-        src: "/music/ocean-depths.mp3",
-        cover: "/music/covers/ocean.jpg"
+        src: "/music/Stavitskaya_Daria_Location_swamp.mp3", 
+        cover: "/music/covers/swamp.jpg"
       }
     ],
     sections: {
@@ -219,51 +204,35 @@ export const locales: Record<string, Locale> = {
     musicTracks: [
       {
         id: "track1",
-        title: "Forest Melody",
-        artist: "Alma Pixel",
+        title: "Forest",
+        artist: "Stavitskaya Daria",
         duration: "3:24",
-        src: "/music/forest-melody.mp3",
+        src: "/music/Stavitskaya_Daria_Forest.mp3",
         cover: "/music/covers/forest.jpg"
       },
       {
         id: "track2", 
-        title: "Cosmic Journey",
-        artist: "Alma Pixel",
+        title: "Location bone",
+        artist: "Stavitskaya Daria",
         duration: "4:12",
-        src: "/music/cosmic-journey.mp3",
-        cover: "/music/covers/cosmic.jpg"
+        src: "/music/Stavitskaya_Daria_Location_bone.mp3",
+        cover: "/music/covers/bone.jpg"
       },
       {
         id: "track3",
-        title: "Pixel Dreams",
-        artist: "Alma Pixel", 
+        title: "Location Forest",
+        artist: "Stavitskaya Daria", 
         duration: "2:58",
-        src: "/music/pixel-dreams.mp3",
-        cover: "/music/covers/pixel.jpg"
+        src: "/music/Stavitskaya_Daria_Location_Forest.mp3",
+        cover: "/music/covers/forest-location.jpg"
       },
       {
         id: "track4",
-        title: "Mystic Garden",
-        artist: "Alma Pixel",
+        title: "Location swamp",
+        artist: "Stavitskaya Daria",
         duration: "3:45",
-        src: "/music/mystic-garden.mp3", 
-        cover: "/music/covers/mystic.jpg"
-      },
-      {
-        id: "track5",
-        title: "Neon City",
-        artist: "Alma Pixel",
-        duration: "4:33",
-        src: "/music/neon-city.mp3",
-        cover: "/music/covers/neon.jpg"
-      },
-      {
-        id: "track6",
-        title: "Ocean Depths",
-        artist: "Alma Pixel",
-        duration: "3:17",
-        src: "/music/ocean-depths.mp3",
-        cover: "/music/covers/ocean.jpg"
+        src: "/music/Stavitskaya_Daria_Location_swamp.mp3", 
+        cover: "/music/covers/swamp.jpg"
       }
     ],
     sections: {
