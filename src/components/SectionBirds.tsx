@@ -34,8 +34,8 @@ const SectionBirds: React.FC<SectionBirdsProps> = ({
     
     return {
       id: index + 1,
-      startX: isLeftToRight ? -200 : 'calc(100vw + 200px)',
-      endX: isLeftToRight ? 'calc(100vw + 200px)' : -200,
+      startX: isLeftToRight ? -400 : 'calc(100vw + 400px)',
+      endX: isLeftToRight ? 'calc(100vw + 400px)' : -400,
       startY: baseY,
       curveY: [
         baseY,
