@@ -404,8 +404,8 @@ export default function App() {
               </p>
             </div>
             
-            {/* Music cards in 4 rows */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Music cards centered */}
+            <div className="flex flex-wrap justify-center gap-6 max-w-4xl mx-auto">
               {locale.musicTracks.map((track) => (
                 <MusicCard
                   key={track.id}
