@@ -24,15 +24,19 @@ const SectionBirds: React.FC<SectionBirdsProps> = ({
   sectionHeight, 
   birdCount = 3 
 }) => {
+  console.log(`SectionBirds: Creating ${birdCount} birds for section height ${sectionHeight}`);
+  console.log('SectionBirds: Birds array:', birds);
+  
   // Генерируем птиц для конкретного раздела
   const birds: Bird[] = Array.from({ length: birdCount }, (_, index) => {
-    // Все птицы летят слева направо
+    const isLeftToRight = index % 2 === 0;
+    // Распределяем птиц равномерно по высоте раздела
     const baseY = (sectionHeight / birdCount) * index + 100;
     
     return {
       id: index + 1,
-      startX: -200, // Все начинают слева
-      endX: 'calc(100vw + 200px)', // Все заканчивают справа
+      startX: isLeftToRight ? -200 : 'calc(100vw + 200px)',
+      endX: isLeftToRight ? 'calc(100vw + 200px)' : -200,
       startY: baseY,
       curveY: [
         baseY,
@@ -45,13 +49,12 @@ const SectionBirds: React.FC<SectionBirdsProps> = ({
       ],
       delay: index * 2,
       duration: 8 + (index * 2),
-      direction: 'left-to-right', // Все летят слева направо
-      scaleX: [-1, -1, -1, -1, -1, -1, -1] // Поворачиваем на 180° для полета вправо
+      direction: isLeftToRight ? 'left-to-right' : 'right-to-left',
+      scaleX: isLeftToRight 
+        ? [-1, -1, -1, -1, -1, -1, -1] 
+        : [1, 1, 1, 1, 1, 1, 1]
     };
   });
-
-  console.log(`SectionBirds: Creating ${birdCount} birds for section height ${sectionHeight}`);
-  console.log('SectionBirds: Birds array:', birds);
 
   return (
     <div className="absolute inset-0 pointer-events-none z-30 overflow-hidden">
@@ -86,8 +89,8 @@ const SectionBirds: React.FC<SectionBirdsProps> = ({
             <MovieClipAnimation
               mcPath="/animations/bird_ske_mc.json"
               texturePath="/animations/bird_ske_tex.png"
-              width={120}
-              height={120}
+              width={150}
+              height={150}
               loop={true}
               animation="fly"
               className="w-full h-full"
