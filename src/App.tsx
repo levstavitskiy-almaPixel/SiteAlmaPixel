@@ -555,25 +555,6 @@ export default function App() {
         <footer className="py-12 border-t border-gray-800">
           <Container>
             <div className="text-center text-gray-400">
-              {/* BangerDonats Image */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="mb-6"
-              >
-                <div className="relative mx-auto">
-                  <img 
-                    src="/BangerDonats.png?v=1" 
-                    alt="Banger Donats - Alma Pixel" 
-                    className="rounded-lg shadow-2xl"
-                    style={{ width: '600px', height: '600px', objectFit: 'contain' }}
-                    draggable={false}
-                    onDragStart={(e) => e.preventDefault()}
-                  />
-                </div>
-              </motion.div>
-              
               <p>© {new Date().getFullYear()} {locale.brand}. {locale.footer.copyright}</p>
             </div>
           </Container>
