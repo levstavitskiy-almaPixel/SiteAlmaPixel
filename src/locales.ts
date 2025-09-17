@@ -102,7 +102,7 @@ export const locales: Record<string, Locale> = {
         artist: "Stavitskaya Daria",
         duration: "3:24",
         src: "/music/Stavitskaya_Daria_Forest.mp3",
-        cover: "/music/covers/forest.jpg"
+        cover: "/music/covers/OwlPlay.png"
       },
       {
         id: "track2", 
@@ -110,7 +110,7 @@ export const locales: Record<string, Locale> = {
         artist: "Stavitskaya Daria",
         duration: "4:12",
         src: "/music/Stavitskaya_Daria_Location_bone.mp3",
-        cover: "/music/covers/bone.jpg"
+        cover: "/music/covers/OwlPlay.png"
       },
       {
         id: "track3",
@@ -118,7 +118,7 @@ export const locales: Record<string, Locale> = {
         artist: "Stavitskaya Daria", 
         duration: "2:58",
         src: "/music/Stavitskaya_Daria_Location_Forest.mp3",
-        cover: "/music/covers/forest-location.jpg"
+        cover: "/music/covers/OwlPlay.png"
       },
       {
         id: "track4",
@@ -126,7 +126,7 @@ export const locales: Record<string, Locale> = {
         artist: "Stavitskaya Daria",
         duration: "3:45",
         src: "/music/Stavitskaya_Daria_Location_swamp.mp3", 
-        cover: "/music/covers/swamp.jpg"
+        cover: "/music/covers/OwlPlay.png"
       }
     ],
     sections: {
@@ -208,7 +208,7 @@ export const locales: Record<string, Locale> = {
         artist: "Stavitskaya Daria",
         duration: "3:24",
         src: "/music/Stavitskaya_Daria_Forest.mp3",
-        cover: "/music/covers/forest.jpg"
+        cover: "/music/covers/OwlPlay.png"
       },
       {
         id: "track2", 
@@ -216,7 +216,7 @@ export const locales: Record<string, Locale> = {
         artist: "Stavitskaya Daria",
         duration: "4:12",
         src: "/music/Stavitskaya_Daria_Location_bone.mp3",
-        cover: "/music/covers/bone.jpg"
+        cover: "/music/covers/OwlPlay.png"
       },
       {
         id: "track3",
@@ -224,7 +224,7 @@ export const locales: Record<string, Locale> = {
         artist: "Stavitskaya Daria", 
         duration: "2:58",
         src: "/music/Stavitskaya_Daria_Location_Forest.mp3",
-        cover: "/music/covers/forest-location.jpg"
+        cover: "/music/covers/OwlPlay.png"
       },
       {
         id: "track4",
@@ -232,7 +232,7 @@ export const locales: Record<string, Locale> = {
         artist: "Stavitskaya Daria",
         duration: "3:45",
         src: "/music/Stavitskaya_Daria_Location_swamp.mp3", 
-        cover: "/music/covers/swamp.jpg"
+        cover: "/music/covers/OwlPlay.png"
       }
     ],
     sections: {

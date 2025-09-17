@@ -183,7 +183,7 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
     </div>
     {/* Постоянно видимые названия и статус */}
-    <div className="h-[120px] bg-gray-800/90 px-4 py-3 flex flex-col justify-center items-center text-center border-t border-gray-700">
+    <div className="h-[120px] bg-gray-800/90 px-4 py-3 flex flex-col justify-center items-center text-center">
       <h3 className="text-sm font-semibold text-white font-chiron-heading mb-1 leading-tight">{game.title}</h3>
       <p className="text-xs text-gray-300 mb-2 leading-tight">{game.subtitle}</p>
       <span className="text-xs font-medium text-amber-400">{game.status}</span>
@@ -227,10 +227,24 @@ export default function App() {
 
 
   const handlePlayTrack = (trackId: string) => {
+    // Останавливаем все аудио элементы перед воспроизведением нового
+    const allAudioElements = document.querySelectorAll('audio');
+    allAudioElements.forEach(audio => {
+      audio.pause();
+      audio.currentTime = 0;
+    });
+    
     setCurrentTrack(trackId);
   };
 
   const handleStopTrack = () => {
+    // Останавливаем все аудио элементы
+    const allAudioElements = document.querySelectorAll('audio');
+    allAudioElements.forEach(audio => {
+      audio.pause();
+      audio.currentTime = 0;
+    });
+    
     setCurrentTrack(null);
   };
 
@@ -249,6 +263,7 @@ export default function App() {
           <header 
             className="sticky top-0 z-40 backdrop-blur-sm relative cloud-animation"
             style={{
+              backgroundColor: '#216477',
               backgroundImage: 'url(/Cloud.png)',
               backgroundSize: 'auto 100%',
               backgroundRepeat: 'repeat-x',
@@ -256,7 +271,7 @@ export default function App() {
             }}
           >
             <Container>
-            <div className="flex h-[300px] items-start justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative z-10 pt-2">
+            <div className="flex h-[350px] items-start justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative z-10 pt-2">
               <div className="flex items-center gap-3">
                 <div className="w-[90px] h-[90px] flex items-center justify-center">
                   <img 
@@ -268,7 +283,7 @@ export default function App() {
                   />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-white font-chiron-heading">{locale.brand}</h1>
+                  <h1 className="font-bold text-white font-chiron-heading" style={{ fontSize: '40px' }}>{locale.brand}</h1>
                   <p className="text-sm text-gray-400 -mt-1">{locale.tagline}</p>
                 </div>
               </div>
@@ -316,12 +331,12 @@ export default function App() {
         {/* Games */}
         <section 
           id="games" 
-          className="py-10 pb-20 bg-gray-900/50 overflow-y-hidden md:overflow-y-hidden relative" 
-          style={{ height: 'auto', minHeight: '700px' }}
+          className="py-10 pb-20 overflow-y-hidden md:overflow-y-hidden relative" 
+          style={{ height: 'auto', minHeight: '700px', backgroundColor: '#216477' }}
         >
           <Container>
             <div className="text-center mb-8">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.games.title}</h2>
+              <h2 className="font-bold text-white mb-4 font-chiron-heading uppercase" style={{ fontSize: '35px' }}>{locale.sections.games.title}</h2>
             </div>
           </Container>
           
@@ -346,7 +361,7 @@ export default function App() {
         >
           <Container>
             <div className="text-center">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 font-chiron-heading">{locale.sections.about.title}</h2>
+              <h2 className="font-bold text-white mb-8 font-chiron-heading uppercase" style={{ fontSize: '35px' }}>{locale.sections.about.title}</h2>
               <div className="prose prose-lg text-gray-300 max-w-4xl mx-auto">
                 <p className="text-xl leading-relaxed">
                   {locale.sections.about.description1}
@@ -368,14 +383,14 @@ export default function App() {
         >
           <Container>
             <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.music.title}</h2>
+              <h2 className="font-bold text-white mb-4 font-chiron-heading uppercase" style={{ fontSize: '35px' }}>{locale.sections.music.title}</h2>
               <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
                 {locale.sections.music.description}
               </p>
             </div>
             
-            {/* Music cards centered */}
-            <div className="flex flex-wrap justify-center gap-6 max-w-4xl mx-auto">
+            {/* Music cards in 2 rows */}
+            <div className="flex justify-center items-center gap-0 max-w-lg mx-auto">
               {locale.musicTracks.map((track) => (
                 <MusicCard
                   key={track.id}
@@ -388,41 +403,52 @@ export default function App() {
             </div>
             
             {/* Анимации музыкантов */}
-            <div className="mt-16 flex flex-row items-center justify-center -space-x-48 sm:-space-x-56">
-              {/* Анимация лягушки-барда */}
-              <MovieClipAnimation 
-                mcPath="/animations/frog_bard_mc.json"
-                texturePath="/animations/frog_bard_tex.png"
-                width={400}
-                height={450}
-                loop={true}
-                className="rounded-lg"
-                offsetY={35}
-                animation="damage"
-              />
+            <div className="mt-16 relative flex justify-center">
+              {/* Наложение для музыкантов */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20 z-10 pointer-events-none"></div>
               
-              {/* Анимация musicKar */}
-              <MovieClipAnimation 
-                mcPath="/animations/musicKar_mc.json"
-                texturePath="/animations/musicKar_tex.png"
-                width={400}
-                height={450}
-                loop={true}
-                className="rounded-lg"
-                offsetY={20}
-                animation="idle"
-              />
-              
-              {/* Анимация лисы-музыканта */}
-              <MovieClipAnimation 
-                mcPath="/animations/fox_Music_mc.json"
-                texturePath="/animations/fox_Music_tex.png"
-                width={400}
-                height={450}
-                loop={true}
-                className="rounded-lg"
-                animation="music"
-              />
+              <div className="flex flex-row items-center justify-center relative z-0">
+                {/* Анимация лягушки-барда */}
+                <div className="p-2 rounded-lg" style={{ marginRight: '-200px', zIndex: 1 }}>
+                  <MovieClipAnimation 
+                    mcPath="/animations/frog_bard_mc.json"
+                    texturePath="/animations/frog_bard_tex.png"
+                    width={300}
+                    height={350}
+                    loop={true}
+                    className="rounded-lg opacity-90"
+                    offsetY={35}
+                    animation="damage"
+                  />
+                </div>
+                
+                {/* Анимация musicKar */}
+                <div className="p-2 rounded-lg" style={{ zIndex: 2 }}>
+                  <MovieClipAnimation 
+                    mcPath="/animations/musicKar_mc.json"
+                    texturePath="/animations/musicKar_tex.png"
+                    width={300}
+                    height={350}
+                    loop={true}
+                    className="rounded-lg opacity-90"
+                    offsetY={20}
+                    animation="idle"
+                  />
+                </div>
+                
+                {/* Анимация лисы-музыканта */}
+                <div className="p-2 rounded-lg" style={{ marginLeft: '-200px', zIndex: 1 }}>
+                  <MovieClipAnimation 
+                    mcPath="/animations/fox_Music_mc.json"
+                    texturePath="/animations/fox_Music_tex.png"
+                    width={300}
+                    height={350}
+                    loop={true}
+                    className="rounded-lg opacity-90"
+                    animation="music"
+                  />
+                </div>
+              </div>
             </div>
           </Container>
         </section>
@@ -439,7 +465,7 @@ export default function App() {
         >
           <Container>
             <div className="max-w-sm mx-auto text-center">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 font-chiron-heading">{locale.sections.contact.title}</h2>
+              <h2 className="font-bold text-white mb-8 font-chiron-heading uppercase" style={{ fontSize: '35px' }}>{locale.sections.contact.title}</h2>
               <p className="text-base sm:text-lg text-gray-300 mb-8">
                 {locale.sections.contact.description}
               </p>
