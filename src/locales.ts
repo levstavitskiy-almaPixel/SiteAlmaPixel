@@ -57,7 +57,7 @@ export const locales: Record<string, Locale> = {
     brand: "Alma Pixel",
     tagline: "Indie Game Studio",
     description: "We create unique indie games with hand-drawn animation, atmospheric music, and deep gameplay.",
-    email: "hello@alma-pixel.com",
+    email: "support@alma-pixel.com",
     telegram: "@levstavitskiy",
     nav: {
       games: "COMING SOON",
@@ -179,7 +179,7 @@ export const locales: Record<string, Locale> = {
     brand: "Alma Pixel",
     tagline: "Инди Студия Игр",
     description: "Создаем уникальные инди-игры с ручной анимацией, атмосферной музыкой и глубоким геймплеем.",
-    email: "hello@alma-pixel.com",
+    email: "support@alma-pixel.com",
     telegram: "@levstavitskiy",
     nav: {
       games: "Игры",
