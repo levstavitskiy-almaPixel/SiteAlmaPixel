@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import MovieClipAnimation from "./components/MovieClipAnimation";
 import MusicCard from "./components/MusicCard";
 import FlyingBirds from "./components/FlyingBirds";
-import SectionBirds from "./components/SectionBirds";
 import { locales, type Locale } from "./locales";
 
 // Функция для автоматического создания игр на основе доступных изображений
@@ -324,7 +323,6 @@ export default function App() {
           className="py-10 pb-20 bg-gray-900/50 overflow-y-hidden md:overflow-y-hidden relative" 
           style={{ height: 'auto', minHeight: '700px' }}
         >
-          <SectionBirds sectionHeight={700} birdCount={3} />
           <Container>
             <div className="text-center mb-8">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.games.title}</h2>
@@ -350,7 +348,6 @@ export default function App() {
           id="about" 
           className="py-20 md:overflow-y-hidden relative" 
         >
-          <SectionBirds sectionHeight={600} birdCount={3} />
           <Container>
             <div className="max-w-6xl mx-auto">
                <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -395,7 +392,6 @@ export default function App() {
           id="music" 
           className="py-20 md:overflow-y-hidden relative" 
         >
-          <SectionBirds sectionHeight={800} birdCount={3} />
           <Container>
             <div className="text-center mb-12">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-chiron-heading">{locale.sections.music.title}</h2>
@@ -467,7 +463,6 @@ export default function App() {
           id="contact" 
           className="py-20 bg-gray-900/50 md:overflow-y-hidden relative" 
         >
-          <SectionBirds sectionHeight={600} birdCount={3} />
           <Container>
             <div className="max-w-sm mx-auto text-center">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 font-chiron-heading">{locale.sections.contact.title}</h2>
