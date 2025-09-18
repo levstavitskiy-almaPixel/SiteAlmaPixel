@@ -336,12 +336,14 @@ export default function App() {
     const name = formData.get('name') as string;
     const email = formData.get('email') as string;
     const message = formData.get('message') as string;
+    const subject = formData.get('subject') as string;
     
     const mailtoBody = encodeURIComponent(`Message:\n\n${message}\n\n---\nSender Info:\nName: ${name}\nEmail: ${email}`);
-    const mailtoSubject = encodeURIComponent(`${locale.sections.contact.form.subject} - ${name}`);
+    const mailtoSubject = encodeURIComponent(`${subject || locale.sections.contact.form.subject} - ${name}`);
     const mailtoLink = `mailto:${locale.email}?subject=${mailtoSubject}&body=${mailtoBody}`;
     
-    window.open(mailtoLink, '_blank');
+    // Открываем почтовый клиент вместо отправки
+    window.location.href = mailtoLink;
   };
 
 
@@ -402,8 +404,8 @@ export default function App() {
                   />
                 </div>
                 <div>
-                  <h1 className="font-bold text-white font-chiron-heading" style={{ fontSize: '40px' }}>{locale.brand}</h1>
-                  <p className="text-sm text-gray-400 -mt-1">{locale.tagline}</p>
+                  <h1 className="font-bold font-chiron-heading" style={{ fontSize: '40px', color: 'white', textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>{locale.brand}</h1>
+                  <p className="text-sm -mt-1" style={{ color: 'white', textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>{locale.tagline}</p>
                 </div>
               </div>
               
@@ -446,14 +448,21 @@ export default function App() {
           </Container>
         </header>
 
+        {/* Градиент от шапки к Games */}
+        <div 
+          className="h-20 w-full"
+          style={{
+            background: 'linear-gradient(to bottom, transparent, #216477)'
+          }}
+        ></div>
 
         {/* Games */}
         <section 
           id="games" 
-          className="py-10 pb-20 overflow-y-hidden md:overflow-y-hidden relative" 
+          className="py-10 pb-32 overflow-y-hidden md:overflow-y-hidden relative" 
           style={{ 
             height: 'auto', 
-            minHeight: '700px', 
+            minHeight: '800px', 
             backgroundColor: '#216477',
             backgroundImage: 'url(/BgSite2.png)',
             backgroundSize: 'auto',
@@ -463,23 +472,22 @@ export default function App() {
         >
           <Container>
             <div className="text-center mb-8">
-              <h2 className="font-bold text-white mb-4 font-chiron-heading uppercase" style={{ fontSize: '35px' }}>{locale.sections.games.title}</h2>
+              <h2 className="font-bold mb-4 font-chiron-heading uppercase" style={{ fontSize: '35px', color: 'white', textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>{locale.sections.games.title}</h2>
             </div>
           </Container>
           
-          <HorizontalScroll>
+          <div className="mt-8">
+            <HorizontalScroll>
             {generateGames(locale).map((game, i) => (
               <div key={i} className="flex-shrink-0 w-[350px] h-[600px] mx-1">
                 <GameCard game={game} index={i} />
               </div>
             ))}
           </HorizontalScroll>
+          </div>
+          
+          <div className="mt-8"></div>
         </section>
-
-        {/* Divider */}
-        <div className="flex justify-center">
-          <div className="w-1/2 border-t-2 border-gray-600"></div>
-        </div>
 
         {/* About */}
         <section 
@@ -498,19 +506,26 @@ export default function App() {
           </Container>
          </section>
 
-        {/* Divider */}
-        <div className="flex justify-center">
-          <div className="w-1/2 border-t-2 border-gray-600"></div>
-        </div>
-
         {/* Music */}
         <section 
           id="music" 
           className="py-20 md:overflow-y-hidden relative" 
         >
-          <Container>
-            <div className="text-center mb-12">
-              <h2 className="font-bold text-white mb-4 font-chiron-heading uppercase" style={{ fontSize: '35px' }}>{locale.sections.music.title}</h2>
+          {/* Фон травы с анимацией */}
+          <div 
+            className="absolute inset-0 w-full h-full"
+            style={{
+              backgroundImage: 'url(/Grass.png)',
+              backgroundSize: 'auto 100%',
+              backgroundRepeat: 'repeat-x',
+              backgroundPosition: '0 0',
+              animation: 'grassWave 4s ease-in-out infinite'
+            }}
+          ></div>
+          
+          <Container className="relative z-20">
+            <div className="text-center mb-12 relative z-30">
+              <h2 className="font-bold mb-4 font-chiron-heading uppercase" style={{ fontSize: '35px', color: 'white', textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>{locale.sections.music.title}</h2>
               <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
                 {locale.sections.music.description}
               </p>
@@ -531,7 +546,7 @@ export default function App() {
             </MusicHorizontalScroll>
             
             {/* Анимации музыкантов */}
-            <div className="mt-16 relative flex justify-center">
+            <div className="mt-24 relative flex justify-center">
               {/* Наложение для музыкантов */}
               <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20 z-10 pointer-events-none"></div>
               
@@ -581,11 +596,6 @@ export default function App() {
           </Container>
         </section>
 
-        {/* Divider */}
-        <div className="flex justify-center">
-          <div className="w-1/2 border-t-2 border-gray-600"></div>
-        </div>
-
         {/* Contact */}
         <section 
           id="contact" 
@@ -605,12 +615,12 @@ export default function App() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="mb-8"
               >
-                <div className="relative mx-auto">
+                <div className="relative mx-auto p-10">
                   <MovieClipAnimation 
                     mcPath="/animations/Yabloko_mc.json"
                     texturePath="/animations/Yabloko_tex.png"
-                    width={400}
-                    height={400}
+                    width={440}
+                    height={440}
                     loop={true}
                     className="rounded-lg"
                     animation="animtion0"
@@ -694,9 +704,6 @@ export default function App() {
                 <div className="mt-6 text-center">
                   <p className="text-gray-400 text-sm">
                     {locale.sections.contact.form.orDirect} <a href={`mailto:${locale.email}`} className="text-amber-400 hover:text-amber-300">{locale.email}</a>
-                  </p>
-                  <p className="text-gray-400 text-sm mt-2">
-                    Telegram: <span className="text-amber-400">{locale.telegram}</span>
                   </p>
                 </div>
                 </motion.div>
