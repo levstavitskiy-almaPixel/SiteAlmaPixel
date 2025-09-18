@@ -6,23 +6,32 @@ import MusicCard from "./components/MusicCard";
 import FlyingBirds from "./components/FlyingBirds";
 import { locales, type Locale } from "./locales";
 
-// Функция для автоматического создания игр на основе доступных изображений
+// Функция для автоматического создания игр на основе доступных изображений и видео
 const generateGames = (locale: Locale) => {
   const games = [];
   const maxImages = 8; // Максимальное количество изображений
   
+  // Видео для первых двух карточек
+  const videoSources = ['/video/Owl.mov', '/video/Balet.mov'];
+  
   for (let i = 1; i <= maxImages; i++) {
-    const imageSrc = `/shot-${i}.png`;
     const titleIndex = (i - 1) % locale.gameTitles.length;
     const subtitleIndex = (i - 1) % locale.gameSubtitles.length;
     const statusIndex = (i - 1) % locale.gameStatuses.length;
     
+    // Первые 2 карточки используют видео, остальные - изображения
+    const isVideo = i <= 2;
+    const backgroundSrc = `/shot-${i}.png`; // Фон всегда shot-*.png
+    const videoSrc = isVideo ? videoSources[i - 1] : null;
+    
     games.push({
       title: locale.gameTitles[titleIndex],
       subtitle: locale.gameSubtitles[subtitleIndex],
-      src: imageSrc,
+      src: backgroundSrc, // Фоновое изображение
+      videoSrc: videoSrc, // Видео (только для первых двух)
       alt: `${locale.gameTitles[titleIndex]} - скриншот`,
-      status: locale.gameStatuses[statusIndex]
+      status: locale.gameStatuses[statusIndex],
+      isVideo: isVideo
     });
   }
   
@@ -291,13 +300,41 @@ const GameCard = ({ game, index }: { game: any; index: number }) => (
   >
     <div className="relative rounded-lg bg-gray-800 overflow-hidden flex-1">
       <div className="w-full h-full flex items-center justify-center overflow-hidden">
+        {/* Фоновое изображение для всех карточек */}
         <img 
           src={game.src} 
           alt={game.alt} 
-          className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105" 
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
           draggable={false}
           onDragStart={(e) => e.preventDefault()}
         />
+        
+        {/* Контейнер с маской только для видео */}
+        {game.isVideo && (
+          <div 
+            className="w-full h-full flex items-center justify-center"
+            style={{
+              maskImage: 'url(/Conteiner.png)',
+              maskSize: 'contain',
+              maskRepeat: 'no-repeat',
+              maskPosition: 'center',
+              WebkitMaskImage: 'url(/Conteiner.png)',
+              WebkitMaskSize: 'contain',
+              WebkitMaskRepeat: 'no-repeat',
+              WebkitMaskPosition: 'center'
+            }}
+          >
+            <video 
+              src={game.videoSrc} 
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              style={{ objectPosition: 'center 60%' }}
+              autoPlay
+              loop
+              muted
+              playsInline
+            />
+          </div>
+        )}
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
     </div>
@@ -396,7 +433,7 @@ export default function App() {
               <div className="flex items-center gap-3">
                 <div className="w-[110px] h-[110px] flex items-center justify-center">
                   <img 
-                    src="/AlmaPixelLogo.png?v=2" 
+                    src="/AlmaPixelLogo.png?v=3" 
                     alt="Alma Pixel Logo" 
                     className="w-full h-full object-contain"
                     draggable={false}
