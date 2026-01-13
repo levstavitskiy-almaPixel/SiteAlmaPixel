@@ -451,6 +451,7 @@ export default function App() {
                 <a href="#about" className="text-gray-300 hover:text-amber-400 transition-colors">{locale.nav.about}</a>
                 <a href="#music" className="text-gray-300 hover:text-amber-400 transition-colors">{locale.sections.music.title}</a>
                 <a href="#contact" className="text-gray-300 hover:text-amber-400 transition-colors">{locale.nav.contact}</a>
+                <a href="#privacy" className="text-gray-300 hover:text-amber-400 transition-colors">{locale.nav.privacy}</a>
               </nav>
 
               <div className="flex items-center gap-2" style={{ position: 'absolute', right: '10px', top: '10px' }}>
@@ -749,11 +750,111 @@ export default function App() {
           </Container>
         </section>
 
+        {/* Privacy Policy Section */}
+        <section id="privacy" className="py-20">
+          <Container>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="max-w-4xl mx-auto"
+            >
+              <h2 className="text-4xl font-bold mb-4 text-center" style={{ color: '#edc77b', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
+                {locale.sections.privacy.title}
+              </h2>
+              <p className="text-gray-400 text-sm text-center mb-8">
+                {locale.sections.privacy.lastUpdated}
+              </p>
+
+              <div className="space-y-8 text-gray-300 leading-relaxed">
+                <div>
+                  <p className="mb-4">{locale.sections.privacy.sections.introduction}</p>
+                </div>
+
+                <div>
+                  <h3 className="text-2xl font-semibold mb-3 text-amber-400">
+                    {locale.sections.privacy.sections.dataCollection.title}
+                  </h3>
+                  <p>{locale.sections.privacy.sections.dataCollection.content}</p>
+                </div>
+
+                <div>
+                  <h3 className="text-2xl font-semibold mb-3 text-amber-400">
+                    {locale.sections.privacy.sections.permissions.title}
+                  </h3>
+                  <div className="space-y-3">
+                    <div>
+                      <strong className="text-amber-300">{language === 'en' ? 'Camera:' : 'Камера:'}</strong>
+                      <p className="ml-2 inline">{locale.sections.privacy.sections.permissions.camera}</p>
+                    </div>
+                    <div>
+                      <strong className="text-amber-300">{language === 'en' ? 'Internet:' : 'Интернет:'}</strong>
+                      <p className="ml-2 inline">{locale.sections.privacy.sections.permissions.internet}</p>
+                    </div>
+                    <div>
+                      <strong className="text-amber-300">{language === 'en' ? 'Analytics:' : 'Аналитика:'}</strong>
+                      <p className="ml-2 inline">{locale.sections.privacy.sections.permissions.analytics}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-2xl font-semibold mb-3 text-amber-400">
+                    {locale.sections.privacy.sections.dataUsage.title}
+                  </h3>
+                  <p>{locale.sections.privacy.sections.dataUsage.content}</p>
+                </div>
+
+                <div>
+                  <h3 className="text-2xl font-semibold mb-3 text-amber-400">
+                    {locale.sections.privacy.sections.dataStorage.title}
+                  </h3>
+                  <p>{locale.sections.privacy.sections.dataStorage.content}</p>
+                </div>
+
+                <div>
+                  <h3 className="text-2xl font-semibold mb-3 text-amber-400">
+                    {locale.sections.privacy.sections.userRights.title}
+                  </h3>
+                  <p>{locale.sections.privacy.sections.userRights.content}</p>
+                </div>
+
+                <div>
+                  <h3 className="text-2xl font-semibold mb-3 text-amber-400">
+                    {locale.sections.privacy.sections.children.title}
+                  </h3>
+                  <p>{locale.sections.privacy.sections.children.content}</p>
+                </div>
+
+                <div>
+                  <h3 className="text-2xl font-semibold mb-3 text-amber-400">
+                    {locale.sections.privacy.sections.changes.title}
+                  </h3>
+                  <p>{locale.sections.privacy.sections.changes.content}</p>
+                </div>
+
+                <div>
+                  <h3 className="text-2xl font-semibold mb-3 text-amber-400">
+                    {locale.sections.privacy.sections.contact.title}
+                  </h3>
+                  <p>{locale.sections.privacy.sections.contact.content}</p>
+                </div>
+              </div>
+            </motion.div>
+          </Container>
+        </section>
+
         {/* Footer */}
         <footer className="py-12 border-t border-gray-800">
           <Container>
-            <div className="text-center text-gray-400">
+            <div className="text-center text-gray-400 space-y-2">
               <p>© {new Date().getFullYear()} {locale.brand}. {locale.footer.copyright}</p>
+              <p>
+                <a href="#privacy" className="text-amber-400 hover:text-amber-300 transition-colors underline">
+                  {locale.footer.privacyLink}
+                </a>
+              </p>
             </div>
           </Container>
         </footer>
