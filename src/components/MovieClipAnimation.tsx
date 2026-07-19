@@ -9,7 +9,7 @@ interface MovieClipAnimationProps {
   className?: string;
   offsetY?: number;
   scale?: number;
-  animation?: string; // Добавляем поддержку выбора анимации
+  animation?: string;
 }
 
 interface MovieClipData {
@@ -46,37 +46,42 @@ const MovieClipAnimation: React.FC<MovieClipAnimationProps> = ({
   className = "",
   offsetY = 0,
   scale = 1,
-  animation = "idle" // По умолчанию "idle", но можно указать "fly"
+  animation = "idle",
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [image, setImage] = useState<HTMLImageElement | null>(null);
+  const [texture, setTexture] = useState<HTMLImageElement | null>(null);
   const [mcData, setMcData] = useState<MovieClipData | null>(null);
   const [currentFrame, setCurrentFrame] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    // Загружаем изображение
+    let cancelled = false;
+
     const img = new Image();
     img.onload = () => {
-      setImage(img);
+      if (cancelled) return;
+      setTexture(img);
     };
     img.src = texturePath;
 
-    // Загружаем данные MovieClip
     fetch(mcPath)
-      .then(response => response.json())
-      .then(data => {
-        console.log('Loaded MovieClip data:', data);
+      .then((response) => response.json())
+      .then((data) => {
+        if (cancelled) return;
         setMcData(data);
         setIsLoaded(true);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error loading MovieClip data:', error);
       });
+
+    return () => {
+      cancelled = true;
+    };
   }, [mcPath, texturePath]);
 
   useEffect(() => {
-    if (!isLoaded || !image || !mcData) return;
+    if (!isLoaded || !texture || !mcData) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -84,107 +89,51 @@ const MovieClipAnimation: React.FC<MovieClipAnimationProps> = ({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Находим анимацию по имени
-    const animationData = Object.values(mcData.mc)[0]; // Берем первую анимацию
-    if (!animationData) {
-      console.error('Animation not found in MovieClip data:', mcData);
-      return;
-    }
-    
-    console.log('Found animation data:', animationData);
-    console.log('Requested animation:', animation);
-    
-    // Находим нужную анимацию по имени
-    const animationLabel = animationData.labels.find(label => label.name === animation);
-    if (!animationLabel) {
-      console.error(`Animation "${animation}" not found. Available animations:`, animationData.labels.map(l => l.name));
-      // Попробуем использовать первую доступную анимацию
-      const firstAnimation = animationData.labels[0];
-      if (firstAnimation) {
-        console.log(`Using first available animation: "${firstAnimation.name}"`);
-        const animate = () => {
-          ctx.clearRect(0, 0, width, height);
-          
-          const frameIndex = firstAnimation.frame - 1 + currentFrame;
-          const frame = animationData.frames[frameIndex];
-          if (!frame) return;
+    const animationData = Object.values(mcData.mc)[0];
+    if (!animationData) return;
 
-          const resource = mcData.res[frame.res];
-          if (!resource) return;
+    const animationLabel =
+      animationData.labels.find((label) => label.name === animation) ||
+      animationData.labels[0];
 
-          const centerX = width / 2;
-          const centerY = height / 2;
-          
-          const drawWidth = resource.w * scale;
-          const drawHeight = resource.h * scale;
-          
-          const drawX = centerX + frame.x * scale;
-          const drawY = centerY + frame.y * scale + offsetY;
-
-          ctx.drawImage(
-            image,
-            resource.x, resource.y, resource.w, resource.h,
-            drawX, drawY, drawWidth, drawHeight
-          );
-        };
-
-        animate();
-
-        const interval = setInterval(() => {
-          setCurrentFrame(prev => {
-            const next = prev + 1;
-            const maxFrames = firstAnimation.end - firstAnimation.frame + 1;
-            if (next >= maxFrames) {
-              return loop ? 0 : maxFrames - 1;
-            }
-            return next;
-          });
-        }, 1000 / animationData.frameRate);
-
-        return () => clearInterval(interval);
-      }
-      return;
-    }
-    
-    console.log(`Playing animation "${animation}":`, animationLabel);
+    if (!animationLabel) return;
 
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
-      
-      // Вычисляем индекс кадра с учетом выбранной анимации
-      const frameIndex = animationLabel.frame - 1 + currentFrame; // -1 потому что индексы с 0
+
+      const frameIndex = animationLabel.frame - 1 + currentFrame;
       const frame = animationData.frames[frameIndex];
       if (!frame) return;
 
       const resource = mcData.res[frame.res];
       if (!resource) return;
 
-      // Вычисляем позицию для центрирования
       const centerX = width / 2;
       const centerY = height / 2;
-      
-      // Вычисляем размеры отрисовки с учетом масштаба
       const drawWidth = resource.w * scale;
       const drawHeight = resource.h * scale;
-      
-      // Позиция кадра с учетом offset из MovieClip и дополнительного offsetY
       const drawX = centerX + frame.x * scale;
       const drawY = centerY + frame.y * scale + offsetY;
 
-      // Рисуем кадр
       ctx.drawImage(
-        image,
-        resource.x, resource.y, resource.w, resource.h,
-        drawX, drawY, drawWidth, drawHeight
+        texture,
+        resource.x,
+        resource.y,
+        resource.w,
+        resource.h,
+        drawX,
+        drawY,
+        drawWidth,
+        drawHeight
       );
     };
 
     animate();
 
     const interval = setInterval(() => {
-      setCurrentFrame(prev => {
+      setCurrentFrame((prev) => {
         const next = prev + 1;
-        const maxFrames = animationLabel.end - animationLabel.frame + 1; // Количество кадров в анимации
+        const maxFrames = animationLabel.end - animationLabel.frame + 1;
         if (next >= maxFrames) {
           return loop ? 0 : maxFrames - 1;
         }
@@ -193,23 +142,38 @@ const MovieClipAnimation: React.FC<MovieClipAnimationProps> = ({
     }, 1000 / animationData.frameRate);
 
     return () => clearInterval(interval);
-  }, [isLoaded, image, mcData, currentFrame, width, height, loop, animation]);
+  }, [isLoaded, texture, mcData, currentFrame, width, height, loop, animation, scale, offsetY]);
 
-  if (!isLoaded) {
+  if (!isLoaded || !texture) {
     return (
-      <div className={`flex items-center justify-center ${className}`} style={{ width, height }}>
-        <div className="text-white">Loading animation...</div>
-      </div>
+      <div
+        className={className}
+        style={{ width, height, background: "transparent" }}
+        aria-hidden
+      />
     );
   }
 
   return (
-    <div className={`bg-gray-800/20 rounded-lg p-4 ${className}`}>
+    <div
+      className={className}
+      style={{
+        width,
+        height,
+        background: "transparent",
+        lineHeight: 0,
+        overflow: "visible",
+      }}
+    >
       <canvas
         ref={canvasRef}
         width={width}
         height={height}
-        style={{ imageRendering: 'auto' }}
+        style={{
+          display: "block",
+          background: "transparent",
+          imageRendering: "auto",
+        }}
       />
     </div>
   );

@@ -1,46 +1,50 @@
-
 import React, { useState, useRef, useEffect } from "react";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import MovieClipAnimation from "./components/MovieClipAnimation";
-import MusicCard from "./components/MusicCard";
 import FlyingBirds from "./components/FlyingBirds";
+import ContactPage from "./components/ContactPage";
+import MusicPage from "./components/MusicPage";
+import PrivacyPage from "./components/PrivacyPage";
+import BlogPostPage from "./components/BlogPostPage";
+import Hero from "./components/Hero";
+import WaveDivider from "./components/WaveDivider";
+import ScrollReveal from "./components/ScrollReveal";
 import { locales, type Locale } from "./locales";
 
-// Функция для автоматического создания игр на основе доступных изображений и видео
 const generateGames = (locale: Locale) => {
   const games = [];
-  const maxImages = 8; // Максимальное количество изображений
-  
-  // Видео для первых двух карточек
-  const videoSources = ['/video/Owl.mov', '/video/Balet.mov'];
-  
+  const maxImages = 8;
+
   for (let i = 1; i <= maxImages; i++) {
     const titleIndex = (i - 1) % locale.gameTitles.length;
     const subtitleIndex = (i - 1) % locale.gameSubtitles.length;
     const statusIndex = (i - 1) % locale.gameStatuses.length;
-    
-    // Первые 2 карточки используют видео, остальные - изображения
-    const isVideo = i <= 2;
-    const backgroundSrc = `/shot-${i}.png`; // Фон всегда shot-*.png
-    const videoSrc = isVideo ? videoSources[i - 1] : null;
-    
+
     games.push({
       title: locale.gameTitles[titleIndex],
       subtitle: locale.gameSubtitles[subtitleIndex],
-      src: backgroundSrc, // Фоновое изображение
-      videoSrc: videoSrc, // Видео (только для первых двух)
-      alt: `${locale.gameTitles[titleIndex]} - скриншот`,
+      src: `/shot-${i}.png`,
+      alt: `${locale.gameTitles[titleIndex]} - screenshot`,
       status: locale.gameStatuses[statusIndex],
-      isVideo: isVideo
     });
   }
-  
+
   return games;
 };
 
-  const Container = ({ children }: { children: React.ReactNode }) => (
-    <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-[200px] xl:px-[200px]">{children}</div>
-  );
+const Container = ({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <div
+    className={`w-full max-w-[1100px] mx-auto px-5 sm:px-8 md:px-10 ${className}`}
+  >
+    {children}
+  </div>
+);
 
 const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -49,38 +53,8 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
   const [scrollLeft, setScrollLeft] = useState(0);
   const lastMoveTime = useRef(0);
 
-  // Инициализация: начинаем с левого края
   useEffect(() => {
-    if (scrollRef.current) {
-      // Принудительно устанавливаем скролл в начало
-      scrollRef.current.scrollLeft = 0;
-    }
-  }, []);
-
-  // Обновляем позицию при изменении размера окна
-  useEffect(() => {
-    const handleResize = () => {
-      if (scrollRef.current) {
-        const isMobile = window.innerWidth < 768;
-        
-        if (!isMobile) {
-          // На десктопе сохраняем текущую позицию
-          const containerWidth = scrollRef.current.clientWidth;
-          const cardWidth = 350;
-          const scrollPosition = scrollRef.current.scrollLeft;
-          
-          // Пересчитываем позицию для текущей карточки
-          const centerPosition = scrollPosition + containerWidth / 2;
-          const nearestIndex = Math.round(centerPosition / cardWidth);
-          const targetScroll = nearestIndex * cardWidth - containerWidth / 2 + cardWidth / 2;
-          
-          scrollRef.current.scrollLeft = Math.max(0, targetScroll);
-        }
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    if (scrollRef.current) scrollRef.current.scrollLeft = 0;
   }, []);
 
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -88,159 +62,27 @@ const HorizontalScroll = ({ children }: { children: React.ReactNode }) => {
     setIsDragging(true);
     setStartX(e.pageX - scrollRef.current.offsetLeft);
     setScrollLeft(scrollRef.current.scrollLeft);
-    scrollRef.current.style.cursor = 'grabbing';
+    scrollRef.current.style.cursor = "grabbing";
   };
 
   const handleMouseLeave = () => {
     setIsDragging(false);
-    if (scrollRef.current) {
-      scrollRef.current.style.cursor = 'grab';
-    }
+    if (scrollRef.current) scrollRef.current.style.cursor = "grab";
   };
 
   const handleMouseUp = () => {
     setIsDragging(false);
-    if (scrollRef.current) {
-      scrollRef.current.style.cursor = 'grab';
-    }
+    if (scrollRef.current) scrollRef.current.style.cursor = "grab";
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging || !scrollRef.current) return;
-    
     const now = Date.now();
-    if (now - lastMoveTime.current < 16) return; // Throttle to ~60fps
+    if (now - lastMoveTime.current < 16) return;
     lastMoveTime.current = now;
-    
     e.preventDefault();
     const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 1.2; // Еще более плавный скролл
-    scrollRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  // Touch события для мобильных устройств
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (!scrollRef.current) return;
-    setIsDragging(true);
-    setStartX(e.touches[0].pageX - scrollRef.current.offsetLeft);
-    setScrollLeft(scrollRef.current.scrollLeft);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging || !scrollRef.current) return;
-    
-    const now = Date.now();
-    if (now - lastMoveTime.current < 16) return; // Throttle to ~60fps
-    lastMoveTime.current = now;
-    
-    e.preventDefault();
-    const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 1.2; // Еще более плавный скролл
-    scrollRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const handleTouchEnd = () => {
-    setIsDragging(false);
-  };
-
-  return (
-    <div className="relative h-[600px] w-full max-w-full px-4 sm:px-8 md:px-16 lg:px-24 xl:px-32 2xl:px-48">
-      <div
-        ref={scrollRef}
-        className="flex gap-4 overflow-x-auto overflow-y-hidden pb-4 games-scroll cursor-grab select-none h-full w-full"
-        onMouseDown={handleMouseDown}
-        onMouseLeave={handleMouseLeave}
-        onMouseUp={handleMouseUp}
-        onMouseMove={handleMouseMove}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        style={{ 
-          scrollbarWidth: 'none', 
-          msOverflowStyle: 'none',
-          scrollBehavior: 'auto', // Отключаем CSS smooth scroll для ручного управления
-          WebkitOverflowScrolling: 'touch'
-        }}
-      >
-        {children}
-      </div>
-      
-      {/* Градиенты для скролла */}
-      <div className="absolute left-0 top-0 bottom-4 w-4 sm:w-6 md:w-8 lg:w-12 xl:w-16 2xl:w-20 bg-gradient-to-r from-gray-900/50 to-transparent pointer-events-none"></div>
-      <div className="absolute right-0 top-0 bottom-4 w-4 sm:w-6 md:w-8 lg:w-12 xl:w-16 2xl:w-20 bg-gradient-to-l from-gray-900/50 to-transparent pointer-events-none"></div>
-    </div>
-  );
-};
-
-const MusicHorizontalScroll = ({ children }: { children: React.ReactNode }) => {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const lastMoveTime = useRef(0);
-
-  // Инициализация: начинаем с левого края
-  useEffect(() => {
-    if (scrollRef.current) {
-      // Принудительно устанавливаем скролл в начало
-      scrollRef.current.scrollLeft = 0;
-    }
-  }, []);
-
-  // Обновляем позицию при изменении размера окна
-  useEffect(() => {
-    const handleResize = () => {
-      if (scrollRef.current) {
-        const isMobile = window.innerWidth < 768;
-        
-        if (!isMobile) {
-          // На десктопе сохраняем текущую позицию
-          const containerWidth = scrollRef.current.clientWidth;
-          const cardWidth = 200;
-          const scrollPosition = scrollRef.current.scrollLeft;
-          
-          // Пересчитываем позицию для текущей карточки
-          const centerPosition = scrollPosition + containerWidth / 2;
-          const nearestIndex = Math.round(centerPosition / cardWidth);
-          const targetScroll = nearestIndex * cardWidth - containerWidth / 2 + cardWidth / 2;
-          
-          scrollRef.current.scrollLeft = Math.max(0, targetScroll);
-        }
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (!scrollRef.current) return;
-    setIsDragging(true);
-    setStartX(e.pageX - scrollRef.current.offsetLeft);
-    setScrollLeft(scrollRef.current.scrollLeft);
-    scrollRef.current.style.cursor = 'grabbing';
-  };
-
-  const handleMouseLeave = () => {
-    setIsDragging(false);
-    if (scrollRef.current) {
-      scrollRef.current.style.cursor = 'grab';
-    }
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-    if (scrollRef.current) {
-      scrollRef.current.style.cursor = 'grab';
-    }
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !scrollRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    scrollRef.current.scrollLeft = scrollLeft - walk;
+    scrollRef.current.scrollLeft = scrollLeft - (x - startX) * 1.2;
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -252,615 +94,387 @@ const MusicHorizontalScroll = ({ children }: { children: React.ReactNode }) => {
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isDragging || !scrollRef.current) return;
+    const now = Date.now();
+    if (now - lastMoveTime.current < 16) return;
+    lastMoveTime.current = now;
     e.preventDefault();
     const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    scrollRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const handleTouchEnd = () => {
-    setIsDragging(false);
+    scrollRef.current.scrollLeft = scrollLeft - (x - startX) * 1.2;
   };
 
   return (
-    <div className="relative h-[350px] w-full max-w-full px-4 sm:px-8 md:px-16 lg:px-24 xl:px-32 2xl:px-48">
+    <div className="relative h-[560px] md:h-[600px] w-full max-w-full px-4 sm:px-8 md:px-16 lg:px-24">
       <div
         ref={scrollRef}
-        className="flex gap-4 overflow-x-auto overflow-y-hidden pb-4 games-scroll cursor-grab select-none h-full w-full"
+        className="flex gap-5 overflow-x-auto overflow-y-hidden pb-4 games-scroll cursor-grab select-none h-full w-full"
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseLeave}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        style={{ 
-          scrollbarWidth: 'none', 
-          msOverflowStyle: 'none',
-          scrollBehavior: 'auto', // Отключаем CSS smooth scroll для ручного управления
-          WebkitOverflowScrolling: 'touch'
+        onTouchEnd={() => setIsDragging(false)}
+        style={{
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+          scrollBehavior: "auto",
+          WebkitOverflowScrolling: "touch",
         }}
       >
         {children}
       </div>
-      
-      {/* Градиенты для скролла */}
-      <div className="absolute left-0 top-0 bottom-4 w-4 sm:w-6 md:w-8 lg:w-12 xl:w-16 2xl:w-20 bg-gradient-to-r from-gray-900/50 to-transparent pointer-events-none"></div>
-      <div className="absolute right-0 top-0 bottom-4 w-4 sm:w-6 md:w-8 lg:w-12 xl:w-16 2xl:w-20 bg-gradient-to-l from-gray-900/50 to-transparent pointer-events-none"></div>
+      <div className="absolute left-0 top-0 bottom-4 w-8 md:w-16 bg-gradient-to-r from-[#216477] to-transparent pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-4 w-8 md:w-16 bg-gradient-to-l from-[#216477] to-transparent pointer-events-none" />
     </div>
   );
 };
 
 const GameCard = ({ game, index }: { game: any; index: number }) => (
   <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6, delay: index * 0.1 }}
-    className="group cursor-pointer w-full h-full flex flex-col"
+    initial={{ opacity: 0, y: 28 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.3 }}
+    transition={{ duration: 0.65, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+    className="game-card group cursor-pointer w-full h-full flex flex-col rounded-xl overflow-hidden"
+    style={{ backgroundColor: "#163f4a" }}
   >
-    <div className="relative rounded-lg bg-gray-800 overflow-hidden flex-1">
-      <div className="w-full h-full flex items-center justify-center overflow-hidden">
-        {/* Фоновое изображение для всех карточек */}
-        <img 
-          src={game.src} 
-          alt={game.alt} 
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
-          draggable={false}
-          onDragStart={(e) => e.preventDefault()}
-        />
-        
-        {/* Контейнер с маской только для видео */}
-        {game.isVideo && (
-          <div 
-            className="w-full h-full flex items-center justify-center"
-            style={{
-              maskImage: 'url(/Conteiner.png)',
-              maskSize: 'contain',
-              maskRepeat: 'no-repeat',
-              maskPosition: 'center',
-              WebkitMaskImage: 'url(/Conteiner.png)',
-              WebkitMaskSize: 'contain',
-              WebkitMaskRepeat: 'no-repeat',
-              WebkitMaskPosition: 'center'
-            }}
-          >
-            <video 
-              src={game.videoSrc} 
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              style={{ objectPosition: 'center 60%' }}
-              autoPlay
-              loop
-              muted
-              playsInline
-            />
-          </div>
-        )}
-      </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+    <div className="relative flex-1 overflow-hidden">
+      <img
+        src={game.src}
+        alt={game.alt}
+        className="absolute inset-0 w-full h-full object-cover"
+        draggable={false}
+        onDragStart={(e) => e.preventDefault()}
+      />
+
+      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-500 pointer-events-none" />
     </div>
-    {/* Постоянно видимые названия и статус */}
-    <div className="h-[120px] bg-gray-800/90 px-4 py-3 flex flex-col justify-center items-center text-center">
-      <h3 className="text-sm font-semibold text-white font-chiron-heading mb-1 leading-tight">{game.title}</h3>
-      <p className="text-xs text-gray-300 mb-2 leading-tight">{game.subtitle}</p>
-      <span className="text-xs font-medium text-amber-400">{game.status}</span>
+
+    <div
+      className="px-4 py-3 flex flex-col justify-center items-center text-center"
+      style={{ height: 110, backgroundColor: "#163f4a" }}
+    >
+      <h3 className="text-sm font-semibold text-white font-chiron-heading mb-1 leading-tight">
+        {game.title}
+      </h3>
+      <p className="text-xs text-white/70 mb-2 leading-tight">{game.subtitle}</p>
+      <span className="text-xs font-medium" style={{ color: "#e8c56a" }}>
+        {game.status}
+      </span>
     </div>
   </motion.div>
 );
 
-const IconSun = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
-    <circle cx="12" cy="12" r="4" />
-    <path d="M12 2v3m0 14v3M2 12h3m14 0h3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" />
-  </svg>
-);
-
-const IconMoon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
-    <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z" />
-  </svg>
-);
-
-export default function App() {
-  const [dark, setDark] = useState(true);
-  const [currentTrack, setCurrentTrack] = useState<string | null>(null);
-  const [language, setLanguage] = useState<'en' | 'ru'>('en'); // English by default
-  
+function HomePage() {
+  const [language, setLanguage] = useState<"en" | "ru">("en");
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const locale = locales[language];
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const name = formData.get('name') as string;
-    const email = formData.get('email') as string;
-    const message = formData.get('message') as string;
-    const subject = formData.get('subject') as string;
-    
-    const mailtoBody = encodeURIComponent(`Message:\n\n${message}\n\n---\nSender Info:\nName: ${name}\nEmail: ${email}`);
-    const mailtoSubject = encodeURIComponent(`${subject || locale.sections.contact.form.subject} - ${name}`);
-    const mailtoLink = `mailto:${locale.email}?subject=${mailtoSubject}&body=${mailtoBody}`;
-    
-    // Открываем почтовый клиент вместо отправки
-    window.location.href = mailtoLink;
-  };
-
-
-  const handlePlayTrack = (trackId: string) => {
-    // Останавливаем все аудио элементы перед воспроизведением нового
-    const allAudioElements = document.querySelectorAll('audio');
-    allAudioElements.forEach(audio => {
-      audio.pause();
-      audio.currentTime = 0;
-    });
-    
-    setCurrentTrack(trackId);
-  };
-
-  const handleStopTrack = () => {
-    // Останавливаем все аудио элементы
-    const allAudioElements = document.querySelectorAll('audio');
-    allAudioElements.forEach(audio => {
-      audio.pause();
-      audio.currentTime = 0;
-    });
-    
-    setCurrentTrack(null);
-  };
+  useEffect(() => {
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+    window.scrollTo(0, 0);
+    const onScroll = () => setScrolled(window.scrollY > 48);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <div className={dark ? "dark" : ""}>
-        <div className="min-h-screen w-screen text-white overflow-x-hidden font-chiron-body" style={{ 
-          backgroundColor: '#f5f4f0',
-          backgroundImage: 'url(/BgSite.png)',
-          backgroundRepeat: 'repeat',
-          backgroundSize: 'auto'
-        }}>
-          {/* Летающие птицы */}
-          <FlyingBirds />
-          
-          {/* Header */}
-          <header 
-            className="sticky top-0 z-40 backdrop-blur-sm relative cloud-animation"
-            style={{
-              backgroundColor: '#216477',
-              backgroundImage: 'url(/Cloud.png)',
-              backgroundSize: 'auto 100%',
-              backgroundRepeat: 'repeat-x',
-              backgroundPosition: '0% 20%'
+    <div className="min-h-screen w-full overflow-x-hidden font-chiron-body panel-cream">
+      {/* Header overlays hero */}
+      <header
+        className={`site-header fixed top-0 left-0 right-0 z-50 border-b ${
+          scrolled ? "is-scrolled" : "is-top"
+        }`}
+      >
+        <Container>
+          <div className="flex h-16 md:h-20 items-center justify-between">
+            <a
+              href="/"
+              className="flex items-center gap-2 md:gap-3 transition-opacity hover:opacity-85"
+              aria-label={locale.brand}
+            >
+              <div
+                className="flex items-center justify-center"
+                style={{ width: 48, height: 48 }}
+              >
+                <img
+                  src="/AlmaPixelLogo.png?v=3"
+                  alt="Alma Pixel"
+                  className="w-full h-full object-contain"
+                  draggable={false}
+                />
+              </div>
+              <span className="brand-name hidden sm:block font-bold font-chiron-heading text-lg md:text-xl">
+                {locale.brand}
+              </span>
+            </a>
+
+            <nav className="hidden md:flex items-center gap-7 lg:gap-9">
+              <a href="#games" className="nav-link font-medium text-sm lg:text-base">
+                {locale.nav.games}
+              </a>
+              <a href="#about" className="nav-link font-medium text-sm lg:text-base">
+                {locale.nav.about}
+              </a>
+              <Link
+                to="/music"
+                className="nav-link font-medium text-sm lg:text-base"
+              >
+                {locale.sections.music.title}
+              </Link>
+              <Link
+                to="/contact"
+                className="nav-link font-medium text-sm lg:text-base"
+              >
+                {locale.nav.contact}
+              </Link>
+            </nav>
+
+            <div className="flex items-center gap-3">
+              <div
+                className="lang-switch-wrap flex gap-1 rounded-lg p-1"
+                style={{ fontFamily: "system-ui, sans-serif" }}
+              >
+                <button
+                  onClick={() => setLanguage("en")}
+                  className={`lang-switch px-3 py-1 rounded-md text-sm font-medium ${
+                    language === "en"
+                      ? scrolled
+                        ? "bg-white shadow-sm"
+                        : "bg-white/90"
+                      : ""
+                  }`}
+                  style={{
+                    color:
+                      language === "en"
+                        ? "#216477"
+                        : scrolled
+                          ? "#5a6f76"
+                          : "rgba(255,255,255,0.85)",
+                  }}
+                >
+                  EN
+                </button>
+                <button
+                  onClick={() => setLanguage("ru")}
+                  className={`lang-switch px-3 py-1 rounded-md text-sm font-medium ${
+                    language === "ru"
+                      ? scrolled
+                        ? "bg-white shadow-sm"
+                        : "bg-white/90"
+                      : ""
+                  }`}
+                  style={{
+                    color:
+                      language === "ru"
+                        ? "#216477"
+                        : scrolled
+                          ? "#5a6f76"
+                          : "rgba(255,255,255,0.85)",
+                  }}
+                >
+                  RU
+                </button>
+              </div>
+
+              <button
+                className={`md:hidden p-2 transition-colors ${
+                  scrolled ? "text-[#216477]" : "text-white"
+                }`}
+                aria-label="Menu"
+                aria-expanded={menuOpen}
+                onClick={() => setMenuOpen((v) => !v)}
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {menuOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile nav */}
+          <motion.div
+            initial={false}
+            animate={{
+              height: menuOpen ? "auto" : 0,
+              opacity: menuOpen ? 1 : 0,
             }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="md:hidden overflow-hidden"
           >
-            <Container>
-            <div className="flex h-[350px] items-start justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative z-10 pt-2">
-              <div className="flex items-center gap-3">
-                <div className="w-[110px] h-[110px] flex items-center justify-center">
-                  <img 
-                    src="/AlmaPixelLogo.png?v=3" 
-                    alt="Alma Pixel Logo" 
-                    className="w-full h-full object-contain"
-                    draggable={false}
-                    onDragStart={(e) => e.preventDefault()}
-                  />
-                </div>
-                <div>
-                  <h1 className="font-bold font-chiron-heading" style={{ fontSize: '40px', color: 'white', textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>{locale.brand}</h1>
-                  <p className="text-sm -mt-1" style={{ color: 'white', textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>{locale.tagline}</p>
-                </div>
-              </div>
-              
-              <nav className="hidden md:flex items-center gap-8">
-                <a href="#games" className="text-gray-300 hover:text-amber-400 transition-colors">{locale.nav.games}</a>
-                <a href="#about" className="text-gray-300 hover:text-amber-400 transition-colors">{locale.nav.about}</a>
-                <a href="#music" className="text-gray-300 hover:text-amber-400 transition-colors">{locale.sections.music.title}</a>
-                <a href="#contact" className="text-gray-300 hover:text-amber-400 transition-colors">{locale.nav.contact}</a>
-                <a href="#privacy" className="text-gray-300 hover:text-amber-400 transition-colors">{locale.nav.privacy}</a>
-              </nav>
-
-              <div className="flex items-center gap-2" style={{ position: 'absolute', right: '10px', top: '10px' }}>
-                {/* Language Switcher */}
-                <div className="flex gap-2">
-                  {/* EN Button */}
-                  <button
-                    onClick={() => setLanguage('en')}
-                    className={`text-xl font-bold font-chiron-heading transition-colors ${
-                      language === 'en' 
-                        ? 'text-white' 
-                        : 'text-gray-300 hover:text-white'
-                    }`}
-                  >
-                    EN
-                  </button>
-                  
-                  {/* RU Button */}
-                  <button
-                    onClick={() => setLanguage('ru')}
-                    className={`text-xl font-bold font-chiron-heading transition-colors ${
-                      language === 'ru' 
-                        ? 'text-white' 
-                        : 'text-gray-300 hover:text-white'
-                    }`}
-                  >
-                    РУ
-                  </button>
-                </div>
-              </div>
+            <div className="flex flex-col gap-3 pb-4 pt-1">
+              {[
+                { href: "#games", label: locale.nav.games },
+                { href: "#about", label: locale.nav.about },
+              ].map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="nav-link font-medium py-1"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {item.label}
+                </a>
+              ))}
+              <Link
+                to="/music"
+                className="nav-link font-medium py-1"
+                onClick={() => setMenuOpen(false)}
+              >
+                {locale.sections.music.title}
+              </Link>
+              <Link
+                to="/contact"
+                className="nav-link font-medium py-1"
+                onClick={() => setMenuOpen(false)}
+              >
+                {locale.nav.contact}
+              </Link>
             </div>
-          </Container>
-        </header>
+          </motion.div>
+        </Container>
+      </header>
 
-        {/* Градиент от шапки к Games */}
-        <div 
-          className="h-20 w-full"
-          style={{
-            background: 'linear-gradient(to bottom, transparent, #216477)'
-          }}
-        ></div>
+      {/* Hero — Massive Monster style full-bleed */}
+      <Hero
+        brand={locale.brand}
+        tagline={locale.tagline}
+        description={locale.description}
+        ctaLabel={locale.heroCta}
+        ctaHref="#games"
+      />
 
-        {/* Games */}
-        <section 
-          id="games" 
-          className="py-10 pb-32 overflow-y-hidden md:overflow-y-hidden relative" 
-          style={{ 
-            height: 'auto', 
-            minHeight: '800px', 
-            backgroundColor: '#216477',
-            backgroundImage: 'url(/BgSite2.png)',
-            backgroundSize: 'auto',
-            backgroundRepeat: 'repeat',
-            backgroundPosition: '0 0'
-          }}
-        >
-          <Container>
-            <div className="text-center mb-8">
-              <h2 className="font-bold mb-4 font-chiron-heading uppercase" style={{ fontSize: '35px', color: 'white', textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>{locale.sections.games.title}</h2>
-            </div>
-          </Container>
-          
-          <div className="mt-8">
-            <HorizontalScroll>
+      {/* About intro on cream */}
+      <section id="about" className="relative py-20 md:py-28 panel-cream">
+        <Container>
+          <ScrollReveal className="text-center max-w-3xl mx-auto">
+            <p className="font-chiron-heading uppercase tracking-[0.18em] text-[#216477]/text-sm mb-4">
+              {locale.sections.about.title}
+            </p>
+            <h2
+              className="font-chiron-heading section-title text-[#1a2e34] mb-6"
+              style={{ fontSize: "clamp(1.75rem, 4vw, 2.75rem)" }}
+            >
+              {locale.sections.about.description1}
+            </h2>
+            <p className="text-base md:text-lg leading-relaxed text-[#5a6f76]">
+              {locale.sections.about.description2}
+            </p>
+            <motion.a
+              href="#games"
+              className="hero-cta mt-10 inline-flex items-center justify-center px-8 py-3.5 font-chiron-heading uppercase tracking-wider text-white text-sm"
+              whileHover={{ scale: 1.04, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              {locale.heroCta}
+            </motion.a>
+          </ScrollReveal>
+        </Container>
+      </section>
+
+      {/* Games */}
+      <section id="games" className="relative pt-24 pb-32 min-h-[720px] panel-teal overflow-hidden">
+        <WaveDivider fill="#f5f4f0" flip />
+
+        <Container className="relative z-10">
+          <ScrollReveal className="text-center mb-10">
+            <h2
+              className="font-bold font-chiron-heading section-title uppercase text-white"
+              style={{
+                fontSize: "clamp(1.75rem, 4vw, 2.4rem)",
+                textShadow: "0 3px 16px rgba(0,0,0,0.35)",
+              }}
+            >
+              {locale.sections.games.title}
+            </h2>
+            <p className="mt-3 text-white/80 max-w-xl mx-auto text-base md:text-lg">
+              {locale.sections.games.description}
+            </p>
+          </ScrollReveal>
+        </Container>
+
+        <div className="relative z-10 mt-4">
+          <HorizontalScroll>
             {generateGames(locale).map((game, i) => (
-              <div key={i} className="flex-shrink-0 w-[350px] h-[600px] mx-1">
+              <div key={i} className="flex-shrink-0 w-[300px] sm:w-[340px] h-[540px] md:h-[560px]">
                 <GameCard game={game} index={i} />
               </div>
             ))}
           </HorizontalScroll>
-          </div>
-          
-          <div className="mt-8"></div>
-        </section>
+        </div>
 
-        {/* About */}
-        <section 
-          id="about" 
-          className="py-20 md:overflow-y-hidden relative" 
-        >
-          <Container>
-            <div className="text-center">
-              <h2 className="font-bold text-white mb-8 font-chiron-heading uppercase" style={{ fontSize: '35px' }}>{locale.sections.about.title}</h2>
-              <div className="prose prose-lg text-gray-300 max-w-4xl mx-auto">
-                <p className="text-xl leading-relaxed">
-                  {locale.sections.about.description1}
-                </p>
-              </div>
-            </div>
-          </Container>
-         </section>
+        <WaveDivider fill="#f5f4f0" />
+      </section>
 
-        {/* Music */}
-        <section 
-          id="music" 
-          className="py-20 md:overflow-y-hidden relative" 
-        >
-          {/* Фон травы с анимацией */}
-          <div 
-            className="absolute inset-0 w-full h-full"
-            style={{
-              backgroundImage: 'url(/Grass.png)',
-              backgroundSize: 'auto 100%',
-              backgroundRepeat: 'repeat-x',
-              backgroundPosition: '0 0',
-              animation: 'grassWave 4s ease-in-out infinite'
-            }}
-          ></div>
-          
-          <Container className="relative z-20">
-            <div className="text-center mb-12 relative z-30">
-              <h2 className="font-bold mb-4 font-chiron-heading uppercase" style={{ fontSize: '35px', color: 'white', textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>{locale.sections.music.title}</h2>
-              <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
-                {locale.sections.music.description}
-              </p>
-            </div>
-            
-            {/* Music cards with horizontal scroll */}
-            <MusicHorizontalScroll>
-              {locale.musicTracks.map((track) => (
-                <div key={track.id} className="flex-shrink-0 w-[200px] h-[330px] mx-1">
-                  <MusicCard
-                    track={track}
-                    isPlaying={currentTrack === track.id}
-                    onPlay={handlePlayTrack}
-                    onStop={handleStopTrack}
-                  />
-                </div>
-              ))}
-            </MusicHorizontalScroll>
-            
-            {/* Анимации музыкантов */}
-            <div className="mt-24 relative flex justify-center">
-              {/* Наложение для музыкантов */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20 z-10 pointer-events-none"></div>
-              
-              <div className="flex flex-row items-center justify-center relative z-0">
-                {/* Анимация лягушки-барда */}
-                <div className="p-2 rounded-lg" style={{ marginRight: '-200px', zIndex: 1 }}>
-                  <MovieClipAnimation 
-                    mcPath="/animations/frog_bard_mc.json"
-                    texturePath="/animations/frog_bard_tex.png"
-                    width={300}
-                    height={350}
-                    loop={true}
-                    className="rounded-lg opacity-90"
-                    offsetY={35}
-                    animation="damage"
-                  />
-                </div>
-                
-                {/* Анимация musicKar */}
-                <div className="p-2 rounded-lg" style={{ zIndex: 2 }}>
-                  <MovieClipAnimation 
-                    mcPath="/animations/musicKar_mc.json"
-                    texturePath="/animations/musicKar_tex.png"
-                    width={300}
-                    height={350}
-                    loop={true}
-                    className="rounded-lg opacity-90"
-                    offsetY={20}
-                    animation="idle"
-                  />
-                </div>
-                
-                {/* Анимация лисы-музыканта */}
-                <div className="p-2 rounded-lg" style={{ marginLeft: '-200px', zIndex: 1 }}>
-                  <MovieClipAnimation 
-                    mcPath="/animations/fox_Music_mc.json"
-                    texturePath="/animations/fox_Music_tex.png"
-                    width={300}
-                    height={350}
-                    loop={true}
-                    className="rounded-lg opacity-90"
-                    animation="music"
-                  />
-                </div>
-              </div>
-            </div>
-          </Container>
-        </section>
-
-        {/* Contact */}
-        <section 
-          id="contact" 
-          className="py-20 bg-gray-900/50 md:overflow-y-hidden relative" 
-        >
-          <Container>
-            <div className="max-w-sm mx-auto text-center">
-              <h2 className="font-bold text-white mb-8 font-chiron-heading uppercase" style={{ fontSize: '35px' }}>{locale.sections.contact.title}</h2>
-              <p className="text-base sm:text-lg text-gray-300 mb-8">
-                {locale.sections.contact.description}
-              </p>
-              
-              {/* Yabloko Animation */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="mb-8"
+      {/* Footer */}
+      <footer className="relative py-14 panel-cream border-t border-[#216477]/15">
+        <Container>
+          <ScrollReveal className="text-center text-[#5a6f76] space-y-3">
+            <p className="font-chiron-heading text-[#216477] text-lg">
+              {locale.brand}
+            </p>
+            <p>
+              © {new Date().getFullYear()} {locale.brand}. {locale.footer.copyright}
+            </p>
+            <p>
+              <Link
+                to="/privacy"
+                className="text-[#216477] hover:text-[#163f4a] transition-colors underline underline-offset-4"
               >
-                <div className="relative mx-auto p-10">
-                  <MovieClipAnimation 
-                    mcPath="/animations/Yabloko_mc.json"
-                    texturePath="/animations/Yabloko_tex.png"
-                    width={440}
-                    height={440}
-                    loop={true}
-                    className="rounded-lg"
-                    animation="animtion0"
-                  />
-                </div>
-              </motion.div>
-              
-              {/* Contact Form */}
-              <div className="flex justify-center">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
-                  className="bg-gray-800/50 rounded-xl p-8 backdrop-blur-sm w-80"
-                >
-                <form onSubmit={onSubmit} className="space-y-6">
-                  <div className="space-y-6">
-                    <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                        {locale.sections.contact.form.name}
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        required
-                        className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
-                        placeholder={language === 'en' ? 'Your name' : 'Ваше имя'}
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                        {locale.sections.contact.form.email}
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        required
-                        className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
-                        placeholder="your@email.com"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
-                      {locale.sections.contact.form.subject}
-                    </label>
-                    <input
-                      type="text"
-                      id="subject"
-                      name="subject"
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
-                      placeholder={language === 'en' ? 'Message subject' : 'Тема сообщения'}
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                      {locale.sections.contact.form.message}
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows={6}
-                      required
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all resize-none"
-                      placeholder={language === 'en' ? 'Tell us about your project or question...' : 'Расскажите о вашем проекте или вопросе...'}
-                    />
-                  </div>
-                  
-                  <button
-                    type="submit"
-                    className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white px-8 py-4 rounded-lg font-semibold hover:from-amber-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-gray-900"
-                  >
-                    {locale.sections.contact.form.submit}
-                  </button>
-                </form>
-                
-                <div className="mt-6 text-center">
-                  <p className="text-gray-400 text-sm">
-                    {locale.sections.contact.form.orDirect} <a href={`mailto:${locale.email}`} className="text-amber-400 hover:text-amber-300">{locale.email}</a>
-                  </p>
-                </div>
-                </motion.div>
-              </div>
-            </div>
-          </Container>
-        </section>
-
-        {/* Privacy Policy Section */}
-        <section id="privacy" className="py-20">
-          <Container>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="max-w-4xl mx-auto"
-            >
-              <h2 className="text-4xl font-bold mb-4 text-center" style={{ color: '#edc77b', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
-                {locale.sections.privacy.title}
-              </h2>
-              <p className="text-gray-400 text-sm text-center mb-8">
-                {locale.sections.privacy.lastUpdated}
-              </p>
-
-              <div className="space-y-8 text-gray-300 leading-relaxed">
-                <div>
-                  <p className="mb-4">{locale.sections.privacy.sections.introduction}</p>
-                </div>
-
-                <div>
-                  <h3 className="text-2xl font-semibold mb-3 text-amber-400">
-                    {locale.sections.privacy.sections.dataCollection.title}
-                  </h3>
-                  <p>{locale.sections.privacy.sections.dataCollection.content}</p>
-                </div>
-
-                <div>
-                  <h3 className="text-2xl font-semibold mb-3 text-amber-400">
-                    {locale.sections.privacy.sections.permissions.title}
-                  </h3>
-                  <div className="space-y-3">
-                    <div>
-                      <strong className="text-amber-300">{language === 'en' ? 'Camera:' : 'Камера:'}</strong>
-                      <p className="ml-2 inline">{locale.sections.privacy.sections.permissions.camera}</p>
-                    </div>
-                    <div>
-                      <strong className="text-amber-300">{language === 'en' ? 'Internet:' : 'Интернет:'}</strong>
-                      <p className="ml-2 inline">{locale.sections.privacy.sections.permissions.internet}</p>
-                    </div>
-                    <div>
-                      <strong className="text-amber-300">{language === 'en' ? 'Analytics:' : 'Аналитика:'}</strong>
-                      <p className="ml-2 inline">{locale.sections.privacy.sections.permissions.analytics}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="text-2xl font-semibold mb-3 text-amber-400">
-                    {locale.sections.privacy.sections.dataUsage.title}
-                  </h3>
-                  <p>{locale.sections.privacy.sections.dataUsage.content}</p>
-                </div>
-
-                <div>
-                  <h3 className="text-2xl font-semibold mb-3 text-amber-400">
-                    {locale.sections.privacy.sections.dataStorage.title}
-                  </h3>
-                  <p>{locale.sections.privacy.sections.dataStorage.content}</p>
-                </div>
-
-                <div>
-                  <h3 className="text-2xl font-semibold mb-3 text-amber-400">
-                    {locale.sections.privacy.sections.userRights.title}
-                  </h3>
-                  <p>{locale.sections.privacy.sections.userRights.content}</p>
-                </div>
-
-                <div>
-                  <h3 className="text-2xl font-semibold mb-3 text-amber-400">
-                    {locale.sections.privacy.sections.children.title}
-                  </h3>
-                  <p>{locale.sections.privacy.sections.children.content}</p>
-                </div>
-
-                <div>
-                  <h3 className="text-2xl font-semibold mb-3 text-amber-400">
-                    {locale.sections.privacy.sections.changes.title}
-                  </h3>
-                  <p>{locale.sections.privacy.sections.changes.content}</p>
-                </div>
-
-                <div>
-                  <h3 className="text-2xl font-semibold mb-3 text-amber-400">
-                    {locale.sections.privacy.sections.contact.title}
-                  </h3>
-                  <p>{locale.sections.privacy.sections.contact.content}</p>
-                </div>
-              </div>
-            </motion.div>
-          </Container>
-        </section>
-
-        {/* Footer */}
-        <footer className="py-12 border-t border-gray-800">
-          <Container>
-            <div className="text-center text-gray-400 space-y-2">
-              <p>© {new Date().getFullYear()} {locale.brand}. {locale.footer.copyright}</p>
-              <p>
-                <a href="#privacy" className="text-amber-400 hover:text-amber-300 transition-colors underline">
-                  {locale.footer.privacyLink}
-                </a>
-              </p>
-            </div>
-          </Container>
-        </footer>
-      </div>
+                {locale.footer.privacyLink}
+              </Link>
+            </p>
+          </ScrollReveal>
+        </Container>
+      </footer>
     </div>
   );
 }
 
-// Force redeploy - trigger GitHub Actions
+function App() {
+  const [language] = useState<"en" | "ru">("en");
+  const locale = locales[language];
+
+  return (
+    <BrowserRouter>
+      <FlyingBirds />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/music"
+          element={<MusicPage locale={locale} language={language} />}
+        />
+        <Route
+          path="/contact"
+          element={
+            <div className="min-h-screen w-full overflow-x-hidden font-chiron-body panel-cream">
+              <ContactPage locale={locale} language={language} />
+            </div>
+          }
+        />
+        <Route
+          path="/privacy"
+          element={
+            <div className="min-h-screen w-full overflow-x-hidden font-chiron-body panel-cream">
+              <PrivacyPage locale={locale} language={language} />
+            </div>
+          }
+        />
+        <Route
+          path="/blog/:slug"
+          element={<BlogPostPage locale={locale} language={language} />}
+        />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;

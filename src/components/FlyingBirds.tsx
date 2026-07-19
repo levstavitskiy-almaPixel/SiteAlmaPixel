@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import MovieClipAnimation from './MovieClipAnimation';
+import React, { useMemo } from "react";
+import { motion } from "framer-motion";
+import MovieClipAnimation from "./MovieClipAnimation";
 
-// Интерфейс для птицы
 interface Bird {
   id: number;
   startX: number | string;
@@ -11,111 +10,53 @@ interface Bird {
   curveY: number[];
   delay: number;
   duration: number;
-  direction: 'left-to-right' | 'right-to-left';
+  size: number;
   scaleX: number[];
 }
 
+function buildBirds(count: number): Bird[] {
+  const birds: Bird[] = [];
+
+  for (let i = 0; i < count; i++) {
+    const leftToRight = i % 2 === 0;
+    const startY = 40 + ((i * 67) % 72) * 8; // spread across viewport height
+    const amp = 18 + (i % 5) * 8;
+    const size = 48 + (i % 4) * 6; // 48–66px
+    const duration = 9 + (i % 7) * 1.4;
+    const delay = (i * 1.1) % 14;
+
+    birds.push({
+      id: i + 1,
+      startX: leftToRight ? -180 : "calc(100vw + 180px)",
+      endX: leftToRight ? "calc(100vw + 180px)" : -180,
+      startY,
+      curveY: [startY, startY - amp, startY + amp * 0.7, startY],
+      delay,
+      duration,
+      size,
+      scaleX: leftToRight ? [-1, -1, -1, -1] : [1, 1, 1, 1],
+    });
+  }
+
+  return birds;
+}
+
 const FlyingBirds: React.FC = () => {
-  console.log('FlyingBirds component rendered');
-  
-  // Генерируем больше птиц для покрытия всей длины сайта
-  const birds: Bird[] = [
-    {
-      id: 1,
-      startX: -500,
-      endX: 'calc(100vw + 500px)',
-      startY: 100,
-      curveY: [100, 30, 150, 100],
-      delay: 0,
-      duration: 12,
-      direction: 'left-to-right',
-      scaleX: [-1, -1, -1, -1]
-    },
-    {
-      id: 2,
-      startX: 'calc(100vw + 500px)',
-      endX: -500,
-      startY: 200,
-      curveY: [200, 120, 180, 200],
-      delay: 3,
-      duration: 10,
-      direction: 'right-to-left',
-      scaleX: [1, 1, 1, 1]
-    },
-    {
-      id: 3,
-      startX: -500,
-      endX: 'calc(100vw + 500px)',
-      startY: 300,
-      curveY: [300, 220, 280, 300],
-      delay: 6,
-      duration: 14,
-      direction: 'left-to-right',
-      scaleX: [-1, -1, -1, -1]
-    },
-    {
-      id: 4,
-      startX: 'calc(100vw + 500px)',
-      endX: -500,
-      startY: 150,
-      curveY: [150, 70, 130, 150],
-      delay: 9,
-      duration: 11,
-      direction: 'right-to-left',
-      scaleX: [1, 1, 1, 1]
-    },
-    {
-      id: 5,
-      startX: -500,
-      endX: 'calc(100vw + 500px)',
-      startY: 400,
-      curveY: [400, 320, 380, 400],
-      delay: 12,
-      duration: 13,
-      direction: 'left-to-right',
-      scaleX: [-1, -1, -1, -1]
-    },
-    {
-      id: 6,
-      startX: 'calc(100vw + 500px)',
-      endX: -500,
-      startY: 600,
-      curveY: [600, 520, 580, 600],
-      delay: 15,
-      duration: 16,
-      direction: 'right-to-left',
-      scaleX: [1, 1, 1, 1]
-    },
-    {
-      id: 7,
-      startX: -500,
-      endX: 'calc(100vw + 500px)',
-      startY: 800,
-      curveY: [800, 720, 780, 800],
-      delay: 18,
-      duration: 15,
-      direction: 'left-to-right',
-      scaleX: [-1, -1, -1, -1]
-    },
-    {
-      id: 8,
-      startX: 'calc(100vw + 500px)',
-      endX: -500,
-      startY: 1000,
-      curveY: [1000, 920, 980, 1000],
-      delay: 21,
-      duration: 17,
-      direction: 'right-to-left',
-      scaleX: [1, 1, 1, 1]
-    }
-  ];
-  
-  // Добавляем видимые логи на страницу
-  const logMessage = 'FlyingBirds component rendered at: ' + new Date().toLocaleTimeString();
+  const birds = useMemo(() => buildBirds(18), []);
 
   return (
-    <div className="absolute inset-0 pointer-events-none z-50 w-full h-full">
-      {/* Множественные птицы */}
+    <div
+      className="pointer-events-none"
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 40,
+        width: "100%",
+        height: "100%",
+        overflow: "hidden",
+      }}
+      aria-hidden
+    >
       {birds.map((bird) => (
         <motion.div
           key={bird.id}
@@ -123,14 +64,14 @@ const FlyingBirds: React.FC = () => {
           style={{
             left: bird.startX,
             top: bird.startY,
-            width: '250px',
-            height: '250px',
-            overflow: 'visible'
+            width: bird.size,
+            height: bird.size,
+            overflow: "visible",
           }}
           animate={{
             x: [bird.startX, bird.endX],
             y: bird.curveY,
-            scaleX: bird.scaleX
+            scaleX: bird.scaleX,
           }}
           transition={{
             duration: bird.duration,
@@ -138,22 +79,20 @@ const FlyingBirds: React.FC = () => {
             repeat: Infinity,
             ease: "easeInOut",
             scaleX: {
-              duration: 0.1, // Быстрый поворот
-              ease: "linear"
-            }
+              duration: 0.1,
+              ease: "linear",
+            },
           }}
         >
-          <div className="w-full h-full flex items-center justify-center" style={{ overflow: 'visible' }}>
-            <MovieClipAnimation
-              mcPath="/animations/bird_ske_mc.json"
-              texturePath="/animations/bird_ske_tex.png"
-              width={150}
-              height={150}
-              loop={true}
-              animation="fly"
-              className="w-full h-full"
-            />
-          </div>
+          <MovieClipAnimation
+            mcPath="/animations/bird_ske_mc.json"
+            texturePath="/animations/bird_ske_tex.png"
+            width={bird.size}
+            height={bird.size}
+            scale={bird.size / 76}
+            loop
+            animation="fly"
+          />
         </motion.div>
       ))}
     </div>

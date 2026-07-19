@@ -2,6 +2,7 @@ export interface Locale {
   brand: string;
   tagline: string;
   description: string;
+  heroCta: string;
   email: string;
   telegram: string;
   nav: {
@@ -100,11 +101,12 @@ export const locales: Record<string, Locale> = {
     brand: "Alma Pixel",
     tagline: "Indie Game Studio",
     description: "We create unique indie games with hand-drawn animation, atmospheric music, and deep gameplay.",
+    heroCta: "Our Games",
     email: "support@alma-pixel.com",
     telegram: "@levstavitskiy",
     nav: {
-      games: "COMING SOON",
-      about: "News",
+      games: "Games",
+      about: "About",
       contact: "Contact",
       privacy: "Privacy Policy"
     },
@@ -179,8 +181,8 @@ export const locales: Record<string, Locale> = {
         description: "Our projects in development and concepts for future games"
       },
       about: {
-        title: "News",
-        description1: "Our projects in development and concepts for future games",
+        title: "About",
+        description1: "Hand-drawn worlds, atmospheric music, and playful adventures.",
         description2: "We are a small team of developers inspired by studios like Amanita Design, creating games with a focus on atmosphere, music, and unique visual style. Each of our games is a journey into a special world where every detail is thought out, and the gameplay brings joy and tranquility."
       },
       music: {
@@ -210,9 +212,9 @@ export const locales: Record<string, Locale> = {
           },
           permissions: {
             title: "2. Permissions and Data Access",
-            camera: "Camera: Our applications may request camera permission to enable photo capture features within the app. Images are processed locally on your device and are not transmitted to our servers unless you explicitly choose to share them.",
-            internet: "Internet: Internet access is required for downloading game content, updates, and for analytics purposes. We use secure connections (HTTPS) for all data transmission.",
-            analytics: "Analytics: We use analytics services to understand how our applications are used, including crash reports and usage statistics. This helps us improve the user experience and fix bugs. Analytics data is anonymized and does not identify individual users."
+            camera: "Our applications may request camera permission to enable photo capture features within the app. Images are processed locally on your device and are not transmitted to our servers unless you explicitly choose to share them.",
+            internet: "Internet access is required for downloading game content, updates, and for analytics purposes. We use secure connections (HTTPS) for all data transmission.",
+            analytics: "We use analytics services to understand how our applications are used, including crash reports and usage statistics. This helps us improve the user experience and fix bugs. Analytics data is anonymized and does not identify individual users."
           },
           dataUsage: {
             title: "3. How We Use Your Information",
@@ -250,11 +252,12 @@ export const locales: Record<string, Locale> = {
     brand: "Alma Pixel",
     tagline: "Инди Студия Игр",
     description: "Создаем уникальные инди-игры с ручной анимацией, атмосферной музыкой и глубоким геймплеем.",
+    heroCta: "Наши игры",
     email: "support@alma-pixel.com",
     telegram: "@levstavitskiy",
     nav: {
       games: "Игры",
-      about: "Новости",
+      about: "О нас",
       contact: "Контакты",
       privacy: "Политика конфиденциальности"
     },
@@ -328,8 +331,8 @@ export const locales: Record<string, Locale> = {
         description: "Наши проекты в разработке и концепты будущих игр"
       },
       about: {
-        title: "Новости",
-        description1: "Наши проекты в разработке и концепты будущих игр",
+        title: "О нас",
+        description1: "Ручная анимация, атмосферная музыка и уютные приключения.",
         description2: "Мы — небольшая команда разработчиков, вдохновленная работами таких студий как Amanita Design, создаем игры с акцентом на атмосферу, музыку и уникальный визуальный стиль. Каждая наша игра — это путешествие в особый мир, где каждая деталь продумана, а игровой процесс приносит радость и умиротворение."
       },
       music: {
@@ -359,9 +362,9 @@ export const locales: Record<string, Locale> = {
           },
           permissions: {
             title: "2. Разрешения и доступ к данным",
-            camera: "Камера: Наши приложения могут запрашивать разрешение на использование камеры для включения функций фотосъемки в приложении. Изображения обрабатываются локально на вашем устройстве и не передаются на наши серверы, если вы явно не выберете их отправку.",
-            internet: "Интернет: Доступ в интернет необходим для загрузки игрового контента, обновлений и для целей аналитики. Мы используем безопасные соединения (HTTPS) для всех передач данных.",
-            analytics: "Аналитика: Мы используем службы аналитики для понимания того, как используются наши приложения, включая отчеты о сбоях и статистику использования. Это помогает нам улучшать пользовательский опыт и исправлять ошибки. Аналитические данные анонимизированы и не идентифицируют отдельных пользователей."
+            camera: "Наши приложения могут запрашивать разрешение на использование камеры для включения функций фотосъемки в приложении. Изображения обрабатываются локально на вашем устройстве и не передаются на наши серверы, если вы явно не выберете их отправку.",
+            internet: "Доступ в интернет необходим для загрузки игрового контента, обновлений и для целей аналитики. Мы используем безопасные соединения (HTTPS) для всех передач данных.",
+            analytics: "Мы используем службы аналитики для понимания того, как используются наши приложения, включая отчеты о сбоях и статистику использования. Это помогает нам улучшать пользовательский опыт и исправлять ошибки. Аналитические данные анонимизированы и не идентифицируют отдельных пользователей."
           },
           dataUsage: {
             title: "3. Как мы используем вашу информацию",
