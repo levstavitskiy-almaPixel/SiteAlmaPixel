@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import WaveDivider from "./WaveDivider";
-import MovieClipAnimation from "./MovieClipAnimation";
+import LookingApple from "./LookingApple";
 
 type HeroProps = {
   brand: string;
@@ -27,10 +27,11 @@ export default function Hero({
   ctaHref = "#games",
 }: HeroProps) {
   const { scrollY } = useScroll();
-  const cloudY = useTransform(scrollY, [0, 500], [0, 60]);
   const contentY = useTransform(scrollY, [0, 400], [0, 60]);
   const contentOpacity = useTransform(scrollY, [0, 320], [1, 0]);
+  const appleY = useTransform(scrollY, [0, 400], [0, 36]);
   const [reduceMotion, setReduceMotion] = useState(false);
+  const [appleSize, setAppleSize] = useState(460);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -38,6 +39,18 @@ export default function Hero({
     const onChange = () => setReduceMotion(mq.matches);
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      if (w < 480) setAppleSize(300);
+      else if (w < 768) setAppleSize(380);
+      else setAppleSize(480);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
   }, []);
 
   return (
@@ -77,44 +90,6 @@ export default function Hero({
 
       <motion.div
         style={{
-          ...fillParent,
-          pointerEvents: "none",
-          opacity: 0.7,
-          overflow: "hidden",
-          ...(reduceMotion ? {} : { y: cloudY }),
-        }}
-      >
-        <div
-          className={reduceMotion ? undefined : "cloud-ribbon"}
-          style={{
-            position: "absolute",
-            top: "22%",
-            left: 0,
-            display: "flex",
-            height: "42%",
-            width: "max-content",
-          }}
-        >
-          {[0, 1, 2].map((i) => (
-            <img
-              key={i}
-              src="/Cloud.png"
-              alt=""
-              aria-hidden={i > 0}
-              draggable={false}
-              style={{
-                height: "100%",
-                width: "auto",
-                display: "block",
-                flexShrink: 0,
-              }}
-            />
-          ))}
-        </div>
-      </motion.div>
-
-      <motion.div
-        style={{
           position: "relative",
           zIndex: 10,
           flex: 1,
@@ -123,34 +98,11 @@ export default function Hero({
           alignItems: "center",
           justifyContent: "center",
           textAlign: "center",
-          padding: "6rem 1.5rem 8rem",
+          padding: "5.5rem 1.5rem 11rem",
           color: "#fff",
           ...(reduceMotion ? {} : { y: contentY, opacity: contentOpacity }),
         }}
       >
-        <motion.div
-          aria-hidden
-          style={{
-            width: 280,
-            height: 280,
-            marginBottom: 12,
-            filter: "drop-shadow(0 8px 16px rgba(0,0,0,0.25))",
-          }}
-          initial={{ opacity: 0, scale: 0.85 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <MovieClipAnimation
-            mcPath="/animations/Yabloko_mc.json"
-            texturePath="/animations/Yabloko_tex.png"
-            width={280}
-            height={280}
-            scale={0.72}
-            loop
-            animation="animtion0"
-          />
-        </motion.div>
-
         <motion.h1
           className="font-chiron-heading"
           style={{
@@ -223,6 +175,25 @@ export default function Hero({
         >
           {ctaLabel}
         </motion.a>
+      </motion.div>
+
+      <motion.div
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          bottom: "-14%",
+          zIndex: 8,
+          display: "flex",
+          justifyContent: "center",
+          pointerEvents: "none",
+          ...(reduceMotion ? {} : { y: appleY }),
+        }}
+        initial={{ opacity: 0, y: 48 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <LookingApple size={appleSize} />
       </motion.div>
 
       <WaveDivider fill="#f5f4f0" />
