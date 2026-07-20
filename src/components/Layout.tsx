@@ -112,9 +112,12 @@ export default function Layout({ children, locale, dark, setDark, language, setL
           <Container>
             <div className="text-center text-gray-400 space-y-2">
               <p>© {new Date().getFullYear()} {locale.brand}. {locale.footer.copyright}</p>
-              <p>
+              <p className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
                 <Link to="/privacy" className="text-amber-400 hover:text-amber-300 transition-colors underline">
                   {locale.footer.privacyLink}
+                </Link>
+                <Link to="/privacy/freebusinca" className="text-amber-400 hover:text-amber-300 transition-colors underline">
+                  {locale.footer.privacyFreeBusinca}
                 </Link>
               </p>
             </div>

@@ -199,12 +199,18 @@ export default function MusicPage({ locale }: MusicPageProps) {
               © {new Date().getFullYear()} {locale.brand}.{" "}
               {locale.footer.copyright}
             </p>
-            <p>
+            <p className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
               <Link
                 to="/privacy"
                 className="text-[#216477] hover:text-[#163f4a] transition-colors underline underline-offset-4"
               >
                 {locale.footer.privacyLink}
+              </Link>
+              <Link
+                to="/privacy/freebusinca"
+                className="text-[#216477] hover:text-[#163f4a] transition-colors underline underline-offset-4"
+              >
+                {locale.footer.privacyFreeBusinca}
               </Link>
             </p>
           </div>

@@ -51,6 +51,13 @@ export interface Locale {
     privacy: {
       title: string;
       lastUpdated: string;
+      hub: {
+        intro: string;
+        generalTitle: string;
+        generalDesc: string;
+        freeBusincaTitle: string;
+        freeBusincaDesc: string;
+      };
       sections: {
         introduction: string;
         dataCollection: {
@@ -93,19 +100,20 @@ export interface Locale {
   footer: {
     copyright: string;
     privacyLink: string;
+    privacyFreeBusinca: string;
   };
 }
 
 export const locales: Record<string, Locale> = {
   en: {
     brand: "Alma Pixel",
-    tagline: "Indie Game Studio",
-    description: "We create unique indie games with hand-drawn animation, atmospheric music, and deep gameplay.",
-    heroCta: "Our Games",
+    tagline: "Games & Apps Studio",
+    description: "We create indie games and useful mobile apps — with craft, atmosphere, and thoughtful detail.",
+    heroCta: "Our Projects",
     email: "support@alma-pixel.com",
     telegram: "@levstavitskiy",
     nav: {
-      games: "Games",
+      games: "Games & Apps",
       about: "About",
       contact: "Contact",
       privacy: "Privacy Policy"
@@ -177,13 +185,13 @@ export const locales: Record<string, Locale> = {
     ],
     sections: {
       games: {
-        title: "Games",
-        description: "Our projects in development and concepts for future games"
+        title: "Games & Apps",
+        description: "Games in development, concepts, and mobile apps we ship"
       },
       about: {
         title: "About",
-        description1: "Hand-drawn worlds, atmospheric music, and playful adventures.",
-        description2: "We are a small team of developers inspired by studios like Amanita Design, creating games with a focus on atmosphere, music, and unique visual style. Each of our games is a journey into a special world where every detail is thought out, and the gameplay brings joy and tranquility."
+        description1: "Games, apps, atmosphere — crafted with care.",
+        description2: "We are a small team inspired by studios like Amanita Design. We make indie games with hand-drawn worlds and atmospheric music, and we also build practical mobile apps. Whether it’s a playful adventure or a focused utility, we care about clarity, craft, and how it feels to use."
       },
       music: {
         title: "Music",
@@ -191,7 +199,7 @@ export const locales: Record<string, Locale> = {
       },
       contact: {
         title: "Contact",
-        description: "Want to learn more about our projects or discuss collaboration?",
+        description: "Want to learn more about our games, apps, or discuss collaboration?",
         form: {
           name: "Name *",
           email: "Email *",
@@ -204,6 +212,13 @@ export const locales: Record<string, Locale> = {
       privacy: {
         title: "Privacy Policy",
         lastUpdated: "Last updated: October 16, 2025",
+        hub: {
+          intro: "Choose a privacy policy for Alma Pixel services or a specific app.",
+          generalTitle: "Alma Pixel (general)",
+          generalDesc: "Games, apps, and studio services",
+          freeBusincaTitle: "FreeBusinca",
+          freeBusincaDesc: "Android app for app time limits and schedules"
+        },
         sections: {
           introduction: "Alma Pixel (\"we\", \"our\", or \"us\") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile applications and services.",
           dataCollection: {
@@ -245,18 +260,19 @@ export const locales: Record<string, Locale> = {
     },
     footer: {
       copyright: "All Rights Reserved.",
-      privacyLink: "Privacy Policy"
+      privacyLink: "Privacy Policy",
+      privacyFreeBusinca: "FreeBusinca Privacy"
     }
   },
   ru: {
     brand: "Alma Pixel",
-    tagline: "Инди Студия Игр",
-    description: "Создаем уникальные инди-игры с ручной анимацией, атмосферной музыкой и глубоким геймплеем.",
-    heroCta: "Наши игры",
+    tagline: "Студия игр и приложений",
+    description: "Создаём инди-игры и полезные мобильные приложения — с вниманием к атмосфере и деталям.",
+    heroCta: "Наши проекты",
     email: "support@alma-pixel.com",
     telegram: "@levstavitskiy",
     nav: {
-      games: "Игры",
+      games: "Игры и приложения",
       about: "О нас",
       contact: "Контакты",
       privacy: "Политика конфиденциальности"
@@ -327,13 +343,13 @@ export const locales: Record<string, Locale> = {
     ],
     sections: {
       games: {
-        title: "Игры",
-        description: "Наши проекты в разработке и концепты будущих игр"
+        title: "Игры и приложения",
+        description: "Игры в разработке, концепты и мобильные приложения, которые мы выпускаем"
       },
       about: {
         title: "О нас",
-        description1: "Ручная анимация, атмосферная музыка и уютные приключения.",
-        description2: "Мы — небольшая команда разработчиков, вдохновленная работами таких студий как Amanita Design, создаем игры с акцентом на атмосферу, музыку и уникальный визуальный стиль. Каждая наша игра — это путешествие в особый мир, где каждая деталь продумана, а игровой процесс приносит радость и умиротворение."
+        description1: "Игры, приложения, атмосфера — с вниманием к деталям.",
+        description2: "Мы — небольшая команда, вдохновлённая студиями вроде Amanita Design. Делаем инди-игры с ручной анимацией и атмосферной музыкой, а также практичные мобильные приложения. Будь то игровое приключение или полезный инструмент — нам важны ясность, качество и ощущение от использования."
       },
       music: {
         title: "Музыка",
@@ -341,7 +357,7 @@ export const locales: Record<string, Locale> = {
       },
       contact: {
         title: "Контакты",
-        description: "Хотите узнать больше о наших проектах или обсудить сотрудничество?",
+        description: "Хотите узнать больше о наших играх, приложениях или обсудить сотрудничество?",
         form: {
           name: "Имя *",
           email: "Email *",
@@ -354,6 +370,13 @@ export const locales: Record<string, Locale> = {
       privacy: {
         title: "Политика конфиденциальности",
         lastUpdated: "Последнее обновление: 16 октября 2025",
+        hub: {
+          intro: "Выберите политику для сервисов Alma Pixel или конкретного приложения.",
+          generalTitle: "Alma Pixel (общая)",
+          generalDesc: "Игры, приложения и сервисы студии",
+          freeBusincaTitle: "FreeBusinca",
+          freeBusincaDesc: "Android-приложение для лимитов и расписания приложений"
+        },
         sections: {
           introduction: "Alma Pixel (\"мы\", \"наш\" или \"нас\") обязуется защищать вашу конфиденциальность. Настоящая Политика конфиденциальности объясняет, как мы собираем, используем, раскрываем и защищаем вашу информацию при использовании наших мобильных приложений и услуг.",
           dataCollection: {
@@ -395,7 +418,8 @@ export const locales: Record<string, Locale> = {
     },
     footer: {
       copyright: "Все права защищены.",
-      privacyLink: "Политика конфиденциальности"
+      privacyLink: "Политика конфиденциальности",
+      privacyFreeBusinca: "Конфиденциальность FreeBusinca"
     }
   }
 };

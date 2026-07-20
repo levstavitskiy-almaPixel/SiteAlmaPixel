@@ -5,6 +5,7 @@ import FlyingBirds from "./components/FlyingBirds";
 import ContactPage from "./components/ContactPage";
 import MusicPage from "./components/MusicPage";
 import PrivacyPage from "./components/PrivacyPage";
+import FreeBusincaPrivacyPage from "./components/FreeBusincaPrivacyPage";
 import BlogPostPage from "./components/BlogPostPage";
 import Hero from "./components/Hero";
 import WaveDivider from "./components/WaveDivider";
@@ -424,12 +425,18 @@ function HomePage() {
             <p>
               © {new Date().getFullYear()} {locale.brand}. {locale.footer.copyright}
             </p>
-            <p>
+            <p className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
               <Link
                 to="/privacy"
                 className="text-[#216477] hover:text-[#163f4a] transition-colors underline underline-offset-4"
               >
                 {locale.footer.privacyLink}
+              </Link>
+              <Link
+                to="/privacy/freebusinca"
+                className="text-[#216477] hover:text-[#163f4a] transition-colors underline underline-offset-4"
+              >
+                {locale.footer.privacyFreeBusinca}
               </Link>
             </p>
           </ScrollReveal>
@@ -465,6 +472,14 @@ function App() {
           element={
             <div className="min-h-screen w-full overflow-x-hidden font-chiron-body panel-cream">
               <PrivacyPage locale={locale} language={language} />
+            </div>
+          }
+        />
+        <Route
+          path="/privacy/freebusinca"
+          element={
+            <div className="min-h-screen w-full overflow-x-hidden font-chiron-body panel-cream">
+              <FreeBusincaPrivacyPage language={language} />
             </div>
           }
         />
