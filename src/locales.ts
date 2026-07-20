@@ -55,8 +55,8 @@ export interface Locale {
         intro: string;
         generalTitle: string;
         generalDesc: string;
-        freeBusincaTitle: string;
-        freeBusincaDesc: string;
+        almaBreakTitle: string;
+        almaBreakDesc: string;
       };
       sections: {
         introduction: string;
@@ -100,7 +100,7 @@ export interface Locale {
   footer: {
     copyright: string;
     privacyLink: string;
-    privacyFreeBusinca: string;
+    privacyAlmaBreak: string;
   };
 }
 
@@ -216,8 +216,8 @@ export const locales: Record<string, Locale> = {
           intro: "Choose a privacy policy for Alma Pixel services or a specific app.",
           generalTitle: "Alma Pixel (general)",
           generalDesc: "Games, apps, and studio services",
-          freeBusincaTitle: "FreeBusinca",
-          freeBusincaDesc: "Android app for app time limits and schedules"
+          almaBreakTitle: "AlmaBreak",
+          almaBreakDesc: "Android app for app time limits and schedules"
         },
         sections: {
           introduction: "Alma Pixel (\"we\", \"our\", or \"us\") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile applications and services.",
@@ -261,7 +261,7 @@ export const locales: Record<string, Locale> = {
     footer: {
       copyright: "All Rights Reserved.",
       privacyLink: "Privacy Policy",
-      privacyFreeBusinca: "FreeBusinca Privacy"
+      privacyAlmaBreak: "AlmaBreak Privacy"
     }
   },
   ru: {
@@ -374,8 +374,8 @@ export const locales: Record<string, Locale> = {
           intro: "Выберите политику для сервисов Alma Pixel или конкретного приложения.",
           generalTitle: "Alma Pixel (общая)",
           generalDesc: "Игры, приложения и сервисы студии",
-          freeBusincaTitle: "FreeBusinca",
-          freeBusincaDesc: "Android-приложение для лимитов и расписания приложений"
+          almaBreakTitle: "AlmaBreak",
+          almaBreakDesc: "Android-приложение для лимитов и расписания приложений"
         },
         sections: {
           introduction: "Alma Pixel (\"мы\", \"наш\" или \"нас\") обязуется защищать вашу конфиденциальность. Настоящая Политика конфиденциальности объясняет, как мы собираем, используем, раскрываем и защищаем вашу информацию при использовании наших мобильных приложений и услуг.",
@@ -419,7 +419,7 @@ export const locales: Record<string, Locale> = {
     footer: {
       copyright: "Все права защищены.",
       privacyLink: "Политика конфиденциальности",
-      privacyFreeBusinca: "Конфиденциальность FreeBusinca"
+      privacyAlmaBreak: "Конфиденциальность AlmaBreak"
     }
   }
 };

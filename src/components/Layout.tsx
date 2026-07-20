@@ -116,8 +116,8 @@ export default function Layout({ children, locale, dark, setDark, language, setL
                 <Link to="/privacy" className="text-amber-400 hover:text-amber-300 transition-colors underline">
                   {locale.footer.privacyLink}
                 </Link>
-                <Link to="/privacy/freebusinca" className="text-amber-400 hover:text-amber-300 transition-colors underline">
-                  {locale.footer.privacyFreeBusinca}
+                <Link to="/privacy/almabreak" className="text-amber-400 hover:text-amber-300 transition-colors underline">
+                  {locale.footer.privacyAlmaBreak}
                 </Link>
               </p>
             </div>

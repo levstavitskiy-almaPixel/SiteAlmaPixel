@@ -8,7 +8,7 @@ const Container = ({ children }: { children: React.ReactNode }) => (
   </div>
 );
 
-interface FreeBusincaPrivacyPageProps {
+interface AlmaBreakPrivacyPageProps {
   language: "en" | "ru";
 }
 
@@ -16,16 +16,16 @@ const copy = {
   en: {
     back: "← All privacy policies",
     title: "Privacy Policy",
-    app: "App: FreeBusinca",
+    app: "App: AlmaBreak",
     effective: "Effective date: July 20, 2026",
     updated: "Last updated: July 20, 2026",
     intro:
-      'This Privacy Policy describes what data the FreeBusinca mobile app (the "App") processes, for what purposes, and how it is stored. By using the App, you agree to this Policy.',
+      'This Privacy Policy describes what data the AlmaBreak mobile app (the "App") processes, for what purposes, and how it is stored. By using the App, you agree to this Policy.',
     sections: [
       {
         title: "1. Who we are",
         body: [
-          "FreeBusinca is a local Android app that limits the use of other apps by a daily time limit and by schedule.",
+          "AlmaBreak is a local Android app that limits the use of other apps by a daily time limit and by schedule.",
           "Privacy questions: support@alma-pixel.com",
         ],
       },
@@ -131,21 +131,21 @@ const copy = {
         ],
       },
     ],
-    note: "This Policy applies specifically to the FreeBusinca app. For Alma Pixel’s general privacy policy, see the main Privacy Policy page.",
+    note: "This Policy applies specifically to the AlmaBreak app. For Alma Pixel’s general privacy policy, see the main Privacy Policy page.",
   },
   ru: {
     back: "← Все политики конфиденциальности",
     title: "Политика конфиденциальности",
-    app: "Приложение: FreeBusinca",
+    app: "Приложение: AlmaBreak",
     effective: "Дата вступления в силу: 20 июля 2026 г.",
     updated: "Последнее обновление: 20 июля 2026 г.",
     intro:
-      "Настоящая Политика конфиденциальности описывает, какие данные обрабатывает мобильное приложение FreeBusinca (далее — «Приложение»), для каких целей и как они хранятся. Используя Приложение, вы соглашаетесь с условиями этой Политики.",
+      "Настоящая Политика конфиденциальности описывает, какие данные обрабатывает мобильное приложение AlmaBreak (далее — «Приложение»), для каких целей и как они хранятся. Используя Приложение, вы соглашаетесь с условиями этой Политики.",
     sections: [
       {
         title: "1. Кто мы",
         body: [
-          "FreeBusinca — локальное Android-приложение для ограничения использования других приложений по дневному лимиту времени и по расписанию.",
+          "AlmaBreak — локальное Android-приложение для ограничения использования других приложений по дневному лимиту времени и по расписанию.",
           "По вопросам конфиденциальности: support@alma-pixel.com",
         ],
       },
@@ -251,13 +251,13 @@ const copy = {
         ],
       },
     ],
-    note: "Эта Политика относится именно к приложению FreeBusinca. Общая политика Alma Pixel — на основной странице конфиденциальности.",
+    note: "Эта Политика относится именно к приложению AlmaBreak. Общая политика Alma Pixel — на основной странице конфиденциальности.",
   },
 } as const;
 
-export default function FreeBusincaPrivacyPage({
+export default function AlmaBreakPrivacyPage({
   language,
-}: FreeBusincaPrivacyPageProps) {
+}: AlmaBreakPrivacyPageProps) {
   const t = copy[language];
 
   return (

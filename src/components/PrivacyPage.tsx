@@ -51,13 +51,13 @@ export default function PrivacyPage({ locale, language }: PrivacyPageProps) {
               <p className="text-sm text-[#5a6f76]">{hub.generalDesc}</p>
             </a>
             <Link
-              to="/privacy/freebusinca"
+              to="/privacy/almabreak"
               className="block p-5 rounded-2xl border border-[#216477]/25 bg-white/40 hover:bg-white/70 transition-colors"
             >
               <h3 className="font-semibold text-[#1a2e34] text-lg mb-1">
-                {hub.freeBusincaTitle}
+                {hub.almaBreakTitle}
               </h3>
-              <p className="text-sm text-[#5a6f76]">{hub.freeBusincaDesc}</p>
+              <p className="text-sm text-[#5a6f76]">{hub.almaBreakDesc}</p>
             </Link>
           </div>
 

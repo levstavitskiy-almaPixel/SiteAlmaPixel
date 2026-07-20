@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import FlyingBirds from "./components/FlyingBirds";
 import ContactPage from "./components/ContactPage";
 import MusicPage from "./components/MusicPage";
 import PrivacyPage from "./components/PrivacyPage";
-import FreeBusincaPrivacyPage from "./components/FreeBusincaPrivacyPage";
+import AlmaBreakPrivacyPage from "./components/AlmaBreakPrivacyPage";
 import BlogPostPage from "./components/BlogPostPage";
 import Hero from "./components/Hero";
 import WaveDivider from "./components/WaveDivider";
@@ -433,10 +433,10 @@ function HomePage() {
                 {locale.footer.privacyLink}
               </Link>
               <Link
-                to="/privacy/freebusinca"
+                to="/privacy/almabreak"
                 className="text-[#216477] hover:text-[#163f4a] transition-colors underline underline-offset-4"
               >
-                {locale.footer.privacyFreeBusinca}
+                {locale.footer.privacyAlmaBreak}
               </Link>
             </p>
           </ScrollReveal>
@@ -476,12 +476,16 @@ function App() {
           }
         />
         <Route
-          path="/privacy/freebusinca"
+          path="/privacy/almabreak"
           element={
             <div className="min-h-screen w-full overflow-x-hidden font-chiron-body panel-cream">
-              <FreeBusincaPrivacyPage language={language} />
+              <AlmaBreakPrivacyPage language={language} />
             </div>
           }
+        />
+        <Route
+          path="/privacy/freebusinca"
+          element={<Navigate to="/privacy/almabreak" replace />}
         />
         <Route
           path="/blog/:slug"

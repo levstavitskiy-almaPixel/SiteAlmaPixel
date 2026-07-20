@@ -207,10 +207,10 @@ export default function MusicPage({ locale }: MusicPageProps) {
                 {locale.footer.privacyLink}
               </Link>
               <Link
-                to="/privacy/freebusinca"
+                to="/privacy/almabreak"
                 className="text-[#216477] hover:text-[#163f4a] transition-colors underline underline-offset-4"
               >
-                {locale.footer.privacyFreeBusinca}
+                {locale.footer.privacyAlmaBreak}
               </Link>
             </p>
           </div>
