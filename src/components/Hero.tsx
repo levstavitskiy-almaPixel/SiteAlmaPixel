@@ -31,7 +31,7 @@ export default function Hero({
   const contentOpacity = useTransform(scrollY, [0, 320], [1, 0]);
   const appleY = useTransform(scrollY, [0, 400], [0, 36]);
   const [reduceMotion, setReduceMotion] = useState(false);
-  const [appleSize, setAppleSize] = useState(460);
+  const [appleSize, setAppleSize] = useState(560);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -44,9 +44,9 @@ export default function Hero({
   useEffect(() => {
     const update = () => {
       const w = window.innerWidth;
-      if (w < 480) setAppleSize(300);
-      else if (w < 768) setAppleSize(380);
-      else setAppleSize(480);
+      if (w < 480) setAppleSize(360);
+      else if (w < 768) setAppleSize(450);
+      else setAppleSize(560);
     };
     update();
     window.addEventListener("resize", update);
