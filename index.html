@@ -7,6 +7,17 @@
     <title>Alma Pixel — Games & Apps Studio</title>
   </head>
   <body>
+    <script>
+      (function () {
+        var redirect = sessionStorage.getItem("spa-redirect");
+        if (redirect) {
+          sessionStorage.removeItem("spa-redirect");
+          if (redirect !== location.pathname + location.search + location.hash) {
+            history.replaceState(null, "", redirect);
+          }
+        }
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

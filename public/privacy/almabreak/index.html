@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Политика конфиденциальности — AlmaBreak</title>
+  <link rel="icon" type="image/png" href="/vite.png" />
+  <style>
+    :root {
+      --text: #1a1f1c;
+      --muted: #5a635c;
+      --bg: #f7faf8;
+      --card: #ffffff;
+      --accent: #1b6b4a;
+      --border: #d7e3db;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.65;
+      color: var(--text);
+      background: var(--bg);
+    }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 32px 20px 64px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+    }
+    h1 { margin: 0 0 8px; font-size: 1.75rem; color: var(--accent); }
+    h2 { margin: 28px 0 10px; font-size: 1.15rem; }
+    h3 { margin: 18px 0 8px; font-size: 1.02rem; }
+    .meta { color: var(--muted); font-size: 0.95rem; margin-bottom: 24px; }
+    ul { padding-left: 1.25rem; }
+    li { margin: 6px 0; }
+    a { color: var(--accent); }
+    .note {
+      margin-top: 28px;
+      padding: 14px 16px;
+      background: #eef7f1;
+      border-radius: 12px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .back { display: inline-block; margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <a class="back" href="/privacy">← Alma Pixel — политики</a>
+      <h1>Политика конфиденциальности</h1>
+      <p class="meta">
+        Приложение: <strong>AlmaBreak</strong><br />
+        Дата вступления в силу: 20 июля 2026 г.<br />
+        Последнее обновление: 20 июля 2026 г.
+      </p>
+      <p>
+        Настоящая Политика конфиденциальности описывает, какие данные обрабатывает
+        мобильное приложение <strong>AlmaBreak</strong> (далее — «Приложение»),
+        для каких целей и как они хранятся. Используя Приложение, вы соглашаетесь
+        с условиями этой Политики.
+      </p>
+
+      <h2>1. Кто мы</h2>
+      <p>
+        AlmaBreak — локальное Android-приложение для ограничения использования
+        других приложений по дневному лимиту времени и по расписанию.
+      </p>
+      <p>
+        По вопросам конфиденциальности:
+        <a href="mailto:support@alma-pixel.com">support@alma-pixel.com</a>
+      </p>
+
+      <h2>2. Какие данные обрабатываются</h2>
+      <p>Приложение может обрабатывать следующие данные <strong>на вашем устройстве</strong>:</p>
+      <ul>
+        <li><strong>Список установленных приложений</strong> — названия, иконки и идентификаторы пакетов.</li>
+        <li><strong>Статистика использования</strong> (Usage Access / PACKAGE_USAGE_STATS) — время использования выбранных приложений за день.</li>
+        <li><strong>Текущее открытое приложение</strong> (Accessibility Service) — чтобы определить, открыто ли ограниченное приложение.</li>
+        <li><strong>Настройки блокировки</strong> — лимиты, расписание, счётчик времени.</li>
+        <li><strong>Статус подписки</strong> — наличие активной подписки. Оплата через Google Play; данные карты Приложение не получает.</li>
+        <li><strong>Системные разрешения</strong> — уведомления и автозапуск после перезагрузки.</li>
+      </ul>
+      <p>
+        Приложение <strong>не создаёт учётные записи</strong>, не запрашивает имя, телефон,
+        адрес или фотографии и <strong>не собирает точную геолокацию</strong>.
+      </p>
+
+      <h2>3. Для чего используются данные</h2>
+      <ul>
+        <li>функции ограничения приложений (лимит и расписание);</li>
+        <li>подсчёт времени и сброс дневных лимитов;</li>
+        <li>экран и уведомления о блокировке;</li>
+        <li>проверка подписки через Google Play;</li>
+        <li>фоновый мониторинг при активной подписке.</li>
+      </ul>
+      <p>Данные не используются для рекламы и не продаются третьим лицам.</p>
+
+      <h2>4. Где хранятся данные</h2>
+      <ul>
+        <li>Настройки и локальный статус подписки хранятся <strong>локально на устройстве</strong>.</li>
+        <li>У Приложения <strong>нет собственного сервера</strong> для загрузки правил или статистики.</li>
+        <li>
+          Подписка обрабатывается через Google Play Billing.
+          Политика Google:
+          <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>.
+        </li>
+      </ul>
+
+      <h2>5. Специальные разрешения Android</h2>
+      <h3>5.1. Usage Access</h3>
+      <p>Нужен для подсчёта минут в выбранных приложениях и дневного лимита.</p>
+      <h3>5.2. Accessibility Service</h3>
+      <p>
+        Используется <strong>только</strong> для обнаружения ограниченного приложения и блокировки.
+        Не используется для чтения содержимого экрана, паролей или сообщений.
+      </p>
+      <h3>5.3. Уведомления и фон</h3>
+      <p>Уведомления о блокировке и активном мониторинге; фоновый сервис при активной подписке.</p>
+
+      <h2>6. Подписка</h2>
+      <p>
+        Доступ к функциям — по <strong>месячной подписке</strong> через Google Play.
+        Отмена: Google Play → Подписки.
+      </p>
+
+      <h2>7. Передача третьим лицам</h2>
+      <p>
+        Мы не продаём данные блокировки рекламным сетям. Передача возможна только для работы
+        Google Play или если требует закон.
+      </p>
+
+      <h2>8. Хранение и удаление</h2>
+      <p>Чтобы удалить локальные данные:</p>
+      <ul>
+        <li>очистите данные Приложения в настройках Android; или</li>
+        <li>удалите Приложение.</li>
+      </ul>
+
+      <h2>9. Безопасность</h2>
+      <p>
+        Обрабатываем минимум данных, нужный для функций. Безопасность также зависит от защиты
+        вашего устройства.
+      </p>
+
+      <h2>10. Дети</h2>
+      <p>
+        Приложение не предназначено для детей младше 13 лет. Если считаете, что ребёнок
+        предоставил данные, удалите Приложение или очистите данные и свяжитесь с нами.
+      </p>
+
+      <h2>11. Изменения</h2>
+      <p>Обновлённая Политика публикуется на этой странице с новой датой обновления.</p>
+
+      <h2>12. Контакты</h2>
+      <p>
+        Вопросы: <a href="mailto:support@alma-pixel.com">support@alma-pixel.com</a><br />
+        Разработчик: Alma Pixel
+      </p>
+
+      <div class="note">
+        Эта Политика относится к приложению AlmaBreak.
+        Общая политика студии:
+        <a href="/privacy">alma-pixel.com/privacy</a>.
+      </div>
+    </div>
+  </div>
+</body>
+</html>
