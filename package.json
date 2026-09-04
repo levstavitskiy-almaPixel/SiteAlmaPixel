@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "news:sync": "node telegram-bot/sync.mjs"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
@@ -25,6 +26,8 @@
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
     "framer-motion": "^12.23.12",
+    "pixi-dragonbones-runtime": "^8.0.3",
+    "pixi.js": "^8.20.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.12.0"

@@ -1,24 +1,12 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import MusicCard from "./MusicCard";
 import MovieClipAnimation from "./MovieClipAnimation";
 import WaveDivider from "./WaveDivider";
+import SiteHeader from "./SiteHeader";
+import SiteFooter from "./SiteFooter";
+import Container from "./Container";
 import { type Locale } from "../locales";
-
-const Container = ({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => (
-  <div
-    className={`w-full max-w-[1100px] mx-auto px-5 sm:px-8 md:px-10 ${className}`}
-  >
-    {children}
-  </div>
-);
 
 interface MusicPageProps {
   locale: Locale;
@@ -46,60 +34,9 @@ export default function MusicPage({ locale }: MusicPageProps) {
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden font-chiron-body">
-      <header className="site-header is-scrolled sticky top-0 z-50 border-b">
-        <Container>
-          <div className="flex h-16 md:h-20 items-center justify-between">
-            <Link
-              to="/"
-              className="flex items-center gap-2 md:gap-3 transition-opacity hover:opacity-85"
-            >
-              <div
-                className="flex items-center justify-center"
-                style={{ width: 48, height: 48 }}
-              >
-                <img
-                  src="/AlmaPixelLogo.png?v=3"
-                  alt="Alma Pixel"
-                  className="w-full h-full object-contain"
-                  draggable={false}
-                />
-              </div>
-              <span className="brand-name font-bold font-chiron-heading text-lg md:text-xl">
-                {locale.brand}
-              </span>
-            </Link>
+      <SiteHeader variant="solid" />
 
-            <nav className="flex items-center gap-5 md:gap-8">
-              <Link
-                to="/#games"
-                className="nav-link font-medium text-sm md:text-base"
-              >
-                {locale.nav.games}
-              </Link>
-              <Link
-                to="/#about"
-                className="nav-link font-medium text-sm md:text-base"
-              >
-                {locale.nav.about}
-              </Link>
-              <span
-                className="nav-link font-medium text-sm md:text-base"
-                style={{ color: "#216477" }}
-              >
-                {locale.sections.music.title}
-              </span>
-              <Link
-                to="/contact"
-                className="nav-link font-medium text-sm md:text-base"
-              >
-                {locale.nav.contact}
-              </Link>
-            </nav>
-          </div>
-        </Container>
-      </header>
-
-      <section className="relative py-16 md:py-24 overflow-hidden min-h-[calc(100vh-5rem)]">
+      <section className="relative pt-28 pb-16 md:pt-32 md:pb-24 overflow-hidden min-h-[calc(100vh-5rem)]">
         <div
           className="absolute inset-0 w-full h-full"
           style={{
@@ -192,30 +129,7 @@ export default function MusicPage({ locale }: MusicPageProps) {
         </Container>
       </section>
 
-      <footer className="relative py-10 panel-cream border-t border-[#216477]/15">
-        <Container>
-          <div className="text-center text-[#5a6f76] space-y-2">
-            <p>
-              © {new Date().getFullYear()} {locale.brand}.{" "}
-              {locale.footer.copyright}
-            </p>
-            <p className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
-              <Link
-                to="/privacy"
-                className="text-[#216477] hover:text-[#163f4a] transition-colors underline underline-offset-4"
-              >
-                {locale.footer.privacyLink}
-              </Link>
-              <Link
-                to="/privacy/almabreak"
-                className="text-[#216477] hover:text-[#163f4a] transition-colors underline underline-offset-4"
-              >
-                {locale.footer.privacyAlmaBreak}
-              </Link>
-            </p>
-          </div>
-        </Container>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

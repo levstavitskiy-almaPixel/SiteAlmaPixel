@@ -1,0 +1,58 @@
+name: Sync Telegram news
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: telegram-news
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Pull channel posts
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+          TELEGRAM_CHANNEL_URL: ${{ secrets.TELEGRAM_CHANNEL_URL }}
+        run: node telegram-bot/sync.mjs
+
+      - name: Commit news
+        id: commit
+        run: |
+          git add public/news telegram-bot/offset.json
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No news changes"
+            exit 0
+          fi
+          git config user.name "alma-pixel-news"
+          git config user.email "support@alma-pixel.com"
+          git commit -m "news: sync telegram posts"
+          git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Redeploy site
+        if: steps.commit.outputs.changed == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: "deploy.yml",
+              ref: "main",
+            });

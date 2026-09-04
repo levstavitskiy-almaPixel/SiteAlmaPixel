@@ -7,13 +7,18 @@ export interface Locale {
   telegram: string;
   nav: {
     games: string;
+    news: string;
     about: string;
     contact: string;
     privacy: string;
   };
-  gameTitles: string[];
-  gameSubtitles: string[];
-  gameStatuses: string[];
+  gamePage: {
+    back: string;
+    videoLabel: string;
+    videoPlaceholder: string;
+    moreGames: string;
+    playOnGoogle: string;
+  };
   musicTracks: Array<{
     id: string;
     title: string;
@@ -27,10 +32,19 @@ export interface Locale {
       title: string;
       description: string;
     };
+    news: {
+      title: string;
+      description: string;
+      empty: string;
+      fromTelegram: string;
+      loading: string;
+      allNews: string;
+    };
     about: {
       title: string;
       description1: string;
       description2: string;
+      collaboration: string;
     };
     music: {
       title: string;
@@ -107,48 +121,25 @@ export interface Locale {
 export const locales: Record<string, Locale> = {
   en: {
     brand: "Alma Pixel",
-    tagline: "Games & Apps Studio",
-    description: "We create indie games and useful mobile apps — with craft, atmosphere, and thoughtful detail.",
+    tagline: "Indie Game Studio",
+    description: "Hand-drawn worlds, atmospheric music, and games made by one person — with room to grow.",
     heroCta: "Our Projects",
     email: "support@alma-pixel.com",
     telegram: "@levstavitskiy",
     nav: {
-      games: "Games & Apps",
+      games: "Games",
+      news: "News",
       about: "About",
       contact: "Contact",
       privacy: "Privacy Policy"
     },
-    gameTitles: [
-      "Adventure Owl",
-      "Bastard", 
-      "Coming soon",
-      "Coming soon",
-      "Coming soon",
-      "Coming soon",
-      "Coming soon",
-      "Coming soon",
-      "Coming soon"
-    ],
-    gameSubtitles: [
-      "A cozy puzzle adventure",
-      "An atmospheric platformer", 
-      "A space exploration game",
-      "A magical gardening sim",
-      "A cyberpunk adventure",
-      "An underwater exploration",
-      "A mountain climbing journey",
-      "A desert survival game"
-    ],
-    gameStatuses: [
-      "In Development",
-      "In Development",
-      "Concept", 
-      "Concept",
-      "Concept",
-      "Concept",
-      "Concept",
-      "Concept"
-    ],
+    gamePage: {
+      back: "All games",
+      videoLabel: "Vertical video",
+      videoPlaceholder: "Drop a 9:16 clip here when it is ready.",
+      moreGames: "More games",
+      playOnGoogle: "Get it on Google Play"
+    },
     musicTracks: [
       {
         id: "track1",
@@ -185,13 +176,22 @@ export const locales: Record<string, Locale> = {
     ],
     sections: {
       games: {
-        title: "Games & Apps",
-        description: "Games in development, concepts, and mobile apps we ship"
+        title: "Games",
+        description: "A living catalogue — each poster opens the game’s own page."
+      },
+      news: {
+        title: "News",
+        description: "Studio notes, pulled from Telegram so the site stays in sync with the channel.",
+        empty: "No posts yet — the feed will fill as soon as the Telegram bot is connected.",
+        fromTelegram: "New posts published in the studio channel appear here automatically.",
+        loading: "Loading news…",
+        allNews: "All news"
       },
       about: {
         title: "About",
-        description1: "Games, apps, atmosphere — crafted with care.",
-        description2: "We are a small team inspired by studios like Amanita Design. We make indie games with hand-drawn worlds and atmospheric music, and we also build practical mobile apps. Whether it’s a playful adventure or a focused utility, we care about clarity, craft, and how it feels to use."
+        description1: "One person. Whole worlds.",
+        description2: "Alma Pixel is a solo indie studio: I draw, animate, compose, and write the code. The work is inspired by atmospheric games — hand-made worlds, music you remember, and details that feel considered.",
+        collaboration: "I work alone, but I am open to collaboration. Write to"
       },
       music: {
         title: "Music",
@@ -266,47 +266,25 @@ export const locales: Record<string, Locale> = {
   },
   ru: {
     brand: "Alma Pixel",
-    tagline: "Студия игр и приложений",
-    description: "Создаём инди-игры и полезные мобильные приложения — с вниманием к атмосфере и деталям.",
+    tagline: "Инди-студия игр",
+    description: "Миры ручной работы, атмосферная музыка и игры, которые делает один человек — с местом для роста.",
     heroCta: "Наши проекты",
     email: "support@alma-pixel.com",
     telegram: "@levstavitskiy",
     nav: {
-      games: "Игры и приложения",
-      about: "О нас",
+      games: "Игры",
+      news: "Новости",
+      about: "Студия",
       contact: "Контакты",
       privacy: "Политика конфиденциальности"
     },
-    gameTitles: [
-      "Adventure Owl",
-      "Bastard", 
-      "Скоро",
-      "Скоро",
-      "Скоро",
-      "Скоро",
-      "Скоро",
-      "Скоро"
-    ],
-    gameSubtitles: [
-      "Уютное головоломное приключение",
-      "Атмосферный платформер", 
-      "Игра исследования космоса",
-      "Магический симулятор садоводства",
-      "Киберпанк приключение",
-      "Подводное исследование",
-      "Путешествие по горам",
-      "Игра выживания в пустыне"
-    ],
-    gameStatuses: [
-      "В разработке",
-      "В разработке",
-      "Концепт", 
-      "Концепт",
-      "Концепт",
-      "Концепт",
-      "Концепт",
-      "Концепт"
-    ],
+    gamePage: {
+      back: "Все игры",
+      videoLabel: "Вертикальное видео",
+      videoPlaceholder: "Сюда можно вставить ролик 9:16, когда он будет готов.",
+      moreGames: "Другие игры",
+      playOnGoogle: "Скачать в Google Play"
+    },
     musicTracks: [
       {
         id: "track1",
@@ -343,13 +321,22 @@ export const locales: Record<string, Locale> = {
     ],
     sections: {
       games: {
-        title: "Игры и приложения",
-        description: "Игры в разработке, концепты и мобильные приложения, которые мы выпускаем"
+        title: "Игры",
+        description: "Живой каталог — каждый постер ведёт на страницу игры."
+      },
+      news: {
+        title: "Новости",
+        description: "Заметки студии: посты из Telegram сами появляются на сайте.",
+        empty: "Пока тихо — лента заполнится, как только подключим бота Telegram.",
+        fromTelegram: "Новые посты из канала студии будут появляться здесь автоматически.",
+        loading: "Загружаем новости…",
+        allNews: "Все новости"
       },
       about: {
-        title: "О нас",
-        description1: "Игры, приложения, атмосфера — с вниманием к деталям.",
-        description2: "Мы — небольшая команда, вдохновлённая студиями вроде Amanita Design. Делаем инди-игры с ручной анимацией и атмосферной музыкой, а также практичные мобильные приложения. Будь то игровое приключение или полезный инструмент — нам важны ясность, качество и ощущение от использования."
+        title: "Студия",
+        description1: "Один человек. Целые миры.",
+        description2: "Alma Pixel — соло-студия: я рисую, анимирую, собираю музыку и пишу код. Вдохновляюсь атмосферными играми — миры руками, музыка которая остаётся, и детали, которые чувствуются.",
+        collaboration: "Я работаю один, но открыт к сотрудничеству. Пишите на"
       },
       music: {
         title: "Музыка",
