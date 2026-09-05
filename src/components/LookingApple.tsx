@@ -9,9 +9,9 @@ type LookingAppleProps = {
   size?: number;
 };
 
-const APPLE_SKE = "/animations/menu/Apple_ske.json";
-const APPLE_TEX = "/animations/menu/Apple_tex.json";
-const APPLE_PNG = "/animations/menu/Apple_tex.png";
+const APPLE_SKE = "/animations/menu/Apple_ske.json?v=2";
+const APPLE_TEX = "/animations/menu/Apple_tex.json?v=2";
+const APPLE_PNG = "/animations/menu/Apple_tex.png?v=2";
 const EYE_BONE = "eye";
 const AABB_W = 386;
 const AABB_H = 444.08;
