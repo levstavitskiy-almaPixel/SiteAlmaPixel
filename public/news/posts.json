@@ -1,4 +1,10 @@
 {
-  "posts": [],
-  "channelUrl": "https://t.me/levstavitskiy"
+  "posts": [
+    {
+      "id": "tg--1004343592419-4",
+      "date": "2026-09-05T06:11:59.000Z",
+      "text": "New post"
+    }
+  ],
+  "channelUrl": "https://t.me/c/4343592419"
 }

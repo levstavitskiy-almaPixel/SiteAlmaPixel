@@ -98,6 +98,54 @@ function toPost(message, photoUrl) {
   };
 }
 
+function decodeHtml(value) {
+  return value
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<[^>]+>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .trim();
+}
+
+async function seedFromPublicChannel(username, byId) {
+  const res = await fetch(`https://t.me/s/${username}`);
+  if (!res.ok) return 0;
+  const html = await res.text();
+  const blocks = html.split('class="tgme_widget_message ');
+  let added = 0;
+
+  for (const block of blocks) {
+    const postMatch = block.match(/data-post="([^"]+)"/);
+    if (!postMatch) continue;
+    const [channelName, messageId] = postMatch[1].split("/");
+    if (!messageId) continue;
+
+    const textMatch = block.match(/class="tgme_widget_message_text[^"]*"[^>]*>([\s\S]*?)<\/div>/);
+    const text = textMatch ? decodeHtml(textMatch[1]) : "";
+    const dateMatch = block.match(/datetime="([^"]+)"/);
+    const photoMatch = block.match(/tgme_widget_message_photo_wrap[^>]*background-image:url\('([^']+)'\)/);
+
+    const id = `tg-public-${channelName}-${messageId}`;
+    if (!text && !photoMatch) continue;
+    if (byId.has(id) || byId.has(`tg--100${channelName}-${messageId}`)) continue;
+
+    byId.set(id, {
+      id,
+      date: dateMatch ? new Date(dateMatch[1]).toISOString() : new Date().toISOString(),
+      text,
+      photo: photoMatch?.[1],
+      telegramUrl: `https://t.me/${channelName}/${messageId}`,
+    });
+    added += 1;
+  }
+
+  return added;
+}
+
 async function readJson(file, fallback) {
   try {
     return JSON.parse(await readFile(file, "utf8"));
@@ -111,6 +159,7 @@ async function main() {
   const token = process.env.TELEGRAM_BOT_TOKEN || "";
   const channelId = String(process.env.TELEGRAM_CHANNEL_ID || "").trim();
   let channelUrl = process.env.TELEGRAM_CHANNEL_URL || "https://t.me/levstavitskiy";
+  let channelUsername = "";
 
   if (!token) {
     console.log("TELEGRAM_BOT_TOKEN is not set — skip news sync.");
@@ -123,9 +172,14 @@ async function main() {
     try {
       const chat = await telegram(token, "getChat", { chat_id: channelId });
       if (chat?.username) {
+        channelUsername = chat.username;
         channelUrl = `https://t.me/${chat.username}`;
+      } else if (String(chat?.id || "").startsWith("-100")) {
+        channelUrl = `https://t.me/c/${String(chat.id).slice(4)}`;
       }
-      console.log(`Channel ok: ${chat?.title || channelId}`);
+      console.log(
+        `Channel ok: ${chat?.title || channelId}${channelUsername ? ` (@${channelUsername})` : ""}`
+      );
     } catch (err) {
       console.log(
         `Cannot read channel ${channelId}. Add @AlmaPixelNewsBot as a channel admin, then run news:sync again.`
@@ -138,10 +192,11 @@ async function main() {
 
   const offsetFile = await readJson(offsetPath, { offset: 0 });
   const updates = await telegram(token, "getUpdates", {
-    offset: (offsetFile.offset || 0) + 1,
+    offset: offsetFile.offset ? offsetFile.offset + 1 : 0,
     timeout: 0,
     allowed_updates: ["channel_post", "edited_channel_post", "message"],
   });
+  console.log(`Pending Telegram updates: ${updates.length}`);
 
   const newsFile = await readJson(postsPath, { posts: [], channelUrl });
   const posts = Array.isArray(newsFile.posts) ? [...newsFile.posts] : [];
@@ -184,6 +239,10 @@ async function main() {
 
   if (updates.length) {
     await writeFile(offsetPath, JSON.stringify({ offset: maxOffset }, null, 2) + "\n");
+  }
+
+  if (!changed && channelUsername) {
+    changed += await seedFromPublicChannel(channelUsername, byId);
   }
 
   const next = [...byId.values()]
