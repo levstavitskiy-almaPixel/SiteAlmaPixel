@@ -37,7 +37,7 @@ export type Game = {
   /** Internal folder / project name */
   codeName: string;
   cover: string;
-  /** 9:16 trailer or gameplay. Leave empty to keep a drop-in slot. */
+  /** 1080×2400 vertical trailer or gameplay. Leave empty to keep a drop-in slot. */
   video?: string;
   videoPoster?: string;
   accent: string;
@@ -55,9 +55,9 @@ export const GAMES: Game[] = [
   {
     slug: "owl-tale",
     codeName: "OwlAdventure",
-    cover: "/shot-1.png?v=6",
-    video: "/video/Owl.mov",
-    videoPoster: "/shot-1.png?v=6",
+    cover: "/shot-1.png?v=7",
+    video: "/video/owlTale.mp4",
+    videoPoster: "/shot-1.png?v=7",
     accent: "#d4652f",
     status: "in-development",
     animations: [
@@ -99,7 +99,9 @@ export const GAMES: Game[] = [
   {
     slug: "beastate",
     codeName: "basterd",
-    cover: "/shot-2.png?v=6",
+    cover: "/shot-2.png?v=7",
+    video: "/video/beastate.mp4",
+    videoPoster: "/shot-2.png?v=7",
     accent: "#c45c54",
     status: "in-development",
     animations: [
@@ -141,7 +143,9 @@ export const GAMES: Game[] = [
   {
     slug: "paw-scrathers",
     codeName: "WizardCat",
-    cover: "/shot-3.png?v=6",
+    cover: "/shot-3.png?v=7",
+    video: "/video/pawScratcers.mp4",
+    videoPoster: "/shot-3.png?v=7",
     accent: "#7a5ea8",
     status: "released",
     animations: [
@@ -187,7 +191,9 @@ export const GAMES: Game[] = [
   {
     slug: "project-4",
     codeName: "CrazyFishing",
-    cover: "/shot-4.png?v=6",
+    cover: "/shot-4.png?v=7",
+    video: "/video/crazyFishing.mp4",
+    videoPoster: "/shot-4.png?v=7",
     accent: "#3a8ea8",
     status: "coming-soon",
     animations: [

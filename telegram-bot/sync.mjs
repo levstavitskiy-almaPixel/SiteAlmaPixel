@@ -110,11 +110,30 @@ async function main() {
   await loadDotEnv();
   const token = process.env.TELEGRAM_BOT_TOKEN || "";
   const channelId = String(process.env.TELEGRAM_CHANNEL_ID || "").trim();
-  const channelUrl = process.env.TELEGRAM_CHANNEL_URL || "https://t.me/levstavitskiy";
+  let channelUrl = process.env.TELEGRAM_CHANNEL_URL || "https://t.me/levstavitskiy";
 
   if (!token) {
     console.log("TELEGRAM_BOT_TOKEN is not set — skip news sync.");
     process.exit(0);
+  }
+
+  await telegram(token, "deleteWebhook", { drop_pending_updates: false });
+
+  if (channelId) {
+    try {
+      const chat = await telegram(token, "getChat", { chat_id: channelId });
+      if (chat?.username) {
+        channelUrl = `https://t.me/${chat.username}`;
+      }
+      console.log(`Channel ok: ${chat?.title || channelId}`);
+    } catch (err) {
+      console.log(
+        `Cannot read channel ${channelId}. Add @AlmaPixelNewsBot as a channel admin, then run news:sync again.`
+      );
+      if (err instanceof Error && err.message) {
+        console.log(err.message.replace(/bot\d+:[A-Za-z0-9_-]+/g, "bot***"));
+      }
+    }
   }
 
   const offsetFile = await readJson(offsetPath, { offset: 0 });
@@ -167,14 +186,15 @@ async function main() {
     await writeFile(offsetPath, JSON.stringify({ offset: maxOffset }, null, 2) + "\n");
   }
 
+  const next = [...byId.values()]
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 50);
+
+  if (changed || newsFile.channelUrl !== channelUrl) {
+    await writeFile(postsPath, JSON.stringify({ posts: next, channelUrl }, null, 2) + "\n");
+  }
+
   if (changed) {
-    const next = [...byId.values()]
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .slice(0, 50);
-    await writeFile(
-      postsPath,
-      JSON.stringify({ posts: next, channelUrl: newsFile.channelUrl || channelUrl }, null, 2) + "\n"
-    );
     console.log(`Synced ${changed} Telegram post(s).`);
   } else {
     console.log("No new Telegram posts.");

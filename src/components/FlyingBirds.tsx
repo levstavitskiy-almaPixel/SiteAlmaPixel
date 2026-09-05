@@ -35,8 +35,33 @@ function layoutBird(
   bird.display.y = y - (aabbY + aabbH / 2) * s;
 }
 
-export default function FlyingBirds() {
+export default function FlyingBirds({ clipTo }: { clipTo?: string }) {
   const hostRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const host = hostRef.current;
+    if (!host || !clipTo) return;
+
+    const updateClip = () => {
+      const zone = document.querySelector(clipTo);
+      if (!zone) {
+        host.style.clipPath = "";
+        return;
+      }
+      const rect = zone.getBoundingClientRect();
+      const clipTop = Math.max(0, rect.top);
+      const clipBottom = Math.max(0, window.innerHeight - rect.bottom);
+      host.style.clipPath = `inset(${clipTop}px 0 ${clipBottom}px 0)`;
+    };
+
+    updateClip();
+    window.addEventListener("scroll", updateClip, { passive: true });
+    window.addEventListener("resize", updateClip);
+    return () => {
+      window.removeEventListener("scroll", updateClip);
+      window.removeEventListener("resize", updateClip);
+    };
+  }, [clipTo]);
 
   useEffect(() => {
     const host = hostRef.current;
@@ -158,10 +183,11 @@ export default function FlyingBirds() {
     <div
       ref={hostRef}
       className="pointer-events-none"
+      data-flying-birds=""
       style={{
         position: "fixed",
         inset: 0,
-        zIndex: 40,
+        zIndex: 15,
         width: "100%",
         height: "100%",
         overflow: "hidden",

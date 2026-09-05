@@ -4,6 +4,7 @@ type WaveDividerProps = {
   fill?: string;
   flip?: boolean;
   className?: string;
+  edge?: "top" | "bottom";
 };
 
 /** Scalloped section edge — Massive Monster style */
@@ -11,6 +12,7 @@ export default function WaveDivider({
   fill = "#f5f4f0",
   flip = false,
   className = "",
+  edge,
 }: WaveDividerProps) {
   return (
     <div
@@ -23,9 +25,11 @@ export default function WaveDivider({
         right: 0,
         zIndex: 20,
         lineHeight: 0,
-        ...(flip
-          ? { top: 0, transform: "rotate(180deg)" }
-          : { bottom: 0 }),
+        ...(edge === "top"
+          ? { top: 0, transform: "translateY(-100%)" }
+          : flip
+            ? { top: 0, transform: "rotate(180deg)" }
+            : { bottom: 0 }),
       }}
     >
       <svg

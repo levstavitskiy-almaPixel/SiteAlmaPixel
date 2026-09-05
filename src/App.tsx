@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import FlyingBirds from "./components/FlyingBirds";
+import HeroApple from "./components/HeroApple";
 import ContactPage from "./components/ContactPage";
 import MusicPage from "./components/MusicPage";
 import PrivacyPage from "./components/PrivacyPage";
@@ -49,58 +50,60 @@ function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen w-full overflow-x-hidden font-chiron-body panel-cream">
+    <div className="min-h-screen w-full overflow-x-clip font-chiron-body panel-cream">
       <SiteHeader variant="overlay" />
 
-      <Hero
-        brand={locale.brand}
-        tagline={locale.tagline}
-        description={locale.description}
-        ctaLabel={locale.heroCta}
-        ctaHref="#games"
-      />
-
-      <section id="about" className="relative py-20 md:py-28 panel-cream">
-        <Container>
-          <ScrollReveal className="text-center max-w-3xl mx-auto">
-            <p className="font-chiron-heading uppercase tracking-[0.18em] text-[#216477] text-sm mb-4">
-              {locale.sections.about.title}
-            </p>
-            <h2
-              className="font-chiron-heading section-title text-[#1a2e34] mb-6"
-              style={{ fontSize: "clamp(1.75rem, 4vw, 2.75rem)" }}
-            >
-              {locale.sections.about.description1}
-            </h2>
-            <p className="text-base md:text-lg leading-relaxed text-[#5a6f76]">
-              {locale.sections.about.description2}
-            </p>
-            <p className="mt-5 text-base md:text-lg leading-relaxed text-[#1a2e34]">
-              {locale.sections.about.collaboration}{" "}
-              <a
-                href={`mailto:${STUDIO.email}`}
-                className="text-[#216477] underline underline-offset-4"
+      <div id="home-stage" className="relative">
+        <FlyingBirds clipTo="#home-stage" />
+        <Hero
+          brand={locale.brand}
+          tagline={locale.tagline}
+          description={locale.description}
+        />
+        <HeroApple />
+        <section id="about" className="relative z-10 py-20 md:py-28 panel-cream">
+          <WaveDivider fill="#f5f4f0" edge="top" />
+          <Container>
+            <ScrollReveal className="text-center max-w-3xl mx-auto">
+              <p className="font-chiron-heading uppercase tracking-[0.18em] text-[#216477] text-sm mb-4">
+                {locale.sections.about.title}
+              </p>
+              <h2
+                className="font-chiron-heading section-title text-[#1a2e34] mb-6"
+                style={{ fontSize: "clamp(1.75rem, 4vw, 2.75rem)" }}
               >
-                {STUDIO.email}
-              </a>
-              .
-            </p>
-            <div className="mt-8 flex justify-center">
-              <SocialLinks />
-            </div>
-            <motion.a
-              href="#games"
-              className="hero-cta mt-10 inline-flex items-center justify-center px-8 py-3.5 font-chiron-heading uppercase tracking-wider text-white text-sm"
-              whileHover={{ scale: 1.04, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              {locale.heroCta}
-            </motion.a>
-          </ScrollReveal>
-        </Container>
-      </section>
+                {locale.sections.about.description1}
+              </h2>
+              <p className="text-base md:text-lg leading-relaxed text-[#5a6f76]">
+                {locale.sections.about.description2}
+              </p>
+              <p className="mt-5 text-base md:text-lg leading-relaxed text-[#1a2e34]">
+                {locale.sections.about.collaboration}{" "}
+                <a
+                  href={`mailto:${STUDIO.email}`}
+                  className="text-[#216477] underline underline-offset-4"
+                >
+                  {STUDIO.email}
+                </a>
+                .
+              </p>
+              <div className="mt-8 flex justify-center">
+                <SocialLinks />
+              </div>
+              <motion.a
+                href="#games"
+                className="hero-cta mt-10 inline-flex items-center justify-center px-8 py-3.5 font-chiron-heading uppercase tracking-wider text-white text-sm"
+                whileHover={{ scale: 1.04, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                {locale.heroCta}
+              </motion.a>
+            </ScrollReveal>
+          </Container>
+        </section>
+      </div>
 
-      <section id="games" className="relative pt-24 pb-28 panel-games overflow-hidden">
+      <section id="games" className="relative z-10 pt-24 pb-28 panel-games overflow-hidden">
         <WaveDivider fill="#f5f4f0" flip />
 
         <Container className="relative z-10">
@@ -154,7 +157,6 @@ function AppRoutes() {
   return (
     <>
       <ScrollToHash />
-      <FlyingBirds />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/games/:slug" element={<GamePage />} />

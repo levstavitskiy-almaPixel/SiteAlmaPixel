@@ -116,7 +116,7 @@ export function NewsPreview() {
   if (!loaded) return null;
 
   return (
-    <section id="news" className="relative py-20 md:py-24 panel-cream">
+    <section id="news" className="relative z-10 py-20 md:py-24 panel-cream">
       <Container>
         <ScrollReveal className="text-center mb-10">
           <h2

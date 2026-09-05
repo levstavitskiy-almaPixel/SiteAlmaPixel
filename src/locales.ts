@@ -136,7 +136,7 @@ export const locales: Record<string, Locale> = {
     gamePage: {
       back: "All games",
       videoLabel: "Vertical video",
-      videoPlaceholder: "Drop a 9:16 clip here when it is ready.",
+      videoPlaceholder: "Drop a 1080×2400 clip here when it is ready.",
       moreGames: "More games",
       playOnGoogle: "Get it on Google Play"
     },
@@ -281,7 +281,7 @@ export const locales: Record<string, Locale> = {
     gamePage: {
       back: "Все игры",
       videoLabel: "Вертикальное видео",
-      videoPlaceholder: "Сюда можно вставить ролик 9:16, когда он будет готов.",
+      videoPlaceholder: "Сюда можно вставить ролик 1080×2400, когда он будет готов.",
       moreGames: "Другие игры",
       playOnGoogle: "Скачать в Google Play"
     },

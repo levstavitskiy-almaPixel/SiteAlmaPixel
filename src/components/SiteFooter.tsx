@@ -9,7 +9,7 @@ export default function SiteFooter() {
   const { locale } = useLanguage();
 
   return (
-    <footer className="relative py-14 panel-cream border-t border-[#216477]/15">
+    <footer className="relative z-10 py-14 panel-cream border-t border-[#216477]/15">
       <Container>
         <ScrollReveal className="text-center text-[#5a6f76] space-y-4">
           <p className="font-chiron-heading text-[#216477] text-lg">{locale.brand}</p>

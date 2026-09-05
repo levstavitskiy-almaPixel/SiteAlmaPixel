@@ -25,6 +25,8 @@ export default function VerticalVideo({
         {showVideo ? (
           <video
             className="w-full h-full object-cover"
+            width={1080}
+            height={2400}
             poster={poster}
             controls
             playsInline

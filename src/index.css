@@ -167,13 +167,12 @@ html, body {
 
 .site-header.is-top .nav-link,
 .site-header.is-top .brand-name {
-  color: #fff;
-  text-shadow: 0 1px 8px rgba(0, 40, 50, 0.35);
+  color: var(--alma-ink);
+  text-shadow: none;
 }
 
 .site-header.is-top .nav-link:hover {
-  color: #fff;
-  opacity: 0.85;
+  color: var(--alma-teal);
 }
 
 .site-header.is-scrolled .nav-link {
@@ -270,18 +269,25 @@ html, body {
   background-size: auto;
 }
 
-.panel-teal {
-  background-color: var(--alma-teal);
-  background-image: url(/BgSite2.png?v=2);
-  background-repeat: repeat;
-  background-size: auto;
+#about.panel-cream {
+  background-image: none;
 }
 
-.panel-games {
-  background-color: var(--alma-teal);
-  background-image: url(/BgSite2.png?v=2);
+.panel-sky {
+  background-color: #d6eaf3;
+  background-image: url(/BgSite1.png);
   background-repeat: repeat;
   background-size: auto;
+  background-blend-mode: screen;
+}
+
+.panel-teal,
+.panel-games {
+  background-color: #0d2348;
+  background-image: url(/BgSite2.png?v=7);
+  background-repeat: repeat;
+  background-size: auto;
+  background-blend-mode: screen;
 }
 
 /* Image quality */
@@ -308,8 +314,8 @@ img {
 }
 
 .site-header.is-top .lang-switch-wrap {
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(33, 100, 119, 0.08);
+  border: 1px solid transparent;
 }
 
 .site-header.is-scrolled .lang-switch-wrap {
@@ -321,7 +327,7 @@ img {
   position: relative;
   aspect-ratio: 316 / 404;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
 }
 
@@ -330,7 +336,7 @@ img {
   position: relative;
   z-index: 1;
   object-fit: contain;
-  object-position: center center;
+  object-position: center bottom;
   filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.28));
   transition: transform 0.5s var(--ease-out-expo), filter 0.5s var(--ease-out-expo);
 }
@@ -377,7 +383,7 @@ img {
 }
 
 .phone-frame-screen {
-  aspect-ratio: 9 / 16;
+  aspect-ratio: 1080 / 2400;
   border-radius: 22px;
   overflow: hidden;
   background: #0d242c;
@@ -455,8 +461,8 @@ img {
 }
 
 .site-header.is-top .header-email {
-  color: #fff;
-  text-shadow: 0 1px 8px rgba(0, 40, 50, 0.35);
+  color: var(--alma-ink);
+  text-shadow: none;
 }
 
 .site-header.is-top .header-email:hover {
@@ -469,7 +475,7 @@ img {
 
 .site-header.is-top .social-link {
   color: #111;
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(0, 0, 0, 0.06);
 }
 
 .site-header.is-top .social-link:hover {

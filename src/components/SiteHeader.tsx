@@ -52,9 +52,7 @@ export default function SiteHeader({ variant = "solid" }: SiteHeaderProps) {
         color:
           language === code
             ? "#216477"
-            : scrolled || variant === "solid"
-              ? "#5a6f76"
-              : "rgba(255,255,255,0.85)",
+            : "#5a6f76",
       }}
     >
       {code.toUpperCase()}
@@ -115,7 +113,7 @@ export default function SiteHeader({ variant = "solid" }: SiteHeaderProps) {
 
             <button
               className={`lg:hidden p-2 transition-colors ${
-                scrolled || variant === "solid" ? "text-[#216477]" : "text-white"
+                "text-[#216477]"
               }`}
               aria-label="Menu"
               aria-expanded={menuOpen}
