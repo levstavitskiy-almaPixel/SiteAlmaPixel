@@ -130,10 +130,36 @@ export default function GamePage() {
       </section>
 
       <section className="relative py-16 md:py-24">
-        <Container>
-          <div className="grid lg:grid-cols-[minmax(0,1fr)_300px] gap-12 lg:gap-16 items-start">
-            <article className="space-y-5 text-[#1a2e34] max-w-2xl">
-              {storyOwl ? (
+        <Container className="relative">
+          {storyOwl ? (
+            <>
+              <div className="lg:hidden mb-10 flex flex-col items-center">
+                <p className="font-chiron-heading text-[#216477] uppercase tracking-[0.16em] text-xs mb-4 text-center">
+                  {locale.gamePage.videoLabel}
+                </p>
+                <VerticalVideo
+                  key={`${game.slug}-mobile`}
+                  src={game.video}
+                  poster={game.videoPoster ?? game.cover}
+                  title={copy.title}
+                  label={locale.gamePage.videoLabel}
+                  placeholder={locale.gamePage.videoPlaceholder}
+                />
+              </div>
+              <div className="hidden lg:block absolute top-0 right-0 z-20 w-[260px]">
+                <p className="font-chiron-heading text-[#216477] uppercase tracking-[0.16em] text-xs mb-4 text-center">
+                  {locale.gamePage.videoLabel}
+                </p>
+                <VerticalVideo
+                  key={game.slug}
+                  src={game.video}
+                  poster={game.videoPoster ?? game.cover}
+                  title={copy.title}
+                  label={locale.gamePage.videoLabel}
+                  placeholder={locale.gamePage.videoPlaceholder}
+                />
+              </div>
+              <article className="text-[#1a2e34]">
                 <OwlTaleStory
                   hook={copy.storyHook}
                   lead={copy.lead}
@@ -142,31 +168,32 @@ export default function GamePage() {
                   owl={storyOwl}
                   king={game.storyAfter}
                 />
-              ) : (
-                <>
-                  {copy.body.map((paragraph) => (
-                    <p key={paragraph} className="text-base md:text-lg leading-relaxed text-[#5a6f76]">
-                      {paragraph}
-                    </p>
-                  ))}
-                </>
-              )}
-            </article>
-
-            <div>
-              <p className="font-chiron-heading text-[#216477] uppercase tracking-[0.16em] text-xs mb-4 text-center">
-                {locale.gamePage.videoLabel}
-              </p>
-              <VerticalVideo
-                key={game.slug}
-                src={game.video}
-                poster={game.videoPoster ?? game.cover}
-                title={copy.title}
-                label={locale.gamePage.videoLabel}
-                placeholder={locale.gamePage.videoPlaceholder}
-              />
+              </article>
+            </>
+          ) : (
+            <div className="grid lg:grid-cols-[minmax(0,1fr)_300px] gap-12 lg:gap-16 items-start">
+              <article className="space-y-5 text-[#1a2e34] max-w-2xl">
+                {copy.body.map((paragraph) => (
+                  <p key={paragraph} className="text-base md:text-lg leading-relaxed text-[#5a6f76]">
+                    {paragraph}
+                  </p>
+                ))}
+              </article>
+              <div>
+                <p className="font-chiron-heading text-[#216477] uppercase tracking-[0.16em] text-xs mb-4 text-center">
+                  {locale.gamePage.videoLabel}
+                </p>
+                <VerticalVideo
+                  key={game.slug}
+                  src={game.video}
+                  poster={game.videoPoster ?? game.cover}
+                  title={copy.title}
+                  label={locale.gamePage.videoLabel}
+                  placeholder={locale.gamePage.videoPlaceholder}
+                />
+              </div>
             </div>
-          </div>
+          )}
         </Container>
       </section>
 

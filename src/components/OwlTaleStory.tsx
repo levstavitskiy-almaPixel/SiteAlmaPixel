@@ -2,10 +2,13 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { GameAnimation } from "../data/games";
 import GameCharacterAnimation from "./GameCharacterAnimation";
 
-const CARD_SRC = "/Card_0.png";
-const OWL_WIDTH = 168;
-const OWL_HEIGHT = 200;
-const CARD_WIDTH = 132;
+const CARD_SRC = "/Card_0.png?v=3";
+const OWL_WIDTH = 112;
+const OWL_HEIGHT = 134;
+const OWL_OFFSET_X = 12;
+const KING_WIDTH = 136;
+const KING_HEIGHT = 162;
+const CARD_WIDTH = 72;
 
 type OwlTaleStoryProps = {
   hook?: string;
@@ -22,31 +25,26 @@ function owlPointOnCard(card: HTMLElement, trail: HTMLElement): Point {
   const trailBox = trail.getBoundingClientRect();
   const cardBox = card.getBoundingClientRect();
   return {
-    x: cardBox.left - trailBox.left + (cardBox.width - OWL_WIDTH) / 2,
+    x: cardBox.left - trailBox.left + (cardBox.width - OWL_WIDTH) / 2 + OWL_OFFSET_X,
     y: cardBox.top - trailBox.top + cardBox.height * 0.08,
   };
 }
 
 function StoryCard({
-  align,
   cardRef,
   occupant,
 }: {
-  align: "left" | "right" | "center";
   cardRef?: (node: HTMLDivElement | null) => void;
   occupant?: ReactNode;
 }) {
-  const justify =
-    align === "left" ? "justify-start pl-2 sm:pl-8" : align === "right" ? "justify-end pr-2 sm:pr-8" : "justify-center";
-
   return (
-    <div className={`flex ${justify}`}>
+    <div className="flex justify-center">
       <div ref={cardRef} className="relative" style={{ width: CARD_WIDTH }}>
         <img src={CARD_SRC} alt="" className="w-full h-auto select-none" draggable={false} />
         {occupant ? (
           <div
             className="absolute left-1/2 -translate-x-1/2 pointer-events-none"
-            style={{ top: "8%" }}
+            style={{ top: "2%" }}
           >
             {occupant}
           </div>
@@ -58,13 +56,12 @@ function StoryCard({
 
 export default function OwlTaleStory({ hook, lead, body, crownSrc, owl, king }: OwlTaleStoryProps) {
   const paragraphs = [lead, ...body];
-  const owlPadCount = 1 + paragraphs.length;
+  const owlPadCount = paragraphs.length;
   const trailRef = useRef<HTMLDivElement>(null);
   const padRefs = useRef<Array<HTMLDivElement | null>>([]);
   const [pos, setPos] = useState<Point>({ x: 0, y: 0 });
   const [duration, setDuration] = useState(0);
   const [owlAnim, setOwlAnim] = useState("idle");
-  const [flip, setFlip] = useState(false);
   const padRef = useRef(0);
   const posRef = useRef(pos);
 
@@ -83,7 +80,6 @@ export default function OwlTaleStory({ hook, lead, body, crownSrc, owl, king }: 
       const prev = posRef.current;
       const dist = Math.hypot(point.x - prev.x, point.y - prev.y);
       const running = animate && dist > 12;
-      setFlip(point.x < prev.x - 4);
       setDuration(running ? Math.min(1100, Math.max(420, dist * 1.05)) : 0);
       setOwlAnim(running ? "run" : "idle");
       setPos(point);
@@ -135,13 +131,12 @@ export default function OwlTaleStory({ hook, lead, body, crownSrc, owl, king }: 
       ) : null}
 
       {hook ? (
-        <p className="text-lg md:text-xl leading-relaxed text-[#1a2e34] text-center font-chiron-heading">
+        <p className="text-lg md:text-xl leading-relaxed text-[#1a2e34] text-center font-chiron-heading max-w-2xl mx-auto">
           {hook}
         </p>
       ) : null}
 
       <StoryCard
-        align="left"
         cardRef={(node) => {
           padRefs.current[0] = node;
         }}
@@ -149,20 +144,24 @@ export default function OwlTaleStory({ hook, lead, body, crownSrc, owl, king }: 
 
       {paragraphs.map((paragraph, index) => (
         <div key={paragraph} className="space-y-6">
-          <p className="text-base md:text-lg leading-relaxed text-[#5a6f76]">{paragraph}</p>
-          <StoryCard
-            align={index % 2 === 0 ? "right" : "left"}
-            cardRef={(node) => {
-              padRefs.current[index + 1] = node;
-            }}
-          />
+          <p className="text-base md:text-lg leading-relaxed text-[#5a6f76] max-w-2xl mx-auto">{paragraph}</p>
+          {index < paragraphs.length - 1 ? (
+            <StoryCard
+              cardRef={(node) => {
+                padRefs.current[index + 1] = node;
+              }}
+            />
+          ) : null}
         </div>
       ))}
 
       {king ? (
         <StoryCard
-          align="center"
-          occupant={<GameCharacterAnimation clip={king} />}
+          occupant={
+            <GameCharacterAnimation
+              clip={{ ...king, width: KING_WIDTH, height: KING_HEIGHT, scale: 1 }}
+            />
+          }
         />
       ) : null}
 
@@ -171,13 +170,15 @@ export default function OwlTaleStory({ hook, lead, body, crownSrc, owl, king }: 
         style={{
           width: OWL_WIDTH,
           height: OWL_HEIGHT,
-          transform: `translate3d(${pos.x}px, ${pos.y}px, 0) scaleX(${flip ? -1 : 1})`,
+          transform: `translate3d(${pos.x}px, ${pos.y}px, 0)`,
           transition: duration ? `transform ${duration}ms linear` : "none",
-          transformOrigin: "center bottom",
         }}
         onTransitionEnd={() => setOwlAnim("idle")}
       >
-        <GameCharacterAnimation clip={owl} animation={owlAnim} />
+        <GameCharacterAnimation
+          clip={{ ...owl, width: OWL_WIDTH, height: OWL_HEIGHT, scale: 0.9 }}
+          animation={owlAnim}
+        />
       </div>
     </div>
   );
