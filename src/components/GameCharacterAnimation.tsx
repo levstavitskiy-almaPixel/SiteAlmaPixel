@@ -5,15 +5,17 @@ import MovieClipAnimation from "./MovieClipAnimation";
 export default function GameCharacterAnimation({
   clip,
   className = "",
+  animation: animationOverride,
 }: {
   clip: GameAnimation;
   className?: string;
+  animation?: string;
 }) {
   const width = clip.width ?? 280;
   const height = clip.height ?? 320;
   const scale = clip.scale ?? 1;
   const offsetY = clip.offsetY ?? 0;
-  const animation = clip.animation ?? "idle";
+  const animation = animationOverride ?? clip.animation ?? "idle";
 
   if (clip.skePath && clip.texPath) {
     return (

@@ -51,6 +51,9 @@ export default function DragonBonesAnimation({
   className = "",
 }: DragonBonesAnimationProps) {
   const hostRef = useRef<HTMLDivElement>(null);
+  const displayRef = useRef<PixiArmatureDisplay | null>(null);
+  const animationRef = useRef(animation);
+  animationRef.current = animation;
 
   useEffect(() => {
     const host = hostRef.current;
@@ -93,14 +96,15 @@ export default function DragonBonesAnimation({
         return;
       }
 
-      const playName = pickAnimationName(display.animation.animationNames, animation);
-      if (playName) {
-        display.animation.play(playName, 0);
-      }
-
       fitArmature(display, width, height, scale, offsetX, offsetY);
       pixi.stage.addChild(display);
       armatureDisplay = display;
+      displayRef.current = display;
+
+      const playName = pickAnimationName(display.animation.animationNames, animationRef.current);
+      if (playName) {
+        display.animation.play(playName, 0);
+      }
     };
 
     void setup().catch((error: unknown) => {
@@ -113,6 +117,7 @@ export default function DragonBonesAnimation({
       cancelled = true;
       armatureDisplay?.dispose();
       armatureDisplay = null;
+      displayRef.current = null;
       if (app) {
         app.destroy(true);
         app = null;
@@ -120,18 +125,16 @@ export default function DragonBonesAnimation({
         host.replaceChildren();
       }
     };
-  }, [
-    skePath,
-    texPath,
-    texturePath,
-    armature,
-    animation,
-    width,
-    height,
-    scale,
-    offsetX,
-    offsetY,
-  ]);
+  }, [skePath, texPath, texturePath, armature, width, height, scale, offsetX, offsetY]);
+
+  useEffect(() => {
+    const display = displayRef.current;
+    if (!display) return;
+    const playName = pickAnimationName(display.animation.animationNames, animation);
+    if (playName) {
+      display.animation.play(playName, 0);
+    }
+  }, [animation]);
 
   return (
     <div

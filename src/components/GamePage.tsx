@@ -6,6 +6,7 @@ import Container from "./Container";
 import VerticalVideo from "./VerticalVideo";
 import GameCharacterAnimation from "./GameCharacterAnimation";
 import GameCard from "./GameCard";
+import OwlTaleStory from "./OwlTaleStory";
 import { getGame, publishedGames } from "../data/games";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -132,41 +133,24 @@ export default function GamePage() {
         <Container>
           <div className="grid lg:grid-cols-[minmax(0,1fr)_300px] gap-12 lg:gap-16 items-start">
             <article className="space-y-5 text-[#1a2e34] max-w-2xl">
-              {game.storyBeforeImage ? (
-                <div className="flex justify-center">
-                  <img
-                    src={game.storyBeforeImage}
-                    alt=""
-                    className="max-h-40 md:max-h-52 w-auto object-contain drop-shadow-lg"
-                    draggable={false}
-                  />
-                </div>
-              ) : null}
-              {copy.storyHook ? (
-                <p className="text-lg md:text-xl leading-relaxed text-[#1a2e34] text-center font-chiron-heading">
-                  {copy.storyHook}
-                </p>
-              ) : null}
               {storyOwl ? (
-                <div className="flex justify-center">
-                  <GameCharacterAnimation key="owl-before-lead" clip={storyOwl} />
-                </div>
-              ) : null}
-              {storyOwl ? (
-                <p className="text-base md:text-lg leading-relaxed text-[#5a6f76]">
-                  {copy.lead}
-                </p>
-              ) : null}
-              {copy.body.map((paragraph) => (
-                <p key={paragraph} className="text-base md:text-lg leading-relaxed text-[#5a6f76]">
-                  {paragraph}
-                </p>
-              ))}
-              {game.storyAfter ? (
-                <div className="flex justify-center pt-2">
-                  <GameCharacterAnimation key="king-woods" clip={game.storyAfter} />
-                </div>
-              ) : null}
+                <OwlTaleStory
+                  hook={copy.storyHook}
+                  lead={copy.lead}
+                  body={copy.body}
+                  crownSrc={game.storyBeforeImage}
+                  owl={storyOwl}
+                  king={game.storyAfter}
+                />
+              ) : (
+                <>
+                  {copy.body.map((paragraph) => (
+                    <p key={paragraph} className="text-base md:text-lg leading-relaxed text-[#5a6f76]">
+                      {paragraph}
+                    </p>
+                  ))}
+                </>
+              )}
             </article>
 
             <div>
