@@ -79,7 +79,7 @@ export const GAMES: Game[] = [
         offsetY: 4,
       },
     ],
-    storyBeforeImage: "/animations/owlTale/Crow-wood.png?v=2",
+    storyBeforeImage: "/animations/owlTale/Crow-wood.png?v=3",
     storyAfter: {
       skePath: "/animations/owlTale/kingWoods_ske.json",
       texPath: "/animations/owlTale/kingWoods_tex.json",

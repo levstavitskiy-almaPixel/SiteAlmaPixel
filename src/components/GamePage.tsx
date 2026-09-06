@@ -167,11 +167,6 @@ export default function GamePage() {
                   <GameCharacterAnimation key="king-woods" clip={game.storyAfter} />
                 </div>
               ) : null}
-              {storyOwl ? (
-                <div className="flex justify-center">
-                  <GameCharacterAnimation key="owl-after-king" clip={storyOwl} />
-                </div>
-              ) : null}
             </article>
 
             <div>
