@@ -1,13 +1,22 @@
 import { useEffect, useState } from "react";
+import type { Language } from "../context/LanguageContext";
+
+export type NewsText = string | { en?: string; ru?: string };
 
 export type NewsPost = {
   id: string;
   date: string;
-  text: string;
+  text: NewsText;
   photo?: string;
   video?: string;
   telegramUrl?: string;
 };
+
+export function displayNewsText(text: NewsText | undefined, language: Language): string {
+  if (!text) return "";
+  if (typeof text === "string") return text;
+  return text[language] || text.ru || text.en || "";
+}
 
 type NewsFile = {
   posts?: NewsPost[];

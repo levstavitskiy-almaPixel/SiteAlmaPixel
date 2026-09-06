@@ -20,16 +20,17 @@ export default function GamePage() {
 
   const copy = game.copy[language];
   const others = publishedGames().filter((item) => item.slug !== game.slug).slice(0, 3);
+  const storyOwl = copy.storyHook ? game.animations?.[0] : undefined;
+  const heroClips = storyOwl ? [] : game.animations ?? [];
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden font-chiron-body panel-cream">
       <SiteHeader variant="solid" />
 
       <section
-        className="relative pt-28 pb-16 md:pt-32 md:pb-24 panel-games overflow-hidden game-hero"
+        className="relative pt-28 pb-16 md:pt-32 md:pb-24 panel-games overflow-hidden"
         style={{ ["--game-accent" as string]: game.accent }}
       >
-        <div className="game-hero-glow" aria-hidden />
         <Container className="relative z-10">
           <Link
             to="/#games"
@@ -38,7 +39,7 @@ export default function GamePage() {
             ← {locale.gamePage.back}
           </Link>
 
-          <div className="grid lg:grid-cols-[minmax(0,1fr)_280px] gap-10 lg:gap-16 items-start">
+          <div className={heroClips.length ? "grid lg:grid-cols-[minmax(0,1fr)_280px] gap-10 lg:gap-16 items-start" : ""}>
             <div>
               <p className="uppercase tracking-[0.2em] text-white/70 text-xs mb-3">
                 {copy.statusLabel}
@@ -60,29 +61,16 @@ export default function GamePage() {
               >
                 {copy.subtitle}
               </motion.p>
-              {game.storyBeforeImage ? (
-                <motion.div
-                  className="mt-8 mb-2 flex justify-start"
+              {!storyOwl ? (
+                <motion.p
+                  className="mt-6 text-base md:text-lg leading-relaxed text-white/90 max-w-2xl"
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.14 }}
+                  transition={{ duration: 0.7, delay: 0.18 }}
                 >
-                  <img
-                    src={game.storyBeforeImage}
-                    alt=""
-                    className="max-h-40 md:max-h-52 w-auto object-contain drop-shadow-lg"
-                    draggable={false}
-                  />
-                </motion.div>
+                  {copy.lead}
+                </motion.p>
               ) : null}
-              <motion.p
-                className="mt-6 text-base md:text-lg leading-relaxed text-white/90 max-w-2xl"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.18 }}
-              >
-                {copy.lead}
-              </motion.p>
               {game.store?.googlePlay ? (
                 <motion.a
                   href={game.store.googlePlay}
@@ -103,7 +91,7 @@ export default function GamePage() {
               ) : null}
             </div>
 
-            {game.animations?.length ? (
+            {heroClips.length ? (
               <motion.div
                 className="flex justify-center lg:justify-end"
                 initial={{ opacity: 0, scale: 0.92 }}
@@ -114,7 +102,7 @@ export default function GamePage() {
                   animate={{ y: [0, -10, 0] }}
                   transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  {game.animations.map((clip) => (
+                  {heroClips.map((clip) => (
                     <GameCharacterAnimation
                       key={clip.skePath ?? clip.mcPath ?? clip.texturePath}
                       clip={clip}
@@ -122,7 +110,7 @@ export default function GamePage() {
                   ))}
                 </motion.div>
               </motion.div>
-            ) : (
+            ) : !storyOwl ? (
               <motion.div
                 className="game-poster w-[240px] mx-auto lg:ml-auto"
                 initial={{ opacity: 0, y: 16 }}
@@ -135,7 +123,7 @@ export default function GamePage() {
                   draggable={false}
                 />
               </motion.div>
-            )}
+            ) : null}
           </div>
         </Container>
       </section>
@@ -144,6 +132,31 @@ export default function GamePage() {
         <Container>
           <div className="grid lg:grid-cols-[minmax(0,1fr)_300px] gap-12 lg:gap-16 items-start">
             <article className="space-y-5 text-[#1a2e34] max-w-2xl">
+              {game.storyBeforeImage ? (
+                <div className="flex justify-center">
+                  <img
+                    src={game.storyBeforeImage}
+                    alt=""
+                    className="max-h-40 md:max-h-52 w-auto object-contain drop-shadow-lg"
+                    draggable={false}
+                  />
+                </div>
+              ) : null}
+              {copy.storyHook ? (
+                <p className="text-lg md:text-xl leading-relaxed text-[#1a2e34] text-center font-chiron-heading">
+                  {copy.storyHook}
+                </p>
+              ) : null}
+              {storyOwl ? (
+                <div className="flex justify-center">
+                  <GameCharacterAnimation key="owl-before-lead" clip={storyOwl} />
+                </div>
+              ) : null}
+              {storyOwl ? (
+                <p className="text-base md:text-lg leading-relaxed text-[#5a6f76]">
+                  {copy.lead}
+                </p>
+              ) : null}
               {copy.body.map((paragraph) => (
                 <p key={paragraph} className="text-base md:text-lg leading-relaxed text-[#5a6f76]">
                   {paragraph}
@@ -151,7 +164,12 @@ export default function GamePage() {
               ))}
               {game.storyAfter ? (
                 <div className="flex justify-center pt-2">
-                  <GameCharacterAnimation clip={game.storyAfter} />
+                  <GameCharacterAnimation key="king-woods" clip={game.storyAfter} />
+                </div>
+              ) : null}
+              {storyOwl ? (
+                <div className="flex justify-center">
+                  <GameCharacterAnimation key="owl-after-king" clip={storyOwl} />
                 </div>
               ) : null}
             </article>

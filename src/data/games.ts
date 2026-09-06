@@ -24,6 +24,8 @@ export type GameCopy = {
   subtitle: string;
   statusLabel: string;
   lead: string;
+  /** Line shown in the story block, above the owlet. */
+  storyHook?: string;
   body: string[];
 };
 
@@ -84,16 +86,17 @@ export const GAMES: Game[] = [
       texturePath: "/animations/owlTale/kingWoods_tex.png",
       armature: "Armature",
       animation: "idle",
-      width: 280,
-      height: 320,
-      scale: 1.05,
-      offsetY: 8,
+      width: 168,
+      height: 200,
+      scale: 0.92,
+      offsetY: 4,
     },
     copy: {
       en: {
         title: "Owl Tale",
         subtitle: "Owl Adventure",
         statusLabel: "In development",
+        storyHook: "Write your own adventure of a little brave owlet fighting evil!",
         lead: "A turn-based forest RPG: you walk tile by tile, strike enemies beside you, dodge wolves, foxes and archers, and collect a deck of abilities.",
         body: [
           "Combat is tactics on the field. Turns, range, positions. Abilities from your gear change the board: ignite neighbours, power up a strike, hold a shield, dash out from under an attack. Ignite charges from kills — it burns those standing nearby and buffs your next hit.",
@@ -106,6 +109,7 @@ export const GAMES: Game[] = [
         title: "Owl Tale",
         subtitle: "Owl Adventure",
         statusLabel: "В разработке",
+        storyHook: "Напиши свою историю приключения маленького отважного совенка борющегося со злом!",
         lead: "Пошаговая лесная RPG: ходишь по клеткам, бьёшь врагов рядом, уворачиваешься от волков, лис и лучников и собираешь колоду способностей.",
         body: [
           "Бой — тактика на поле. Ходы, дистанция, позиции. Способности из экипировки меняют расклад: поджигай соседей, усиливай удар, держи щит, рывком выходи из-под атаки. «Поджог» заряжается убийствами — жжёт рядом стоящих и даёт бонус к следующему удару.",

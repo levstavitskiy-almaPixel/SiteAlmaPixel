@@ -26,6 +26,9 @@ function ScrollToHash() {
   const location = useLocation();
 
   useEffect(() => {
+    document.querySelectorAll("video").forEach((video) => {
+      video.pause();
+    });
     if (location.hash) {
       const id = location.hash.slice(1);
       requestAnimationFrame(() => {
@@ -112,7 +115,6 @@ function HomePage() {
               className="font-bold font-chiron-heading section-title uppercase text-white"
               style={{
                 fontSize: "clamp(1.75rem, 4vw, 2.4rem)",
-                textShadow: "0 3px 16px rgba(0,0,0,0.35)",
               }}
             >
               {locale.sections.games.title}

@@ -98,6 +98,63 @@ function toPost(message, photoUrl) {
   };
 }
 
+function detectLang(text) {
+  return /[А-Яа-яЁё]/.test(text) ? "ru" : "en";
+}
+
+function sourceText(text) {
+  if (!text) return "";
+  if (typeof text === "string") return text;
+  return text.ru || text.en || "";
+}
+
+function hasBothTranslations(text) {
+  return Boolean(text && typeof text === "object" && text.en && text.ru);
+}
+
+async function translateChunk(text, from, to) {
+  const url = new URL("https://translate.googleapis.com/translate_a/single");
+  url.searchParams.set("client", "gtx");
+  url.searchParams.set("sl", from);
+  url.searchParams.set("tl", to);
+  url.searchParams.set("dt", "t");
+  url.searchParams.set("q", text);
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`translate ${res.status}`);
+  const data = await res.json();
+  return (data[0] || []).map((row) => row[0]).join("");
+}
+
+async function translateText(text, from, to) {
+  if (!text.trim()) return text;
+  const parts = [];
+  let rest = text;
+  while (rest.length) {
+    let chunk = rest.slice(0, 900);
+    if (rest.length > 900) {
+      const cut = Math.max(chunk.lastIndexOf("\n"), chunk.lastIndexOf(". "));
+      if (cut > 200) chunk = rest.slice(0, cut + 1);
+    }
+    parts.push(await translateChunk(chunk, from, to));
+    rest = rest.slice(chunk.length);
+  }
+  return parts.join("");
+}
+
+async function localizeText(text) {
+  if (hasBothTranslations(text)) return text;
+  const source = sourceText(text);
+  if (!source) return { en: "", ru: "" };
+  const from = detectLang(source);
+  const to = from === "ru" ? "en" : "ru";
+  try {
+    const translated = await translateText(source, from, to);
+    return from === "ru" ? { ru: source, en: translated } : { en: source, ru: translated };
+  } catch {
+    return from === "ru" ? { ru: source, en: source } : { en: source, ru: source };
+  }
+}
+
 function decodeHtml(value) {
   return value
     .replace(/<br\s*\/?>/gi, "\n")
@@ -245,11 +302,20 @@ async function main() {
     changed += await seedFromPublicChannel(channelUsername, byId);
   }
 
-  const next = [...byId.values()]
+  let localized = false;
+  const next = [];
+  for (const post of [...byId.values()]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 50);
+    .slice(0, 50)) {
+    if (hasBothTranslations(post.text)) {
+      next.push(post);
+      continue;
+    }
+    localized = true;
+    next.push({ ...post, text: await localizeText(post.text) });
+  }
 
-  if (changed || newsFile.channelUrl !== channelUrl) {
+  if (changed || localized || newsFile.channelUrl !== channelUrl) {
     await writeFile(postsPath, JSON.stringify({ posts: next, channelUrl }, null, 2) + "\n");
   }
 

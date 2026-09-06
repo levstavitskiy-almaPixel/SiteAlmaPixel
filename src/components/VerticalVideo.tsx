@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type VerticalVideoProps = {
   src?: string;
@@ -8,6 +8,15 @@ type VerticalVideoProps = {
   label: string;
 };
 
+function stopVideo(video: HTMLVideoElement | null) {
+  if (!video) return;
+  video.pause();
+  video.currentTime = 0;
+  video.removeAttribute("src");
+  video.querySelectorAll("source").forEach((source) => source.removeAttribute("src"));
+  video.load();
+}
+
 export default function VerticalVideo({
   src,
   poster,
@@ -15,8 +24,18 @@ export default function VerticalVideo({
   placeholder,
   label,
 }: VerticalVideoProps) {
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [failed, setFailed] = useState(false);
   const showVideo = Boolean(src) && !failed;
+
+  useEffect(() => {
+    setFailed(false);
+  }, [src]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    return () => stopVideo(video);
+  }, [src]);
 
   return (
     <figure className="phone-frame mx-auto">
@@ -24,6 +43,8 @@ export default function VerticalVideo({
       <div className="phone-frame-screen">
         {showVideo ? (
           <video
+            key={src}
+            ref={videoRef}
             className="w-full h-full object-cover"
             width={1080}
             height={2400}

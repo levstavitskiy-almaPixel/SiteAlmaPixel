@@ -4,7 +4,7 @@ import SiteFooter from "./SiteFooter";
 import Container from "./Container";
 import ScrollReveal from "./ScrollReveal";
 import { useLanguage } from "../context/LanguageContext";
-import { formatNewsDate, useNews } from "../lib/news";
+import { displayNewsText, formatNewsDate, useNews, type NewsText } from "../lib/news";
 import { STUDIO } from "../data/studio";
 
 function NewsCard({
@@ -17,11 +17,12 @@ function NewsCard({
 }: {
   id: string;
   date: string;
-  text: string;
+  text: NewsText;
   photo?: string;
   telegramUrl?: string;
   language: "en" | "ru";
 }) {
+  const body = displayNewsText(text, language);
   return (
     <article
       id={id}
@@ -34,8 +35,8 @@ function NewsCard({
         <p className="text-xs uppercase tracking-[0.14em] text-[#216477] mb-3">
           {formatNewsDate(date, language)}
         </p>
-        {text ? (
-          <p className="text-[#1a2e34] whitespace-pre-wrap leading-relaxed">{text}</p>
+        {body ? (
+          <p className="text-[#1a2e34] whitespace-pre-wrap leading-relaxed">{body}</p>
         ) : null}
         {telegramUrl ? (
           <a

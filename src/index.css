@@ -294,7 +294,7 @@ html, body {
   inset: 0;
   background-image: url(/BgSite2.png?v=10);
   background-repeat: repeat;
-  opacity: 0.28;
+  opacity: 0.12;
   mix-blend-mode: screen;
   pointer-events: none;
   z-index: 0;
@@ -358,19 +358,6 @@ img {
 
 .game-status-released {
   color: #b8ecff !important;
-}
-
-.game-hero {
-  isolation: isolate;
-}
-
-.game-hero-glow {
-  position: absolute;
-  inset: 10% 20% auto;
-  height: 55%;
-  background: radial-gradient(ellipse at center, color-mix(in srgb, var(--game-accent, #d4a24a) 45%, transparent), transparent 70%);
-  pointer-events: none;
-  z-index: 0;
 }
 
 .phone-frame {
