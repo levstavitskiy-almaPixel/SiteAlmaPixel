@@ -6,10 +6,14 @@ export default function GameCharacterAnimation({
   clip,
   className = "",
   animation: animationOverride,
+  anchorBone,
+  onAnchor,
 }: {
   clip: GameAnimation;
   className?: string;
   animation?: string;
+  anchorBone?: string;
+  onAnchor?: (point: { x: number; y: number } | null) => void;
 }) {
   const width = clip.width ?? 280;
   const height = clip.height ?? 320;
@@ -31,6 +35,8 @@ export default function GameCharacterAnimation({
         offsetX={clip.offsetX ?? 0}
         offsetY={offsetY}
         className={className}
+        anchorBone={anchorBone}
+        onAnchor={onAnchor}
       />
     );
   }

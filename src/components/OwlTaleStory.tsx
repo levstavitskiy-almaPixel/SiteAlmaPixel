@@ -124,7 +124,7 @@ export default function OwlTaleStory({ hook, lead, body, crownSrc, owl, king }: 
           <img
             src={crownSrc}
             alt=""
-            className="max-h-40 md:max-h-52 w-auto object-contain"
+            className="max-h-24 md:max-h-28 w-auto object-contain"
             draggable={false}
           />
         </div>

@@ -4,6 +4,8 @@ import { PixiFactory } from "pixi-dragonbones-runtime";
 import type { PixiArmatureDisplay } from "pixi-dragonbones-runtime";
 import { ensureDragonBonesParsed, pickAnimationName } from "../lib/dragonbones";
 
+export type DragonBonesAnchor = { x: number; y: number };
+
 export type DragonBonesAnimationProps = {
   skePath: string;
   texPath: string;
@@ -16,6 +18,9 @@ export type DragonBonesAnimationProps = {
   offsetX?: number;
   offsetY?: number;
   className?: string;
+  /** Report this bone's position in the canvas each frame. */
+  anchorBone?: string;
+  onAnchor?: (point: DragonBonesAnchor | null) => void;
 };
 
 function fitArmature(
@@ -49,11 +54,17 @@ export default function DragonBonesAnimation({
   offsetX = 0,
   offsetY = 0,
   className = "",
+  anchorBone,
+  onAnchor,
 }: DragonBonesAnimationProps) {
   const hostRef = useRef<HTMLDivElement>(null);
   const displayRef = useRef<PixiArmatureDisplay | null>(null);
   const animationRef = useRef(animation);
+  const onAnchorRef = useRef(onAnchor);
+  const anchorBoneRef = useRef(anchorBone);
   animationRef.current = animation;
+  onAnchorRef.current = onAnchor;
+  anchorBoneRef.current = anchorBone;
 
   useEffect(() => {
     const host = hostRef.current;
@@ -105,6 +116,37 @@ export default function DragonBonesAnimation({
       if (playName) {
         display.animation.play(playName, 0);
       }
+
+      const reportAnchor = () => {
+        const boneName = anchorBoneRef.current;
+        const callback = onAnchorRef.current;
+        if (!boneName || !callback) return;
+        const names = boneName.split("|");
+        let bone = null as ReturnType<typeof display.armature.getBone>;
+        for (const name of names) {
+          bone = display.armature.getBone(name);
+          if (bone) break;
+        }
+        if (!bone) {
+          callback(null);
+          return;
+        }
+        bone.updateGlobalTransform();
+        const world = display.toGlobal({
+          x: bone.globalTransformMatrix.tx,
+          y: bone.globalTransformMatrix.ty,
+        });
+        const canvasBox = pixi.canvas.getBoundingClientRect();
+        const screenW = Math.max(pixi.screen.width, 1);
+        const screenH = Math.max(pixi.screen.height, 1);
+        callback({
+          x: (world.x / screenW) * canvasBox.width,
+          y: (world.y / screenH) * canvasBox.height,
+        });
+      };
+
+      pixi.ticker.add(reportAnchor);
+      reportAnchor();
     };
 
     void setup().catch((error: unknown) => {

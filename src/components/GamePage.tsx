@@ -7,6 +7,8 @@ import VerticalVideo from "./VerticalVideo";
 import GameCharacterAnimation from "./GameCharacterAnimation";
 import GameCard from "./GameCard";
 import OwlTaleStory from "./OwlTaleStory";
+import FishTaleStory from "./FishTaleStory";
+import WizardCatStory from "./WizardCatStory";
 import { getGame, publishedGames } from "../data/games";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -21,8 +23,11 @@ export default function GamePage() {
 
   const copy = game.copy[language];
   const others = publishedGames().filter((item) => item.slug !== game.slug).slice(0, 3);
-  const storyOwl = copy.storyHook ? game.animations?.[0] : undefined;
-  const heroClips = storyOwl ? [] : game.animations ?? [];
+  const storyOwl = game.slug !== "project-4" && copy.storyHook ? game.animations?.[0] : undefined;
+  const storyCat = game.slug === "project-4" ? game.animations?.[0] : undefined;
+  const storyWizard = game.slug === "paw-scrathers" ? game.animations?.[0] : undefined;
+  const isStoryPage = Boolean(storyOwl || storyCat || storyWizard);
+  const heroClips = isStoryPage ? [] : game.animations ?? [];
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden font-chiron-body panel-cream">
@@ -62,7 +67,7 @@ export default function GamePage() {
               >
                 {copy.subtitle}
               </motion.p>
-              {!storyOwl ? (
+              {!isStoryPage ? (
                 <motion.p
                   className="mt-6 text-base md:text-lg leading-relaxed text-white/90 max-w-2xl"
                   initial={{ opacity: 0, y: 12 }}
@@ -111,7 +116,7 @@ export default function GamePage() {
                   ))}
                 </motion.div>
               </motion.div>
-            ) : !storyOwl ? (
+            ) : !isStoryPage ? (
               <motion.div
                 className="game-poster w-[240px] mx-auto lg:ml-auto"
                 initial={{ opacity: 0, y: 16 }}
@@ -131,22 +136,28 @@ export default function GamePage() {
 
       <section className="relative py-16 md:py-24">
         <Container className="relative">
-          {storyOwl ? (
-            <>
-              <div className="lg:hidden mb-10 flex flex-col items-center">
-                <p className="font-chiron-heading text-[#216477] uppercase tracking-[0.16em] text-xs mb-4 text-center">
-                  {locale.gamePage.videoLabel}
-                </p>
-                <VerticalVideo
-                  key={`${game.slug}-mobile`}
-                  src={game.video}
-                  poster={game.videoPoster ?? game.cover}
-                  title={copy.title}
-                  label={locale.gamePage.videoLabel}
-                  placeholder={locale.gamePage.videoPlaceholder}
+          {isStoryPage ? (
+            <article className="text-[#1a2e34]">
+              {storyOwl ? (
+                <OwlTaleStory
+                  hook={copy.storyHook}
+                  lead={copy.lead}
+                  body={copy.body}
+                  crownSrc={game.storyBeforeImage}
+                  owl={storyOwl}
+                  king={game.storyAfter}
                 />
-              </div>
-              <div className="hidden lg:block absolute top-0 right-0 z-20 w-[260px]">
+              ) : storyCat ? (
+                <FishTaleStory
+                  lead={copy.lead}
+                  body={copy.body}
+                  cat={storyCat}
+                  hookSrc={game.storyBeforeImage}
+                />
+              ) : storyWizard ? (
+                <WizardCatStory lead={copy.lead} body={copy.body} cat={storyWizard} />
+              ) : null}
+              <div className="mt-16 flex flex-col items-center">
                 <p className="font-chiron-heading text-[#216477] uppercase tracking-[0.16em] text-xs mb-4 text-center">
                   {locale.gamePage.videoLabel}
                 </p>
@@ -159,17 +170,7 @@ export default function GamePage() {
                   placeholder={locale.gamePage.videoPlaceholder}
                 />
               </div>
-              <article className="text-[#1a2e34]">
-                <OwlTaleStory
-                  hook={copy.storyHook}
-                  lead={copy.lead}
-                  body={copy.body}
-                  crownSrc={game.storyBeforeImage}
-                  owl={storyOwl}
-                  king={game.storyAfter}
-                />
-              </article>
-            </>
+            </article>
           ) : (
             <div className="grid lg:grid-cols-[minmax(0,1fr)_300px] gap-12 lg:gap-16 items-start">
               <article className="space-y-5 text-[#1a2e34] max-w-2xl">
