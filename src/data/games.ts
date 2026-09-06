@@ -44,6 +44,10 @@ export type Game = {
   status: GameStatus;
   hidden?: boolean;
   animations?: GameAnimation[];
+  /** Static art shown above the story text. */
+  storyBeforeImage?: string;
+  /** DragonBones / MovieClip shown after the story text. */
+  storyAfter?: GameAnimation;
   store?: {
     googlePlay?: string;
     appStore?: string;
@@ -73,25 +77,41 @@ export const GAMES: Game[] = [
         offsetY: 4,
       },
     ],
+    storyBeforeImage: "/animations/owlTale/Crow-wood.png?v=2",
+    storyAfter: {
+      skePath: "/animations/owlTale/kingWoods_ske.json",
+      texPath: "/animations/owlTale/kingWoods_tex.json",
+      texturePath: "/animations/owlTale/kingWoods_tex.png",
+      armature: "Armature",
+      animation: "idle",
+      width: 280,
+      height: 320,
+      scale: 1.05,
+      offsetY: 8,
+    },
     copy: {
       en: {
         title: "Owl Tale",
-        subtitle: "Help the little owl overthrow the kings of fairy-tale lands",
+        subtitle: "Owl Adventure",
         statusLabel: "In development",
-        lead: "Help the little owl overthrow the kings of fairy-tale lands.",
+        lead: "A turn-based forest RPG: you walk tile by tile, strike enemies beside you, dodge wolves, foxes and archers, and collect a deck of abilities.",
         body: [
-          "A small knight, a too-big sword, and a map of kingdoms that have sat on their thrones for far too long.",
-          "Travel the fairy-tale lands, topple the rulers, and put the owl where a king used to stand.",
+          "Combat is tactics on the field. Turns, range, positions. Abilities from your gear change the board: ignite neighbours, power up a strike, hold a shield, dash out from under an attack. Ignite charges from kills — it burns those standing nearby and buffs your next hit.",
+          "Elements are a separate layer. Fire, ice, lightning and poison land on enemies and tiles, combine, and unlock reactions. An enemy catches fire — keep them burning. Hit a wet target with lightning — you get a different effect. Build around a style: blood, fire, shield, or a hybrid.",
+          "Between fights — an adventure map. Random events on the trail: a well, a fortune teller, a chest, spirits, strange mushrooms. Your choice decides whether you get coins, healing, an attack boost — or walk into an ambush.",
+          "The first location is free. To reach the King of the Forest you have to walk the path and beat two mini-bosses. At the end waits a bear in a crown. Knock the crown off him — and show whose woods these are.",
         ],
       },
       ru: {
         title: "Owl Tale",
-        subtitle: "Помоги совёнку свергнуть королей сказочных земель",
+        subtitle: "Owl Adventure",
         statusLabel: "В разработке",
-        lead: "Помоги совёнку свергнуть королей сказочных земель.",
+        lead: "Пошаговая лесная RPG: ходишь по клеткам, бьёшь врагов рядом, уворачиваешься от волков, лис и лучников и собираешь колоду способностей.",
         body: [
-          "Маленький рыцарь, слишком большой меч и карта королевств, которые слишком долго сидели на троне.",
-          "Странствуй по сказочным землям, свергай правителей и поставь совёнка туда, где раньше был король.",
+          "Бой — тактика на поле. Ходы, дистанция, позиции. Способности из экипировки меняют расклад: поджигай соседей, усиливай удар, держи щит, рывком выходи из-под атаки. «Поджог» заряжается убийствами — жжёт рядом стоящих и даёт бонус к следующему удару.",
+          "Стихии — отдельный слой. Огонь, лёд, молния и яд вешаются на врагов и клетки, сочетаются и открывают реакции. Поджёгся враг — держи его в огне; ударил по мокрому током — получи другой эффект. Строй билд под стиль: кровь, огонь, щит или гибрид.",
+          "Между боями — карта приключений. Случайные события на тропе: колодец, гадалка, сундук, духи, странные грибы. Выбор решает, получишь ли монеты, лечение, усиление атаки — или нарвёшься на засаду.",
+          "Первая локация бесплатна. Чтобы добраться до Короля леса, нужно пройти путь и победить двух мини-боссов. В конце ждёт медведь в короне. Снеси с него корону — и покажи, чьи в лесу шишки.",
         ],
       },
     },

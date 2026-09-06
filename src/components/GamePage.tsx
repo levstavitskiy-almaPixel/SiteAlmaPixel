@@ -60,6 +60,21 @@ export default function GamePage() {
               >
                 {copy.subtitle}
               </motion.p>
+              {game.storyBeforeImage ? (
+                <motion.div
+                  className="mt-8 mb-2 flex justify-start"
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.14 }}
+                >
+                  <img
+                    src={game.storyBeforeImage}
+                    alt=""
+                    className="max-h-40 md:max-h-52 w-auto object-contain drop-shadow-lg"
+                    draggable={false}
+                  />
+                </motion.div>
+              ) : null}
               <motion.p
                 className="mt-6 text-base md:text-lg leading-relaxed text-white/90 max-w-2xl"
                 initial={{ opacity: 0, y: 12 }}
@@ -134,6 +149,11 @@ export default function GamePage() {
                   {paragraph}
                 </p>
               ))}
+              {game.storyAfter ? (
+                <div className="flex justify-center pt-2">
+                  <GameCharacterAnimation clip={game.storyAfter} />
+                </div>
+              ) : null}
             </article>
 
             <div>
@@ -141,6 +161,7 @@ export default function GamePage() {
                 {locale.gamePage.videoLabel}
               </p>
               <VerticalVideo
+                key={game.slug}
                 src={game.video}
                 poster={game.videoPoster ?? game.cover}
                 title={copy.title}
