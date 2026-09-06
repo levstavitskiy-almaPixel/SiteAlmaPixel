@@ -292,7 +292,7 @@ html, body {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url(/BgSite2.png?v=8);
+  background-image: url(/BgSite2.png?v=10);
   background-repeat: repeat;
   opacity: 0.28;
   mix-blend-mode: screen;
