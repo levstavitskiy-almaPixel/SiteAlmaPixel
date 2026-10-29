@@ -71,6 +71,8 @@ export interface Locale {
         generalDesc: string;
         almaBreakTitle: string;
         almaBreakDesc: string;
+        taleOwlTitle: string;
+        taleOwlDesc: string;
       };
       sections: {
         introduction: string;
@@ -217,7 +219,9 @@ export const locales: Record<string, Locale> = {
           generalTitle: "Alma Pixel (general)",
           generalDesc: "Games, apps, and studio services",
           almaBreakTitle: "AlmaBreak",
-          almaBreakDesc: "Android app for app time limits and schedules"
+          almaBreakDesc: "Android app for app time limits and schedules",
+          taleOwlTitle: "Tale Owl",
+          taleOwlDesc: "Data deletion request for the Tale Owl Android game"
         },
         sections: {
           introduction: "Alma Pixel (\"we\", \"our\", or \"us\") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile applications and services.",
@@ -362,7 +366,9 @@ export const locales: Record<string, Locale> = {
           generalTitle: "Alma Pixel (общая)",
           generalDesc: "Игры, приложения и сервисы студии",
           almaBreakTitle: "AlmaBreak",
-          almaBreakDesc: "Android-приложение для лимитов и расписания приложений"
+          almaBreakDesc: "Android-приложение для лимитов и расписания приложений",
+          taleOwlTitle: "Tale Owl",
+          taleOwlDesc: "Запрос на удаление данных игры Tale Owl"
         },
         sections: {
           introduction: "Alma Pixel (\"мы\", \"наш\" или \"нас\") обязуется защищать вашу конфиденциальность. Настоящая Политика конфиденциальности объясняет, как мы собираем, используем, раскрываем и защищаем вашу информацию при использовании наших мобильных приложений и услуг.",

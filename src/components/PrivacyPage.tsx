@@ -59,6 +59,15 @@ export default function PrivacyPage({ locale, language }: PrivacyPageProps) {
               </h3>
               <p className="text-sm text-[#5a6f76]">{hub.almaBreakDesc}</p>
             </Link>
+            <a
+              href="/privacy/tale-owl/data-deletion.html"
+              className="block p-5 rounded-2xl border border-[#216477]/25 bg-white/40 hover:bg-white/70 transition-colors"
+            >
+              <h3 className="font-semibold text-[#1a2e34] text-lg mb-1">
+                {hub.taleOwlTitle}
+              </h3>
+              <p className="text-sm text-[#5a6f76]">{hub.taleOwlDesc}</p>
+            </a>
           </div>
 
           <div id="general" className="space-y-8 text-gray-300 leading-relaxed scroll-mt-24">
