@@ -219,8 +219,16 @@ async function main() {
   let channelUsername = "";
 
   if (!token) {
-    console.log("TELEGRAM_BOT_TOKEN is not set — skip news sync.");
-    process.exit(0);
+    console.error("TELEGRAM_BOT_TOKEN is not set — news sync cannot run.");
+    process.exit(process.env.GITHUB_ACTIONS ? 1 : 0);
+  }
+
+  const me = await telegram(token, "getMe");
+  console.log(`Bot ok: @${me.username || "unknown"}`);
+  if (me.can_read_all_group_messages === false) {
+    console.log(
+      "Privacy mode is ON: the bot does not see ordinary group posts. In @BotFather run /setprivacy → Disable for this bot."
+    );
   }
 
   await telegram(token, "deleteWebhook", { drop_pending_updates: false });
@@ -235,8 +243,13 @@ async function main() {
         channelUrl = `https://t.me/c/${String(chat.id).slice(4)}`;
       }
       console.log(
-        `Channel ok: ${chat?.title || channelId}${channelUsername ? ` (@${channelUsername})` : ""}`
+        `${chat?.type === "supergroup" ? "Group" : "Channel"} ok: ${chat?.title || channelId}${channelUsername ? ` (@${channelUsername})` : ""}`
       );
+      if (chat?.type === "supergroup" && me.can_read_all_group_messages === false) {
+        console.log(
+          "@AlmaPixelGames is a group, not a channel. With privacy ON the bot will not receive news posts."
+        );
+      }
     } catch (err) {
       console.log(
         `Cannot read channel ${channelId}. Add @AlmaPixelNewsBot as a channel admin, then run news:sync again.`
@@ -266,6 +279,23 @@ async function main() {
 
   for (const update of updates) {
     maxOffset = Math.max(maxOffset, update.update_id);
+    const dm = update.message;
+    if (dm?.chat?.type === "private") {
+      try {
+        await telegram(token, "sendMessage", {
+          chat_id: dm.chat.id,
+          text:
+            "Это бот новостей Alma Pixel.\nПубликуйте посты в @AlmaPixelGames — они появятся на alma-pixel.com/news.\n\nThis is the Alma Pixel news bot. Posts from @AlmaPixelGames go to the site.",
+        });
+      } catch (err) {
+        console.log("Could not reply to a private message.");
+        if (err instanceof Error && err.message) {
+          console.log(err.message.replace(/bot\d+:[A-Za-z0-9_-]+/g, "bot***"));
+        }
+      }
+      continue;
+    }
+
     const message = update.channel_post || update.edited_channel_post || update.message;
     if (!message) continue;
     if (update.message && !matchesChannel(channelId, message.chat)) continue;
