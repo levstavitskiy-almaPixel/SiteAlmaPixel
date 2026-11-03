@@ -127,7 +127,7 @@ export const GAMES: Game[] = [
     video: "/video/beastate.mp4",
     videoPoster: "/shot-2.png?v=7",
     accent: "#c45c54",
-    status: "in-development",
+    status: "released",
     animations: [
       {
         skePath: "/animations/img_Politics_ske.json",
@@ -141,11 +141,14 @@ export const GAMES: Game[] = [
         offsetY: 6,
       },
     ],
+    store: {
+      googlePlay: "https://play.google.com/store/apps/details?id=com.almaPixel",
+    },
     copy: {
       en: {
         title: "Beastate",
         subtitle: "Rule the animal farm until they overthrow you",
-        statusLabel: "In development",
+        statusLabel: "Released",
         lead: "Rule the animal farm until they overthrow you.",
         body: [
           "You sit on top of the barnyard. Medals, orders, a nervous crowd of beasts.",
@@ -155,7 +158,7 @@ export const GAMES: Game[] = [
       ru: {
         title: "Beastate",
         subtitle: "Правь скотным двором, пока тебя не свергли",
-        statusLabel: "В разработке",
+        statusLabel: "Вышла",
         lead: "Правь скотным двором, пока тебя не свергли.",
         body: [
           "Ты на вершине скотного двора. Медали, приказы, нервная толпа зверей.",
