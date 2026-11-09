@@ -65,7 +65,10 @@ export const GAMES: Game[] = [
     video: "/video/owlTale.mp4",
     videoPoster: "/shot-1.png?v=7",
     accent: "#d4652f",
-    status: "in-development",
+    status: "released",
+    store: {
+      googlePlay: "https://play.google.com/store/apps/details?id=com.almapixel.adventureowl",
+    },
     animations: [
       {
         skePath: "/animations/owl_ske.json",
@@ -95,7 +98,7 @@ export const GAMES: Game[] = [
       en: {
         title: "Owl Tale",
         subtitle: "Owl Adventure",
-        statusLabel: "In development",
+        statusLabel: "Released",
         storyHook: "Write your own adventure of a little brave owlet fighting evil!",
         lead: "A turn-based forest RPG: you walk tile by tile, strike enemies beside you, dodge wolves, foxes and archers, and collect a deck of abilities.",
         body: [
@@ -108,7 +111,7 @@ export const GAMES: Game[] = [
       ru: {
         title: "Owl Tale",
         subtitle: "Owl Adventure",
-        statusLabel: "В разработке",
+        statusLabel: "В релизе",
         storyHook: "Напиши свою историю приключения маленького отважного совенка борющегося со злом!",
         lead: "Пошаговая лесная RPG: ходишь по клеткам, бьёшь врагов рядом, уворачиваешься от волков, лис и лучников и собираешь колоду способностей.",
         body: [
