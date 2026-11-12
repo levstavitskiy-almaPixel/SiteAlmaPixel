@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Container from "./Container";
 import ScrollReveal from "./ScrollReveal";
 import SocialLinks from "./SocialLinks";
+import CommunityButtons from "./CommunityButtons";
 import { useLanguage } from "../context/LanguageContext";
 import { STUDIO } from "../data/studio";
 
@@ -13,7 +14,10 @@ export default function SiteFooter() {
       <Container>
         <ScrollReveal className="text-center text-[#5a6f76] space-y-4">
           <p className="font-chiron-heading text-[#216477] text-lg">{locale.brand}</p>
-          <SocialLinks className="justify-center" />
+          <div className="flex flex-col items-center gap-4">
+            <CommunityButtons />
+            <SocialLinks className="justify-center" />
+          </div>
           <p>
             <a
               href={`mailto:${STUDIO.email}`}

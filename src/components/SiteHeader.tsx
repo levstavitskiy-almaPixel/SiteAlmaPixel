@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import Container from "./Container";
 import SocialLinks from "./SocialLinks";
+import CommunityButtons from "./CommunityButtons";
 import { useLanguage } from "../context/LanguageContext";
 import { STUDIO } from "../data/studio";
 
@@ -98,10 +99,11 @@ export default function SiteHeader({ variant = "solid" }: SiteHeaderProps) {
           <div className="flex items-center gap-2 sm:gap-3">
             <a
               href={`mailto:${STUDIO.email}`}
-              className="header-email hidden lg:inline text-sm font-medium whitespace-nowrap"
+              className="header-email hidden xl:inline text-sm font-medium whitespace-nowrap"
             >
               {STUDIO.email}
             </a>
+            <CommunityButtons compact />
             <SocialLinks compact iconClass="w-4 h-4" />
             <div
               className="lang-switch-wrap flex gap-1 rounded-lg p-1"
@@ -154,6 +156,7 @@ export default function SiteHeader({ variant = "solid" }: SiteHeaderProps) {
             >
               {STUDIO.email}
             </a>
+            <CommunityButtons className="self-start" />
             <SocialLinks compact iconClass="w-4 h-4" className="pt-1" />
           </div>
         </motion.div>

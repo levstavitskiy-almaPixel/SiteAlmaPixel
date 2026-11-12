@@ -18,6 +18,7 @@ import GameCard from "./components/GameCard";
 import GamePage from "./components/GamePage";
 import NewsPage, { NewsPreview } from "./components/NewsPage";
 import SocialLinks from "./components/SocialLinks";
+import CommunityButtons from "./components/CommunityButtons";
 import { LanguageProvider, useLanguage } from "./context/LanguageContext";
 import { publishedGames } from "./data/games";
 import { STUDIO } from "./data/studio";
@@ -90,7 +91,8 @@ function HomePage() {
                 </a>
                 .
               </p>
-              <div className="mt-8 flex justify-center">
+              <div className="mt-8 flex flex-col items-center gap-4">
+                <CommunityButtons />
                 <SocialLinks />
               </div>
               <motion.a

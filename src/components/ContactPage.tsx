@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { type Locale } from "../locales";
 import Container from "./Container";
 import SocialLinks from "./SocialLinks";
+import CommunityButtons from "./CommunityButtons";
 import { STUDIO } from "../data/studio";
 
 interface ContactPageProps {
@@ -114,7 +115,10 @@ export default function ContactPage({ locale, language }: ContactPageProps) {
                 {STUDIO.email}
               </a>
             </p>
-            <SocialLinks className="justify-center" />
+            <div className="flex flex-col items-center gap-4">
+              <CommunityButtons />
+              <SocialLinks className="justify-center" />
+            </div>
           </div>
         </motion.div>
       </Container>

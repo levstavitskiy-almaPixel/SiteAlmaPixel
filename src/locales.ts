@@ -3,6 +3,8 @@ export interface Locale {
   tagline: string;
   description: string;
   heroCta: string;
+  discordCta: string;
+  telegramCta: string;
   email: string;
   telegram: string;
   nav: {
@@ -126,6 +128,8 @@ export const locales: Record<string, Locale> = {
     tagline: "Indie Game Studio",
     description: "Hand-drawn worlds, atmospheric music, and games made by one person — with room to grow.",
     heroCta: "Our Projects",
+    discordCta: "Discord",
+    telegramCta: "Telegram",
     email: "support@alma-pixel.com",
     telegram: "@levstavitskiy",
     nav: {
@@ -273,6 +277,8 @@ export const locales: Record<string, Locale> = {
     tagline: "Инди-студия игр",
     description: "Миры ручной работы, атмосферная музыка и игры, которые делает один человек — с местом для роста.",
     heroCta: "Наши проекты",
+    discordCta: "Discord",
+    telegramCta: "Telegram",
     email: "support@alma-pixel.com",
     telegram: "@levstavitskiy",
     nav: {

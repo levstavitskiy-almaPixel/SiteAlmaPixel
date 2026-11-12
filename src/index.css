@@ -62,6 +62,252 @@
     0 14px 32px rgba(22, 63, 74, 0.4);
 }
 
+.discord-btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.85rem 1.7rem;
+  color: #fff;
+  font-family: "ChironGoRoundTC", sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 0.75rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28) 0%, transparent 42%),
+    linear-gradient(135deg, #e9d5ff 0%, #c084fc 38%, #a78bfa 68%, #8b5cf6 100%);
+  box-shadow:
+    0 4px 0 #6d28d9,
+    0 10px 28px rgba(139, 92, 246, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  transition:
+    box-shadow 0.35s var(--ease-out-expo),
+    filter 0.35s var(--ease-out-expo);
+}
+
+.discord-btn:hover {
+  filter: brightness(1.08);
+  box-shadow:
+    0 5px 0 #6d28d9,
+    0 16px 36px rgba(168, 85, 247, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.discord-btn--compact {
+  width: 2rem;
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0;
+  gap: 0;
+  border-radius: 999px;
+  box-shadow:
+    0 3px 0 #6d28d9,
+    0 8px 18px rgba(139, 92, 246, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.discord-btn__shine,
+.discord-btn__glitter,
+.discord-btn__sparkle {
+  pointer-events: none;
+}
+
+.discord-btn__shine {
+  position: absolute;
+  inset: -40% -30%;
+  background: linear-gradient(
+    110deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.55) 48%,
+    rgba(255, 250, 230, 0.35) 52%,
+    transparent 65%
+  );
+  transform: translateX(-60%) rotate(8deg);
+  animation: discordShine 3.6s ease-in-out infinite;
+  z-index: 1;
+}
+
+.discord-btn__glitter {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 18% 30%, rgba(255, 255, 255, 0.95) 0 1.1px, transparent 1.6px),
+    radial-gradient(circle at 72% 22%, rgba(255, 248, 220, 0.9) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 86% 68%, rgba(255, 255, 255, 0.85) 0 1.2px, transparent 1.8px),
+    radial-gradient(circle at 34% 78%, rgba(255, 236, 179, 0.8) 0 0.9px, transparent 1.4px),
+    radial-gradient(circle at 52% 44%, rgba(255, 255, 255, 0.7) 0 0.7px, transparent 1.2px);
+  animation: discordGlitter 1.8s ease-in-out infinite alternate;
+  z-index: 1;
+}
+
+.discord-btn__sparkle {
+  position: absolute;
+  z-index: 2;
+  background: #fff;
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.95));
+  animation: discordTwinkle 1.6s ease-in-out infinite;
+}
+
+.discord-btn svg,
+.discord-btn .discord-btn__label {
+  position: relative;
+  z-index: 3;
+}
+
+.discord-btn--compact .discord-btn__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+@keyframes discordShine {
+  0%,
+  42% {
+    transform: translateX(-70%) rotate(8deg);
+    opacity: 0;
+  }
+  55% {
+    opacity: 1;
+  }
+  72%,
+  100% {
+    transform: translateX(70%) rotate(8deg);
+    opacity: 0;
+  }
+}
+
+@keyframes discordGlitter {
+  from {
+    opacity: 0.55;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(1px, -1px, 0);
+  }
+}
+
+@keyframes discordTwinkle {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: scale(0.55) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(18deg);
+  }
+}
+
+.telegram-btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.85rem 1.7rem;
+  color: #fff;
+  font-family: "ChironGoRoundTC", sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 0.75rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28) 0%, transparent 42%),
+    linear-gradient(135deg, #7ad3ff 0%, #2AABEE 48%, #1e96d1 100%);
+  box-shadow:
+    0 4px 0 #156a96,
+    0 10px 28px rgba(42, 171, 238, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  transition:
+    box-shadow 0.35s var(--ease-out-expo),
+    filter 0.35s var(--ease-out-expo);
+}
+
+.telegram-btn:hover {
+  filter: brightness(1.08);
+  box-shadow:
+    0 5px 0 #156a96,
+    0 16px 36px rgba(42, 171, 238, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.telegram-btn--compact {
+  width: 2rem;
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0;
+  gap: 0;
+  border-radius: 999px;
+  box-shadow:
+    0 3px 0 #156a96,
+    0 8px 18px rgba(42, 171, 238, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.telegram-btn__shine {
+  pointer-events: none;
+  position: absolute;
+  inset: -40% -30%;
+  background: linear-gradient(
+    110deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.5) 48%,
+    rgba(255, 250, 230, 0.28) 52%,
+    transparent 65%
+  );
+  transform: translateX(-60%) rotate(8deg);
+  animation: discordShine 3.6s ease-in-out infinite;
+  z-index: 1;
+}
+
+.telegram-btn svg,
+.telegram-btn .telegram-btn__label {
+  position: relative;
+  z-index: 3;
+}
+
+.telegram-btn--compact .telegram-btn__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .discord-btn__shine,
+  .discord-btn__glitter,
+  .discord-btn__sparkle,
+  .telegram-btn__shine {
+    animation: none;
+  }
+}
+
 /* Fonts */
 @font-face {
   font-family: 'KosugiMaru';

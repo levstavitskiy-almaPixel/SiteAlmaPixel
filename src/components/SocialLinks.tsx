@@ -32,15 +32,6 @@ export default function SocialLinks({
         </svg>
       ),
     },
-    {
-      href: STUDIO.socials.telegram,
-      label: "Telegram",
-      icon: (
-        <svg className={iconClass} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-          <path d="M21.5 4.4 18.7 20c-.2 1-1.2 1.4-2 .9l-5-3.8-2.6 2.5c-.3.3-.8.1-.9-.3l-.6-5.3L3 11.4c-1-.3-.9-1.7.2-2l17.2-5.3c1-.3 1.9.6 1.1 2.3Z" />
-        </svg>
-      ),
-    },
   ];
 
   const sizeClass = compact
