@@ -53,7 +53,11 @@ export type Game = {
   store?: {
     googlePlay?: string;
     appStore?: string;
+    /** Steam store / wishlist URL when available. */
+    steam?: string;
   };
+  /** Platforms in focus while the game is still in development. */
+  platforms?: Array<"steam" | "mobile">;
   copy: Record<Lang, GameCopy>;
 };
 
@@ -258,6 +262,37 @@ export const GAMES: Game[] = [
         body: [
           "На поверхности выбрасываешь пойманное и рисуешь жестами символы рыбы, чтобы обналичить монеты. На них покупаешь крючки, лески и аксессуары — от фонаря для глубины до помощи при рисовании — и открываешь новые воды, например более глубокое и тёмное «Глубокое».",
           "Визуально игра в мягкой 2D-эстетике: анимированные персонажи, акварельная «бумажная» картинка и ощущение спокойной, но азартной рыбалки.",
+        ],
+      },
+    },
+  },
+  {
+    slug: "detective-cat",
+    codeName: "DetectiveCat",
+    cover: "/shot-cat.png?v=2",
+    videoPoster: "/shot-cat.png?v=2",
+    accent: "#c9a227",
+    status: "in-development",
+    platforms: ["steam"],
+    copy: {
+      en: {
+        title: "Detective Cat",
+        subtitle: "A noir mystery on Steam",
+        statusLabel: "In development · Steam",
+        lead: "A black-cat detective with a magnifying glass and a deerstalker hat — follow clues, question suspects, and crack the case.",
+        body: [
+          "Hand-drawn characters, cozy noir atmosphere, and a trail of mysteries waiting on Steam.",
+          "The game is currently in development for PC.",
+        ],
+      },
+      ru: {
+        title: "Кот-детектив",
+        subtitle: "Нуарная загадка в Steam",
+        statusLabel: "В разработке · Steam",
+        lead: "Чёрный кот-детектив с лупой и охотничьей шляпой — ищи улики, допрашивай подозреваемых и раскрывай дело.",
+        body: [
+          "Ручная отрисовка, уютный нуар и цепочка загадок — игра готовится к выходу в Steam.",
+          "Сейчас проект в разработке для PC.",
         ],
       },
     },

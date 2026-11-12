@@ -20,6 +20,8 @@ export interface Locale {
     videoPlaceholder: string;
     moreGames: string;
     playOnGoogle: string;
+    comingToSteam: string;
+    wishlistSteam: string;
   };
   musicTracks: Array<{
     id: string;
@@ -144,7 +146,9 @@ export const locales: Record<string, Locale> = {
       videoLabel: "Vertical video",
       videoPlaceholder: "Drop a 1080×2400 clip here when it is ready.",
       moreGames: "More games",
-      playOnGoogle: "Get it on Google Play"
+      playOnGoogle: "Get it on Google Play",
+      comingToSteam: "Coming to Steam",
+      wishlistSteam: "Wishlist on Steam"
     },
     musicTracks: [
       {
@@ -293,7 +297,9 @@ export const locales: Record<string, Locale> = {
       videoLabel: "Вертикальное видео",
       videoPlaceholder: "Сюда можно вставить ролик 1080×2400, когда он будет готов.",
       moreGames: "Другие игры",
-      playOnGoogle: "Скачать в Google Play"
+      playOnGoogle: "Скачать в Google Play",
+      comingToSteam: "Скоро в Steam",
+      wishlistSteam: "В вишлист Steam"
     },
     musicTracks: [
       {

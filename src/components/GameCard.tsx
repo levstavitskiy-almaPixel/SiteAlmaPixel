@@ -64,6 +64,20 @@ export default function GameCard({
           {locale.gamePage.playOnGoogle}
         </a>
       ) : null}
+      {game.store?.steam ? (
+        <a
+          href={game.store.steam}
+          target="_blank"
+          rel="noreferrer"
+          className="mt-3 mx-auto flex items-center justify-center gap-2 text-xs font-chiron-heading uppercase tracking-wider text-white/90 hover:text-white"
+        >
+          {locale.gamePage.wishlistSteam}
+        </a>
+      ) : game.platforms?.includes("steam") ? (
+        <span className="mt-3 mx-auto flex items-center justify-center gap-2 text-xs font-chiron-heading uppercase tracking-wider text-[#e8c56a]">
+          {locale.gamePage.comingToSteam}
+        </span>
+      ) : null}
     </motion.div>
   );
 }

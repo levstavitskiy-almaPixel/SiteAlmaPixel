@@ -77,23 +77,57 @@ export default function GamePage() {
                   {copy.lead}
                 </motion.p>
               ) : null}
-              {game.store?.googlePlay ? (
-                <motion.a
-                  href={game.store.googlePlay}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hero-cta mt-8 inline-flex items-center gap-3 px-6 py-3.5 text-white text-sm font-chiron-heading uppercase tracking-wider"
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.26 }}
-                  whileHover={{ scale: 1.04, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <svg width="18" height="20" viewBox="0 0 18 20" fill="currentColor" aria-hidden>
-                    <path d="M.5 1.4v17.2c0 .8.9 1.3 1.6.9l14.6-8.6c.7-.4.7-1.4 0-1.8L2.1.5C1.4.1.5.6.5 1.4Z" />
-                  </svg>
-                  {locale.gamePage.playOnGoogle}
-                </motion.a>
+              {game.store?.googlePlay || game.store?.steam || game.platforms?.includes("steam") ? (
+                <div className="mt-8 flex flex-wrap gap-3">
+                  {game.store?.googlePlay ? (
+                    <motion.a
+                      href={game.store.googlePlay}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="hero-cta inline-flex items-center gap-3 px-6 py-3.5 text-white text-sm font-chiron-heading uppercase tracking-wider"
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.7, delay: 0.26 }}
+                      whileHover={{ scale: 1.04, y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <svg width="18" height="20" viewBox="0 0 18 20" fill="currentColor" aria-hidden>
+                        <path d="M.5 1.4v17.2c0 .8.9 1.3 1.6.9l14.6-8.6c.7-.4.7-1.4 0-1.8L2.1.5C1.4.1.5.6.5 1.4Z" />
+                      </svg>
+                      {locale.gamePage.playOnGoogle}
+                    </motion.a>
+                  ) : null}
+                  {game.store?.steam ? (
+                    <motion.a
+                      href={game.store.steam}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="hero-cta inline-flex items-center gap-3 px-6 py-3.5 text-white text-sm font-chiron-heading uppercase tracking-wider"
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.7, delay: 0.26 }}
+                      whileHover={{ scale: 1.04, y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                        <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0Zm0 2.2c5.4 0 9.8 4.4 9.8 9.8 0 5.4-4.4 9.8-9.8 9.8S2.2 17.4 2.2 12 6.6 2.2 12 2.2Zm-1.1 4.1c-2.4 0-4.4 1.7-4.9 3.9L3.5 14c.3-.1.6-.1.9-.1 1.9 0 3.5 1.3 3.9 3.1l3.5-1.4c.5.2 1 .3 1.5.3 2.6 0 4.7-2.1 4.7-4.7S13.1 6.3 10.9 6.3Zm0 1.6c1.7 0 3.1 1.4 3.1 3.1S12.6 14 10.9 14s-3.1-1.4-3.1-3.1 1.4-3.1 3.1-3.1Zm0 1.4c-.9 0-1.7.8-1.7 1.7s.8 1.7 1.7 1.7 1.7-.8 1.7-1.7-.8-1.7-1.7-1.7Z" />
+                      </svg>
+                      {locale.gamePage.wishlistSteam}
+                    </motion.a>
+                  ) : game.platforms?.includes("steam") ? (
+                    <motion.span
+                      className="inline-flex items-center gap-3 px-6 py-3.5 text-sm font-chiron-heading uppercase tracking-wider text-[#e8c56a] border border-[#e8c56a]/40 rounded-sm"
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.7, delay: 0.26 }}
+                    >
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                        <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0Zm0 2.2c5.4 0 9.8 4.4 9.8 9.8 0 5.4-4.4 9.8-9.8 9.8S2.2 17.4 2.2 12 6.6 2.2 12 2.2Zm-1.1 4.1c-2.4 0-4.4 1.7-4.9 3.9L3.5 14c.3-.1.6-.1.9-.1 1.9 0 3.5 1.3 3.9 3.1l3.5-1.4c.5.2 1 .3 1.5.3 2.6 0 4.7-2.1 4.7-4.7S13.1 6.3 10.9 6.3Zm0 1.6c1.7 0 3.1 1.4 3.1 3.1S12.6 14 10.9 14s-3.1-1.4-3.1-3.1 1.4-3.1 3.1-3.1Zm0 1.4c-.9 0-1.7.8-1.7 1.7s.8 1.7 1.7 1.7 1.7-.8 1.7-1.7-.8-1.7-1.7-1.7Z" />
+                      </svg>
+                      {locale.gamePage.comingToSteam}
+                    </motion.span>
+                  ) : null}
+                </div>
               ) : null}
             </div>
 
