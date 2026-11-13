@@ -269,8 +269,8 @@ export const GAMES: Game[] = [
   {
     slug: "detective-cat",
     codeName: "DetectiveCat",
-    cover: "/shot-cat.png?v=2",
-    videoPoster: "/shot-cat.png?v=2",
+    cover: "/shot-cat.png?v=3",
+    videoPoster: "/shot-cat.png?v=3",
     accent: "#c9a227",
     status: "in-development",
     platforms: ["steam"],
