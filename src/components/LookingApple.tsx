@@ -7,6 +7,8 @@ import { ensureDragonBonesParsed, pickAnimationName } from "../lib/dragonbones";
 type LookingAppleProps = {
   className?: string;
   size?: number;
+  /** Pause Pixi when the apple is clipped away / off-screen. */
+  active?: boolean;
 };
 
 const APPLE_SKE = "/animations/menu/Apple_ske.json?v=2";
@@ -52,12 +54,34 @@ function clampLook(x: number, y: number, max: number): { x: number; y: number } 
 export default function LookingApple({
   className = "",
   size = 420,
+  active = true,
 }: LookingAppleProps) {
   const hostRef = useRef<HTMLDivElement>(null);
   const [reduceMotion, setReduceMotion] = useState(false);
   const reduceMotionRef = useRef(false);
+  const activeRef = useRef(active);
+  const appRef = useRef<Application | null>(null);
+  const armatureRef = useRef<PixiArmatureDisplay | null>(null);
+  const playNameRef = useRef<string | null>(null);
   const width = size + CANVAS_PAD * 2;
   const height = Math.round(size * (AABB_H / AABB_W)) + CANVAS_PAD * 2;
+
+  useEffect(() => {
+    activeRef.current = active;
+    const app = appRef.current;
+    const display = armatureRef.current;
+    if (!app) return;
+    if (active) {
+      app.ticker.start();
+      const playName = playNameRef.current;
+      if (playName && !reduceMotionRef.current && display) {
+        display.animation.play(playName, 0);
+      }
+    } else {
+      app.ticker.stop();
+      display?.animation.stop();
+    }
+  }, [active]);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -86,9 +110,10 @@ export default function LookingApple({
         width,
         height,
         backgroundAlpha: 0,
-        antialias: true,
-        resolution: Math.min(window.devicePixelRatio || 1, 2),
+        antialias: false,
+        resolution: Math.min(window.devicePixelRatio || 1, 1.5),
         autoDensity: true,
+        powerPreference: "low-power",
       });
 
       if (cancelled) {
@@ -97,6 +122,7 @@ export default function LookingApple({
       }
 
       app = pixi;
+      appRef.current = pixi;
       pixi.canvas.style.display = "block";
       pixi.canvas.style.width = "100%";
       pixi.canvas.style.height = "100%";
@@ -114,6 +140,7 @@ export default function LookingApple({
       }
 
       const playName = pickAnimationName(display.animation.animationNames, "idle");
+      playNameRef.current = playName;
       if (playName && !reduceMotionRef.current) {
         display.animation.play(playName, 0);
       } else if (playName) {
@@ -124,6 +151,12 @@ export default function LookingApple({
       display.eventMode = "none";
       pixi.stage.addChild(display);
       armatureDisplay = display;
+      armatureRef.current = display;
+
+      if (!activeRef.current) {
+        pixi.ticker.stop();
+        display.animation.stop();
+      }
 
       const eye = display.armature.getBone(EYE_BONE);
       if (!eye) {
@@ -136,7 +169,7 @@ export default function LookingApple({
       let pressed = false;
 
       const aimAtClient = (clientX: number, clientY: number) => {
-        if (reduceMotionRef.current) {
+        if (reduceMotionRef.current || !activeRef.current) {
           target.x = 0;
           target.y = 0;
           return;
@@ -175,16 +208,41 @@ export default function LookingApple({
         bone.invalidUpdate();
       };
 
+      const tick = () => {
+        if (!activeRef.current) {
+          raf = 0;
+          return;
+        }
+        applyLook(eye);
+        const settling =
+          Math.abs(target.x - current.x) > 0.02 || Math.abs(target.y - current.y) > 0.02;
+        if (pressed || settling) {
+          raf = requestAnimationFrame(tick);
+        } else {
+          raf = 0;
+        }
+      };
+
+      const ensureTick = () => {
+        if (!raf && activeRef.current) raf = requestAnimationFrame(tick);
+      };
+
       const onPointerDown = (event: PointerEvent) => {
+        if (!activeRef.current) return;
         pressed = true;
         aimAtClient(event.clientX, event.clientY);
+        ensureTick();
       };
       const onPointerMove = (event: PointerEvent) => {
         if (!pressed) return;
         aimAtClient(event.clientX, event.clientY);
+        ensureTick();
       };
       const onPointerUp = () => {
         pressed = false;
+        target.x = 0;
+        target.y = 0;
+        ensureTick();
       };
 
       window.addEventListener("pointerdown", onPointerDown, { passive: true });
@@ -198,12 +256,6 @@ export default function LookingApple({
         window.removeEventListener("pointerup", onPointerUp);
         window.removeEventListener("pointercancel", onPointerUp);
       };
-
-      const tick = () => {
-        applyLook(eye);
-        raf = requestAnimationFrame(tick);
-      };
-      raf = requestAnimationFrame(tick);
 
       if (cancelled) {
         cleanupLook();
@@ -224,12 +276,15 @@ export default function LookingApple({
       cleanupLook = null;
       armatureDisplay?.dispose();
       armatureDisplay = null;
+      armatureRef.current = null;
+      playNameRef.current = null;
       if (app) {
         app.destroy(true);
         app = null;
       } else {
         host.replaceChildren();
       }
+      appRef.current = null;
     };
   }, [size, width, height]);
 

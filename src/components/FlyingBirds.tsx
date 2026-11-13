@@ -37,29 +37,51 @@ function layoutBird(
 
 export default function FlyingBirds({ clipTo }: { clipTo?: string }) {
   const hostRef = useRef<HTMLDivElement>(null);
+  const appRef = useRef<Application | null>(null);
+  const visibleRef = useRef(true);
 
   useEffect(() => {
     const host = hostRef.current;
     if (!host || !clipTo) return;
 
+    let raf = 0;
     const updateClip = () => {
+      raf = 0;
       const zone = document.querySelector(clipTo);
       if (!zone) {
         host.style.clipPath = "";
         return;
       }
       const rect = zone.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const onScreen = rect.bottom > 0 && rect.top < vh;
       const clipTop = Math.max(0, rect.top);
-      const clipBottom = Math.max(0, window.innerHeight - rect.bottom);
-      host.style.clipPath = `inset(${clipTop}px 0 ${clipBottom}px 0)`;
+      const clipBottom = Math.max(0, vh - rect.bottom);
+      host.style.clipPath = onScreen
+        ? `inset(${clipTop}px 0 ${clipBottom}px 0)`
+        : "inset(100%)";
+      host.style.visibility = onScreen ? "visible" : "hidden";
+
+      const shouldRun = onScreen && clipTop + clipBottom < vh - 4;
+      visibleRef.current = shouldRun;
+      const app = appRef.current;
+      if (app) {
+        if (shouldRun) app.ticker.start();
+        else app.ticker.stop();
+      }
+    };
+
+    const schedule = () => {
+      if (!raf) raf = requestAnimationFrame(updateClip);
     };
 
     updateClip();
-    window.addEventListener("scroll", updateClip, { passive: true });
-    window.addEventListener("resize", updateClip);
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
     return () => {
-      window.removeEventListener("scroll", updateClip);
-      window.removeEventListener("resize", updateClip);
+      if (raf) cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
     };
   }, [clipTo]);
 
@@ -76,9 +98,10 @@ export default function FlyingBirds({ clipTo }: { clipTo?: string }) {
       await pixi.init({
         resizeTo: window,
         backgroundAlpha: 0,
-        antialias: true,
-        resolution: Math.min(window.devicePixelRatio || 1, 2),
+        antialias: false,
+        resolution: Math.min(window.devicePixelRatio || 1, 1.5),
         autoDensity: true,
+        powerPreference: "low-power",
       });
       if (cancelled) {
         pixi.destroy(true);
@@ -86,11 +109,13 @@ export default function FlyingBirds({ clipTo }: { clipTo?: string }) {
       }
 
       app = pixi;
+      appRef.current = pixi;
       pixi.canvas.style.display = "block";
       pixi.canvas.style.width = "100%";
       pixi.canvas.style.height = "100%";
       pixi.canvas.style.pointerEvents = "none";
       host.appendChild(pixi.canvas);
+      if (!visibleRef.current) pixi.ticker.stop();
 
       const dragonBonesName = await ensureDragonBonesParsed(BIRD_SKE, BIRD_TEX, BIRD_PNG);
       if (cancelled) return;
@@ -170,6 +195,7 @@ export default function FlyingBirds({ clipTo }: { clipTo?: string }) {
       cancelled = true;
       for (const bird of flock) bird.display.dispose();
       flock.length = 0;
+      appRef.current = null;
       if (app) {
         app.destroy(true);
         app = null;
